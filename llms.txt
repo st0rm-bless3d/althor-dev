@@ -1,0 +1,27 @@
+# Althor Consulting
+
+> Production infrastructure for AI agent systems.
+> The guardrails, orchestration, and audit between a prompt and a production deployment.
+
+Althor Consulting LLC is a solo consulting practice (Maryland, US) specializing in the infrastructure that makes agent deployments ship — credential brokers, tool access layers, approval gating, audit trails, and MCP integration for enterprise teams.
+
+## Focus areas
+
+- Production infrastructure for AI agent systems
+- Model Context Protocol (MCP) server design and deployment
+- Credential brokering for agent tool access
+- Policy-gated approval flows for critical actions
+- Audit and observability for agent-driven workflows
+- Salesforce and CRM workflow automation with agent handlers
+- Production ops for internal AI platforms — LiteLLM, Langfuse, vLLM
+- Security and audit posture review for agent-driven workflows
+
+## Engagements
+
+Fixed-scope engagements and advisory retainers. Remote-first.
+
+## Contact
+
+- Email: contact@althor.dev
+- LinkedIn: https://www.linkedin.com/in/samuel-s-a95912248
+- Canonical URL: https://althor.dev/
