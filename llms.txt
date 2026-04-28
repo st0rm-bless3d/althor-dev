@@ -32,6 +32,7 @@ Remote-first.
 
 ## Writing
 
+- Adding MCP servers to Copilot Studio in regulated environments — https://althor.dev/writing/mcp-copilot-studio/
 - Making agent deployments pass security review — https://althor.dev/writing/agent-security-review/
 - Drawing the right boundaries for an MCP server — https://althor.dev/writing/mcp-server-boundaries/
 

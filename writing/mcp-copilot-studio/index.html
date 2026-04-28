@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#1a1d22" />
+
+<title>Adding MCP servers to Copilot Studio in regulated environments · althor</title>
+<meta name="description" content="Five architecture decisions the Copilot Studio MCP onboarding wizard quietly assumes you've made — identity, DLP, generative orchestration, Streamable transport, tenant scoping." />
+<link rel="canonical" href="https://althor.dev/writing/mcp-copilot-studio/" />
+
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+
+<meta property="og:site_name" content="Althor Consulting" />
+<meta property="og:title" content="Adding MCP servers to Copilot Studio in regulated environments" />
+<meta property="og:description" content="Five architecture decisions the wizard quietly assumes you've made." />
+<meta property="og:url" content="https://althor.dev/writing/mcp-copilot-studio/" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://althor.dev/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Adding MCP servers to Copilot Studio in regulated environments" />
+<meta name="twitter:description" content="Identity, DLP, orchestration, transport, tenant scoping — the five decisions before the five clicks." />
+<meta name="twitter:image" content="https://althor.dev/assets/og.png" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Adding MCP servers to Copilot Studio in regulated environments",
+  "description": "Five architecture decisions the Copilot Studio MCP onboarding wizard quietly assumes you've made.",
+  "datePublished": "2026-04-28",
+  "dateModified": "2026-04-28",
+  "author": { "@type": "Person", "name": "Samuel Swegart", "url": "https://althor.dev/" },
+  "publisher": { "@type": "Organization", "name": "Althor Consulting", "url": "https://althor.dev/" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://althor.dev/writing/mcp-copilot-studio/" },
+  "image": "https://althor.dev/assets/og.png",
+  "inLanguage": "en"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+<div class="container container--narrow">
+
+  <header class="brand">
+    <span class="brand__cursor" aria-hidden="true">▋</span>
+    <span class="brand__word"><a href="/">althor</a></span>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/work/">Work</a>
+      <a href="/writing/" aria-current="page">Writing</a>
+      <a href="/#about">About</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <a class="back-link" href="/writing/">All writing</a>
+
+  <article class="article">
+    <div class="article__eyebrow">Pattern · 2026</div>
+    <h1 class="article__title">Adding MCP servers to Copilot Studio in regulated environments</h1>
+    <p class="article__dek">The Microsoft Copilot Studio onboarding wizard makes adding an MCP server look like five clicks. It is — once you've made the five architecture decisions the wizard quietly assumes you've already made.</p>
+    <div class="article__meta">
+      <span>Reading time <strong>~9 min</strong></span>
+      <span>Audience <strong>Engineers, platform leads, tenant admins</strong></span>
+      <span>Last reviewed <strong>2026-04-28</strong></span>
+    </div>
+  </article>
+
+  <div class="prose">
+    <p>
+      This is a working note from wiring MCP into Copilot Studio agents inside Microsoft 365 tenants under enterprise DLP, governance review, and InfoSec scrutiny. Most published guides walk through the wizard. This one walks through the decisions you're making whether you realize it or not.
+    </p>
+
+    <h2>The setup, briefly</h2>
+    <p>
+      Microsoft Copilot Studio reached general availability for MCP integration in May 2025, with continued additions through 2026 (tool listing, enhanced tracing, declarative agents support in M365 Copilot, Security Copilot in preview). MCP servers expose tools and resources; Copilot Studio mounts them as actions inside agents; the connector infrastructure underneath gives you DLP, VNet integration, and managed authentication.
+    </p>
+    <p>
+      Two important constraints before you start:
+    </p>
+    <ul>
+      <li><strong>Generative orchestration must be enabled.</strong> Classic orchestration ignores MCP. If your tenant or your makers have generative orchestration disabled by policy, the rest of this is moot.</li>
+      <li><strong>Streamable transport only.</strong> SSE was deprecated in August 2025. If you have an older MCP server that only speaks SSE, you're updating it before you connect it.</li>
+    </ul>
+    <p>
+      With those out of the way, here are the decisions.
+    </p>
+
+    <h2>Decision 1 · Which identity does the tool call?</h2>
+    <p>
+      The wizard offers three authentication paths: no auth (don't), API key, and OAuth 2.0. The OAuth path further branches into static configuration vs. Dynamic Client Registration (DCR) discovery.
+    </p>
+    <p>
+      The decision that matters underneath is <em>whose credentials are being used when the MCP server reaches downstream</em>.
+    </p>
+
+    <div class="diagram" aria-label="Identity options for MCP tool calls">
+<pre><span class="dim">path</span>                          <span class="dim">downstream identity</span>     <span class="dim">use when</span>
+<span class="accent">API key</span>                       MCP server's own       read-only tools against shared catalogs
+<span class="accent">OAuth 2.0 — agent</span>             agent service principal   tools attributable to the agent
+<span class="accent">OAuth 2.0 — on-behalf-of</span>      signed-in user (UPN)   tools attributable to the human</pre>
+    </div>
+
+    <p>
+      Most teams pick API key because the wizard makes it the path of least resistance. This is fine for a demo and frequently wrong for production. The audit trail downstream now reads "the MCP server did it" — which is exactly the failure mode your compliance team will flag in review.
+    </p>
+    <p>
+      If your tool reads or writes user-scoped data — anything in M365, anything in Dynamics, anything where row-level or record-level permissions matter — OAuth with on-behalf-of is the only correct answer. The agent acts as the user. The audit trail downstream reads with the user's UPN. RBAC enforcement happens at the downstream service, not at the MCP layer.
+    </p>
+    <p>
+      Practical note: DCR with discovery is genuinely the simplest OAuth setup if your MCP server's identity provider supports it. If it doesn't — and Entra ID app registrations don't, by default — you'll be configuring auth manually with your authorization URL, token URL, scopes, and client ID/secret. Budget more time than the wizard implies.
+    </p>
+
+    <h2>Decision 2 · Which DLP zone does this connector sit in?</h2>
+    <p>
+      Copilot Studio MCP connectors are not exempt from your tenant's Data Loss Prevention policy. They live in the standard Power Platform connector framework. That means every MCP server you add is sorted into Business / Non-Business / Blocked by your DLP rules — and if you don't have DLP rules that account for MCP, your makers are sorting them by default into whatever the catch-all is. That default is usually wrong.
+    </p>
+    <p>
+      Three things to do before you publish your first MCP-enabled agent into a managed environment:
+    </p>
+    <ul>
+      <li><strong>Decide the data class your MCP server can touch.</strong> If it returns customer PII, financial records, or anything with regulatory weight, it sits in the Business group with other regulated connectors. Mixing a Business-class MCP server with Non-Business connectors in the same agent will be blocked by DLP.</li>
+      <li><strong>Document the data classification in the connector metadata.</strong> When governance review comes asking "what data does this touch," the answer should be in the connector documentation, not in someone's Slack thread from six months ago.</li>
+      <li><strong>Restrict by environment.</strong> Most tenants run a Default + per-team-or-per-app environment topology. MCP servers reading sensitive data should be scoped to specific environments, not exposed in the Default environment where any maker can wire them up.</li>
+    </ul>
+    <p>
+      DLP is the layer where governance enforcement actually happens. Skipping it produces an agent that runs fine in dev, fails the first DLP review in prod, and rolls back at the worst possible time.
+    </p>
+
+    <h2>Decision 3 · What "generative orchestration" implies about your tool surface</h2>
+    <p>
+      Classic orchestration follows topic-based routing. The maker defines triggers, the bot picks the matching topic, the topic invokes specific actions. The control flow is on rails.
+    </p>
+    <p>
+      Generative orchestration is different. The orchestrator looks at the user's input, looks at the available tools (including all MCP tools the agent has been given), and decides which to call. It can call multiple tools in sequence. It can chain results. It will sometimes pick a tool you didn't expect for an input you didn't anticipate.
+    </p>
+    <p>
+      This is the actual reason MCP requires generative orchestration: the protocol's whole value is dynamic tool discovery, and dynamic tool discovery is incompatible with rails.
+    </p>
+    <p>
+      The implication for your tool surface design:
+    </p>
+    <ul>
+      <li><strong>Tool descriptions become prompt engineering.</strong> The orchestrator picks tools based on their description. A vague description (<code>get_data — returns data</code>) gets picked or not picked unpredictably. A specific description (<code>get_invoice_status — returns the current status (paid, overdue, disputed) of a single invoice given its ID; does not work for batch lookups</code>) is reliable.</li>
+      <li><strong>Tool naming becomes an interface contract.</strong> <code>prom_query_range</code> is a better name than <code>query</code>. <code>list_open_tickets</code> is better than <code>db_select</code>. The name is what the orchestrator's planner reasons about.</li>
+      <li><strong>Tool surface area becomes a security boundary.</strong> A general-purpose tool is a foot-cannon — it gives the orchestrator too many ways to reach into the underlying system. Wrap the transport in domain-shaped tools. (More on this in <a href="/writing/mcp-server-boundaries/">Drawing the right boundaries for an MCP server</a>.)</li>
+    </ul>
+    <p>
+      The MCP server you ship for Copilot Studio is not the same MCP server you'd ship for a code-completion tool. The orchestrator's needs are different. Tools that work fine in Claude Desktop or VS Code can fail in Copilot Studio because the description was written for a different planner.
+    </p>
+
+    <h2>Decision 4 · Streamable transport, and what August 2025 changed</h2>
+    <p>
+      If you built an MCP server before Q3 2025, you almost certainly built it with Server-Sent Events (SSE) as the transport. SSE is deprecated in MCP, and Copilot Studio dropped support for it in August 2025.
+    </p>
+    <p>
+      The replacement is Streamable HTTP — a newer transport that supports the same bidirectional streaming use cases without SSE's connection-management quirks. Migrating is mostly a server-side change; tools and tool descriptions don't move.
+    </p>
+    <p>
+      What this means concretely:
+    </p>
+    <ul>
+      <li><strong>Audit any MCP server you wrote in 2024 or early 2025</strong> before adding it to Copilot Studio. If it's SSE-only, it won't connect. The MCP onboarding wizard's connection test will fail with an opaque error; the underlying problem is transport mismatch.</li>
+      <li><strong>The Copilot Studio connector spec uses</strong> <code>x-ms-agentic-protocol: mcp-streamable-1.0</code> in the Swagger/OpenAPI definition. If you're authoring custom connectors via Power Apps or Power Automate, that protocol marker tells the platform to treat the connector as a streamable MCP endpoint.</li>
+      <li><strong>For new servers, the official MCP TypeScript SDK has Streamable HTTP support out of the box.</strong> Don't roll your own transport.</li>
+    </ul>
+    <p>
+      This is the kind of detail that doesn't matter until it does — and then it matters in a "the connector won't initialize and the error message is unhelpful" kind of way.
+    </p>
+
+    <h2>Decision 5 · Publish to one tenant, or publish across tenants?</h2>
+    <p>
+      The MCP onboarding wizard offers a step labeled "Optional: Publish your MCP connector to allow the connector to be used across tenants." Three buyers in five will instinctively check this box. It is almost always the wrong choice.
+    </p>
+    <p>
+      Cross-tenant publishing means your connector is available in the Microsoft connector marketplace, where any other tenant can discover and install it. That's appropriate for genuinely public services (Stripe MCP, GitHub MCP, etc.). It is inappropriate for an internal MCP server that serves your own tenant's data.
+    </p>
+    <p>
+      Two failure modes when this is wrong:
+    </p>
+    <ul>
+      <li><strong>Data leakage by configuration error.</strong> A maker in another tenant installs your connector, configures it with their own credentials, and now your service is fielding requests from outside your tenant boundary. Whether that's a problem depends entirely on how your server's auth handles unknown callers.</li>
+      <li><strong>Compliance drift.</strong> Your governance team approved the connector for use inside your tenant, with your DLP, with your environments. Publishing across tenants moves the compliance surface beyond what they reviewed.</li>
+    </ul>
+    <p>
+      Default to scoping the connector to your tenant. If you genuinely need cross-tenant publishing — usually because you're shipping a SaaS product with an MCP layer — handle it as a separate workstream with its own threat model.
+    </p>
+
+    <h2>What's not in the docs: the threat model</h2>
+    <p>
+      The MCP integration in Copilot Studio is structurally a new attack surface. Here's the brief threat model worth running before going live:
+    </p>
+    <ul>
+      <li><strong>Prompt injection through tool results.</strong> The orchestrator's plan can be hijacked by malicious content returned from a tool. If your MCP server reads from any source where users (your own or external) can plant text — comments, ticket descriptions, document contents — assume that content is hostile to your orchestrator. Bound the output. Strip or escape suspect markers. Don't pass tool results back into a system prompt.</li>
+      <li><strong>Token theft via credential broker compromise.</strong> Your MCP server is a credential broker. If an attacker gets onto the host running the server, they get whatever scopes the server can mint. Scope tokens narrowly per call; rotate regularly; alert on unusual call patterns.</li>
+      <li><strong>Tool surface drift over time.</strong> MCP servers update tools dynamically; Copilot Studio reflects those changes automatically. A maintainer who adds <code>delete_user</code> to a previously read-only server has just added it to every agent that mounted that server. Your governance process needs to catch tool surface changes, not just connector additions.</li>
+      <li><strong>DLP blind spots on streaming responses.</strong> Streamable HTTP responses can be very large. DLP scanning of the response stream is best-effort. Don't return raw PII as a tool result and assume DLP will catch it; design your tools to return references (IDs, redacted views) and let downstream UI resolve to the full record under the user's own permissions.</li>
+    </ul>
+    <p>
+      None of these are exotic. They're the same threat model that applies to any agent system that reaches into real infrastructure (see <a href="/writing/agent-security-review/">Making agent deployments pass security review</a>). The Copilot Studio integration adds two new attack surfaces — the connector framework and the orchestrator's planner — and removes none.
+    </p>
+
+    <h2>What I'd ship before going live</h2>
+    <p>
+      A short pre-flight list, in order:
+    </p>
+    <ul>
+      <li><strong>OAuth with on-behalf-of</strong> for any tool touching user-scoped data; API key only for stateless reads against non-sensitive sources.</li>
+      <li><strong>DLP classification documented</strong> on every connector, environment scoping enforced.</li>
+      <li><strong>Tool descriptions written for the orchestrator's planner</strong> — domain-shaped names, explicit ranges, explicit pagination.</li>
+      <li><strong>Bounded outputs</strong> — every tool result paginated or truncated with explicit markers; no unbounded streams.</li>
+      <li><strong>Structured errors</strong> — every tool failure returns <code>{ code, message, suggested_action }</code>, not a raw exception.</li>
+      <li><strong>Audit logging at the server boundary</strong> — every tool call logged with caller identity, tool name, input hash, output size, latency, success/failure. Not the full input/output unless you've cleared it with your DPO.</li>
+      <li><strong>Tenant-only publishing</strong> unless cross-tenant is the explicit business goal.</li>
+      <li><strong>Streamable transport, not SSE.</strong> Verify in the connector spec.</li>
+      <li><strong>Tool surface change-detection</strong> — alert when the MCP server publishes new tools, especially write tools. Governance review on adds.</li>
+      <li><strong>A revocation path</strong> — know how you're going to disable the connector tenant-wide if something goes wrong. "Pull it from the maker's environment" is not a revocation path; "block the connector at the DLP level and notify all consumers" is.</li>
+    </ul>
+    <p>
+      If any of those ten are missing, you're not ready for production. You're ready for a controlled pilot at most.
+    </p>
+
+    <h2>What's good about this integration</h2>
+    <p>
+      After the warnings above, worth saying: Microsoft did most of this right. Generative orchestration plus MCP is a powerful primitive. The connector framework's DLP integration is the single best implementation of agent-tool DLP I've seen in any platform. OAuth with DCR is genuinely modern auth UX. Tracing improvements landed in GA give you observability you actually need.
+    </p>
+    <p>
+      The integration is production-grade. The surface area is narrow enough to defend if you make the right calls upstream. The five decisions in this essay are the calls — get them right and the wizard's five clicks become what they advertise.
+    </p>
+    <p>
+      Most teams won't get them right on the first try. That's fine. The cost of getting them wrong is mostly recoverable — re-architect the auth path, re-classify the DLP zone, re-write the tool descriptions, ship a v2 connector. The cost of skipping the decisions entirely is a connector that runs fine in dev, fails the first compliance review in prod, and stalls the whole agent program for a quarter while it's reworked.
+    </p>
+  </div>
+
+  <aside class="cta-aside">
+    <h3>Building this for your team?</h3>
+    <p>I do fixed-scope reviews and builds for teams adding MCP servers to Copilot Studio (and the rest of the M365 + Entra ID stack) — auth, DLP, governance, audit. Done before, working again next month.</p>
+    <div class="cta-aside__buttons">
+      <a class="btn btn-primary" href="mailto:contact@althor.dev?subject=MCP%20%2B%20Copilot%20Studio%20review%20%E2%80%94%20althor.dev">Book a 30-min review</a>
+      <a class="btn-link" href="/#engagements">Or see engagement options →</a>
+    </div>
+  </aside>
+
+  <a class="back-link" href="/writing/" style="margin-top: 2rem;">All writing</a>
+
+</div>
+
+<footer>
+  <span>Althor Consulting (Maryland LLC, in formation)</span>
+  <span>© 2026 Samuel Swegart</span>
+</footer>
+</body>
+</html>

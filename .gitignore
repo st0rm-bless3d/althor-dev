@@ -1,3 +1,7 @@
 .DS_Store
 *.swp
 *.swo
+
+# Local scaffolding / drop-in packages (decisions pending; not deployed)
+/.dropin/
+/incoming/
