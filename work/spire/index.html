@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#1a1d22" />
+
+<title>Spire · althor</title>
+<meta name="description" content="AI-native infrastructure control plane in Rust. Policy-gated approval flows, per-object audit log, MCP-based tool access. Single-binary Docker deploy." />
+<link rel="canonical" href="https://althor.dev/work/spire/" />
+
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+
+<meta property="og:site_name" content="Althor Consulting" />
+<meta property="og:title" content="Spire — AI-native infrastructure control plane" />
+<meta property="og:description" content="Policy-gated approval flows, per-object audit log, MCP-based tool access. Single-binary deploy." />
+<meta property="og:url" content="https://althor.dev/work/spire/" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://althor.dev/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://althor.dev/assets/og.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+<div class="container container--narrow">
+
+  <header class="brand">
+    <span class="brand__cursor" aria-hidden="true">▋</span>
+    <span class="brand__word"><a href="/">althor</a></span>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/work/" aria-current="page">Work</a>
+      <a href="/writing/">Writing</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <a class="back-link" href="/work/">All work</a>
+
+  <article class="article">
+    <div class="article__eyebrow">Case study · Active development</div>
+    <h1 class="article__title">Spire</h1>
+    <p class="article__dek">An AI-native infrastructure control plane built in Rust — operator surface for running agents against real systems without handing them master keys.</p>
+    <div class="article__meta">
+      <span>Role <strong>Sole designer &amp; maintainer</strong></span>
+      <span>Shape <strong>Single-binary Docker image</strong></span>
+      <span>Status <strong>Active development</strong></span>
+    </div>
+  </article>
+
+  <div class="prose">
+    <h2>The premise</h2>
+    <p>
+      Most agent frameworks assume the agent is the operator. Spire assumes the operator is the operator and the agent is a tool the operator wields. The control plane decides which actions auto-execute, which actions queue for approval, which actions are forbidden, and what the audit story is for every one. The agent is a powerful subordinate, not a co-pilot.
+    </p>
+    <p>
+      That framing changes every layer. Tool access is read-only by default. Writes go through policy. Policy decisions are recorded. Approvals are first-class workflow objects, not chat messages.
+    </p>
+
+    <h2>Architecture</h2>
+    <div class="diagram" aria-label="Agent execution flow">
+<pre><span class="dim">Agent</span> → <span class="accent">MCP tool layer</span> <span class="dim">(scoped, read-only guards)</span>
+           ↓
+  <span class="accent">Policy check</span> <span class="dim">(is this a protected resource?)</span>
+           ↓
+  <span class="accent">Confidence gate</span> <span class="dim">(≥ threshold → auto-apply · &lt; threshold → queue approval)</span>
+           ↓
+  <span class="accent">Staged remediation</span> <span class="dim">(dry-run → apply → verify → audit)</span>
+           ↓
+       <span class="dim">Audit event · reversible · reviewable</span></pre>
+    </div>
+
+    <h3>Single-binary deploy</h3>
+    <p>
+      The whole control plane — backend, frontend, embedded migrations, MCP client — ships as one Rust binary in a small Docker image. <code>rust-embed</code> bundles the React build into the binary; SQLite is the persistence layer; bollard talks to the local Docker socket. There is no orchestration to maintain because there is nothing to orchestrate.
+    </p>
+    <p>
+      This isn't minimalism for its own sake. It's the single feature that makes Spire trivially deployable on a homelab, an edge node, or an air-gapped review environment. The operator surface follows the operator wherever they are.
+    </p>
+
+    <h3>Policy-gated approvals</h3>
+    <p>
+      Every action the agent proposes routes through a policy check. Reads of non-sensitive data auto-execute. Writes against critical services queue. The policy is declarative — protected resources, action types, confidence thresholds — and lives next to the audit log so a reviewer can trace why a given action did or didn't auto-apply.
+    </p>
+    <p>
+      Approvals are not chat messages. They are objects with state (pending, approved, denied, expired), a reviewer, a justification, and a hard link to the audit event the action produced. They survive restarts. They are queryable by who and when.
+    </p>
+
+    <h3>MCP tool layer</h3>
+    <p>
+      Spire exposes its capabilities to the agent through MCP servers, one per concern: containers, observability, library, infrastructure, home automation, database. Each server enforces its own auth boundary; each server's tools are read-only-first; writes are tagged and policy-checked at the control-plane layer.
+    </p>
+    <p>
+      The agent never sees a Docker socket. It sees <code>list_containers</code>, <code>get_logs</code>, <code>restart_container</code> — and <code>restart_container</code> is policy-gated.
+    </p>
+
+    <h3>Three-second cancellable countdown</h3>
+    <p>
+      Auto-applied actions don't execute instantly. They show in the operator UI with a three-second countdown that the operator can cancel with one keystroke. This is a small UX detail with a large effect: the operator stays in the loop on auto-applied actions without being blocked by them. The countdown is the seam between automated and supervised — and it's where the operator's hand stays on the kill switch.
+    </p>
+
+    <h2>Decisions and trade-offs</h2>
+
+    <h3>Rust over Node</h3>
+    <p>
+      The control plane runs as a single long-lived process, talks to system sockets, and parses moderately large structured streams. The runtime characteristics that matter — stable memory, no GC pauses, deterministic shutdown — are easier to get right in Rust than in Node. The frontend is React; the backend is not.
+    </p>
+
+    <h3>SQLite, not Postgres</h3>
+    <p>
+      The control plane's data is operator-scale, not internet-scale. SQLite holds it comfortably and removes a whole class of operational surface. The persistence layer is a file. Backups are a copy. There is no migration of an external database to manage.
+    </p>
+
+    <h3>Read-only by default</h3>
+    <p>
+      Every new tool starts read-only. Adding a write capability is an explicit step that requires writing the policy that gates it. This isn't a code-review checklist; it's a structural property of how tools are added.
+    </p>
+
+    <h2>Stack</h2>
+    <div class="stack">
+      <span>Rust</span>
+      <span>Axum</span>
+      <span>sqlx</span>
+      <span>SQLite</span>
+      <span>bollard</span>
+      <span>tokio</span>
+      <span>React</span>
+      <span>Vite</span>
+      <span>Tailwind</span>
+      <span>Motion</span>
+      <span>xyflow</span>
+      <span>Model Context Protocol</span>
+      <span>rust-embed</span>
+    </div>
+
+    <h2>What's interesting about it</h2>
+    <ul>
+      <li>The control plane treats the agent as a subordinate, not a peer. Every policy decision is the operator's, even when delegated.</li>
+      <li>The audit layer and the policy layer share data structures. There is no "what the policy said" vs. "what the audit recorded." They are the same.</li>
+      <li>Single-binary shape means the operator can run the whole control plane in any environment — homelab, customer site, review sandbox — with one image.</li>
+    </ul>
+  </div>
+
+  <a class="back-link" href="/work/" style="margin-top: 2rem;">All work</a>
+
+</div>
+
+<footer>
+  <span>Althor Consulting LLC</span>
+  <span>© 2026</span>
+</footer>
+</body>
+</html>

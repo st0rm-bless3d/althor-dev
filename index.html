@@ -16,7 +16,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png" />
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
 
-<!-- Open Graph (previews in iMessage, Slack, Teams, LinkedIn, Discord) -->
+<!-- Open Graph -->
 <meta property="og:site_name" content="Althor Consulting" />
 <meta property="og:title" content="althor · AI infrastructure consulting" />
 <meta property="og:description" content="The guardrails, orchestration, and audit between a prompt and a production deployment." />
@@ -27,13 +27,13 @@
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="althor — AI infrastructure consulting" />
 
-<!-- Twitter Card (also used by iMessage as fallback) -->
+<!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="althor · AI infrastructure consulting" />
 <meta name="twitter:description" content="The guardrails, orchestration, and audit between a prompt and a production deployment." />
 <meta name="twitter:image" content="https://althor.dev/assets/og.png" />
 
-<!-- Structured data (Person + ProfessionalService) -->
+<!-- Structured data -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -86,326 +86,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<style>
-  :root {
-    /* Slate-dark palette (softer than near-black) */
-    --bg: #1a1d22;
-    --bg-subtle: #22252c;
-    --bg-chip: #262933;
-    --text: #e8e7e2;
-    --text-2: #b0b2bc;
-    --text-dim: #72767f;
-    --border: #2c2f37;
-    --border-dim: #24272e;
-    --accent: oklch(74% 0.15 150);
-    --accent-dim: oklch(45% 0.09 150);
-    --shadow-card: 0 1px 0 rgba(255,255,255,0.02) inset;
-
-    --mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-    --sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
-    --measure: 56rem;
-    --measure-narrow: 40rem;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  ::selection { background: var(--accent); color: var(--bg); }
-
-  html, body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    font-size: 15px;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  body { min-height: 100dvh; display: flex; flex-direction: column; }
-
-  .container {
-    width: 100%;
-    max-width: var(--measure);
-    margin: 0 auto;
-    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 5vw, 3rem);
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(2.5rem, 5vw, 4rem);
-  }
-
-  /* ── Brand row ────────────────────────────────────────── */
-  .brand { display: flex; align-items: center; gap: 0.5rem; font-family: var(--mono); }
-  .brand__cursor { color: var(--accent); font-weight: 600; font-size: 1rem; line-height: 1; position: relative; top: -0.02em; }
-  .brand__word { color: var(--text); font-weight: 500; font-size: 0.9rem; letter-spacing: 0.02em; }
-  .brand__dot { color: var(--text-dim); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; margin-left: auto; }
-
-  /* ── Hero ─────────────────────────────────────────────── */
-  .hero { display: flex; flex-direction: column; gap: 1.25rem; max-width: var(--measure-narrow); }
-  .hero__eyebrow {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
-  .hero__line {
-    font-family: var(--sans);
-    font-size: clamp(1.6rem, 3.2vw, 2.1rem);
-    font-weight: 500;
-    line-height: 1.2;
-    letter-spacing: -0.022em;
-    color: var(--text);
-    max-width: 28ch;
-  }
-  .hero__line em { font-style: normal; color: var(--accent); }
-  .hero__sub {
-    font-family: var(--sans);
-    font-size: 0.9375rem;
-    color: var(--text-2);
-    line-height: 1.65;
-    max-width: 58ch;
-  }
-
-  /* ── Section skeleton ─────────────────────────────────── */
-  section { display: flex; flex-direction: column; gap: 1.75rem; padding-top: 2rem; border-top: 1px solid var(--border); }
-  .section__head { display: flex; align-items: baseline; gap: 1rem; }
-  .section__label {
-    font-family: var(--mono);
-    font-size: 0.6875rem;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    white-space: nowrap;
-  }
-  .section__rule { flex: 1; height: 1px; background: var(--border-dim); }
-
-  /* ── Work entries ─────────────────────────────────────── */
-  .work { display: flex; flex-direction: column; gap: 2.75rem; }
-  .work__item { display: grid; gap: 1.25rem; }
-  .work__head { display: flex; flex-direction: column; gap: 0.35rem; }
-  .work__name {
-    font-family: var(--sans);
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: -0.015em;
-    line-height: 1.3;
-  }
-  .work__tag { font-family: var(--mono); font-size: 0.78125rem; color: var(--text-dim); letter-spacing: 0.01em; }
-  .work__desc { font-family: var(--sans); font-size: 0.9rem; line-height: 1.7; color: var(--text-2); max-width: 64ch; }
-
-  /* Callout: measurable outcome */
-  .outcome {
-    display: flex;
-    gap: 0.75rem;
-    align-items: flex-start;
-    padding: 0.75rem 1rem;
-    background: color-mix(in srgb, var(--accent) 8%, var(--bg-subtle));
-    border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
-    border-radius: 6px;
-    font-family: var(--mono);
-    font-size: 0.8125rem;
-    color: var(--text);
-    line-height: 1.55;
-  }
-  .outcome__label {
-    color: var(--accent);
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-size: 0.6875rem;
-    padding-top: 0.2rem;
-    white-space: nowrap;
-  }
-
-  /* Diagram box */
-  .diagram {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    line-height: 1.7;
-    color: var(--text-2);
-    background: var(--bg-subtle);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1rem 1.25rem;
-    overflow-x: auto;
-    box-shadow: var(--shadow-card);
-  }
-  .diagram pre { margin: 0; white-space: pre; font-family: inherit; }
-  .diagram .accent { color: var(--accent); }
-  .diagram .dim { color: var(--text-dim); }
-
-  /* Patterns list */
-  .patterns {
-    list-style: none;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.55rem;
-    font-family: var(--mono);
-    font-size: 0.78125rem;
-    color: var(--text-2);
-    line-height: 1.6;
-  }
-  @media (min-width: 720px) { .patterns { grid-template-columns: 1fr 1fr; gap: 0.55rem 2rem; } }
-  .patterns li { display: flex; gap: 0.6rem; align-items: baseline; }
-  .patterns li::before { content: "→"; color: var(--accent); flex-shrink: 0; font-weight: 500; }
-
-  /* Stack chips */
-  .stack { display: flex; flex-wrap: wrap; gap: 0.35rem; padding-top: 0.25rem; }
-  .stack span {
-    font-family: var(--mono);
-    font-size: 0.6875rem;
-    padding: 0.2rem 0.55rem;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    color: var(--text-dim);
-    background: var(--bg-chip);
-    letter-spacing: 0.02em;
-    white-space: nowrap;
-  }
-
-  /* Metadata row */
-  .meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.25rem;
-    padding-top: 0.5rem;
-    border-top: 1px dashed var(--border-dim);
-    font-family: var(--mono);
-    font-size: 0.6875rem;
-    color: var(--text-dim);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-  .meta__item { display: flex; align-items: baseline; gap: 0.5rem; }
-  .meta__item strong { color: var(--text-2); font-weight: 500; }
-
-  /* ── Deep dive technical section ─────────────────────── */
-  .deepdive {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    font-family: var(--sans);
-    font-size: 0.925rem;
-    line-height: 1.7;
-    color: var(--text-2);
-    max-width: 64ch;
-  }
-  .deepdive p { max-width: 64ch; }
-  .deepdive p strong { color: var(--text); font-weight: 500; }
-  .deepdive ol {
-    list-style: none;
-    counter-reset: layer;
-    display: flex;
-    flex-direction: column;
-    gap: 1.1rem;
-    padding-left: 0;
-  }
-  .deepdive ol li {
-    counter-increment: layer;
-    display: grid;
-    grid-template-columns: 2rem 1fr;
-    gap: 0.5rem;
-    font-family: var(--sans);
-    font-size: 0.9rem;
-    line-height: 1.65;
-  }
-  .deepdive ol li::before {
-    content: counter(layer, decimal-leading-zero);
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--accent);
-    padding-top: 0.2rem;
-    letter-spacing: 0.05em;
-  }
-  .deepdive ol li strong { display: block; color: var(--text); font-weight: 600; margin-bottom: 0.25rem; font-family: var(--mono); font-size: 0.8125rem; }
-
-  /* ── Methodology ──────────────────────────────────────── */
-  .method { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-  @media (min-width: 640px) { .method { grid-template-columns: 1fr 1fr; gap: 2rem; } }
-  .method__item { display: flex; flex-direction: column; gap: 0.4rem; }
-  .method__title {
-    font-family: var(--mono);
-    font-size: 0.8125rem;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: 0.01em;
-  }
-  .method__title::before { content: "→ "; color: var(--accent); }
-  .method__body {
-    font-family: var(--sans);
-    font-size: 0.875rem;
-    color: var(--text-2);
-    line-height: 1.65;
-    max-width: 50ch;
-    padding-left: 1.15rem;
-  }
-
-  /* ── Available for ────────────────────────────────────── */
-  .engagements { display: grid; grid-template-columns: 1fr; gap: 0.75rem; font-family: var(--mono); font-size: 0.8125rem; color: var(--text-2); }
-  @media (min-width: 640px) { .engagements { grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; } }
-  .engagements div { display: flex; gap: 0.6rem; align-items: baseline; line-height: 1.6; }
-  .engagements div::before { content: "▹"; color: var(--accent); flex-shrink: 0; }
-
-  /* ── Contact ──────────────────────────────────────────── */
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 6rem 1fr;
-    gap: 0.6rem 1rem;
-    font-family: var(--mono);
-    font-size: 0.875rem;
-  }
-  .contact-grid dt {
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    font-size: 0.6875rem;
-    padding-top: 0.25rem;
-  }
-  .contact-grid dd { color: var(--text); }
-
-  /* ── Links ────────────────────────────────────────────── */
-  a {
-    color: var(--text);
-    text-decoration: none;
-    border-bottom: 1px solid var(--border);
-    transition: color 140ms ease, border-color 140ms ease;
-    padding-bottom: 1px;
-  }
-  a:hover, a:focus-visible { color: var(--accent); border-bottom-color: var(--accent); }
-  a:focus-visible { outline: none; }
-
-  /* ── Footer ───────────────────────────────────────────── */
-  footer {
-    padding: 1.5rem clamp(1.5rem, 5vw, 3rem) 2.5rem;
-    max-width: var(--measure);
-    width: 100%;
-    margin: 0 auto;
-    border-top: 1px solid var(--border-dim);
-    font-family: var(--mono);
-    font-size: 0.6875rem;
-    color: var(--text-dim);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  @media (prefers-reduced-motion: reduce) { a { transition: none; } }
-</style>
+<link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
 <div class="container">
 
   <header class="brand">
     <span class="brand__cursor" aria-hidden="true">▋</span>
-    <span class="brand__word">althor</span>
-    <span class="brand__dot">Consulting</span>
+    <span class="brand__word"><a href="/">althor</a></span>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/work/">Work</a>
+      <a href="/writing/">Writing</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </header>
 
   <div class="hero">
@@ -423,14 +116,14 @@
     <div class="section__head">
       <span class="section__label">Project proofs</span>
       <span class="section__rule"></span>
+      <a class="section__more" href="/work/">All work →</a>
     </div>
 
     <div class="work">
 
-      <!-- Entry 1 -->
       <article class="work__item">
         <header class="work__head">
-          <h2 class="work__name">Multi-model extraction pipeline</h2>
+          <h2 class="work__name"><a href="/work/extraction-pipeline/">Multi-model extraction pipeline</a></h2>
           <p class="work__tag">agent framework · consensus voting · learning loops</p>
         </header>
 
@@ -443,52 +136,23 @@
           <span>Eliminated a full-time contract position (~$60–70k annual). Manual throughput went from <strong style="color:var(--text)">4 entries per hour</strong> (15 min per scan) to <strong style="color:var(--text)">120 per hour</strong> (two per minute) — ~<strong style="color:var(--accent)">30× throughput improvement</strong>.</span>
         </div>
 
-        <div class="diagram" aria-label="Extraction pipeline flow">
-<pre><span class="dim">upload →</span> render → segment → extract → <span class="accent">consensus</span> → validate → research → persist
-<span class="dim">                                        ↑                     ↑</span>
-<span class="dim">                                   agreement score       address/format rules</span>
-
-<span class="dim">data layering:</span>   <span class="accent">Raw</span> <span class="dim">(model outputs)</span>  →  <span class="accent">Suggested</span> <span class="dim">(consensus)</span>  →  <span class="accent">Final</span> <span class="dim">(human-confirmed)</span>
-<span class="dim">                 └── no silent overwrites. every layer is auditable ──┘</span></pre>
-        </div>
-
-        <ul class="patterns">
-          <li>Field-level agreement scoring across multiple extraction models</li>
-          <li>Deterministic validators — address verification, format rules</li>
-          <li>Raw → Suggested → Final layers prevent silent overwrites</li>
-          <li>Correction events feed few-shot examples for continuous improvement</li>
-          <li>Auto-approve gate with configurable confidence threshold</li>
-          <li>Per-document audit trail of every model run and decision</li>
-        </ul>
-
         <div class="stack">
           <span>TypeScript</span>
           <span>Next.js</span>
           <span>Azure Functions</span>
           <span>Durable Orchestration</span>
-          <span>Static Web Apps</span>
           <span>Azure SQL</span>
-          <span>Blob Storage</span>
           <span>Entra ID</span>
           <span>Bicep IaC</span>
-          <span>Key Vault RBAC</span>
-          <span>Zod</span>
           <span>Playwright E2E</span>
-          <span>Vitest</span>
-          <span>Sentry (PII-scrubbed)</span>
         </div>
 
-        <div class="meta">
-          <span class="meta__item">Role <strong>Architect &amp; builder</strong></span>
-          <span class="meta__item">Domain <strong>Regulated nonprofit</strong></span>
-          <span class="meta__item">Status <strong>Production</strong></span>
-        </div>
+        <a class="work__more" href="/work/extraction-pipeline/">Read case study</a>
       </article>
 
-      <!-- Entry 2 -->
       <article class="work__item">
         <header class="work__head">
-          <h2 class="work__name">Enterprise AI governance platform</h2>
+          <h2 class="work__name"><a href="/work/governance-platform/">Enterprise AI governance platform</a></h2>
           <p class="work__tag">use-case registry · RBAC · audit trail · Teams + SharePoint embed</p>
         </header>
 
@@ -496,80 +160,34 @@
           AI-adoption governance system spanning submission, review, tool approval, and policy enforcement across a global workforce. Four-tier security-group RBAC, full audit trail for governance-council review, and native Microsoft Teams + SharePoint embedding so the tool meets users where they already work.
         </p>
 
-        <div class="diagram" aria-label="Platform architecture">
-<pre><span class="dim">Users</span> → <span class="accent">Azure Static Web Apps</span> → <span class="accent">Azure Functions</span> → <span class="accent">Cosmos DB</span>
-                                    ↓
-                           <span class="dim">Azure Communication Services</span> <span class="dim">(notify)</span>
-                                    ↓
-                                <span class="dim">Azure Key Vault</span> <span class="dim">(secrets)</span>
-
-<span class="dim">RBAC tiers:</span>   End Users  →  AI Champions  →  AI Council  →  System Admins
-<span class="dim">             (submit)      (review)         (approve)        (operate)</span></pre>
-        </div>
-
-        <ul class="patterns">
-          <li>Microsoft Entra ID SSO with security-group RBAC</li>
-          <li>Four-tier role model — end users, champions, council, admins</li>
-          <li>Native Teams app + SharePoint web-part embedding</li>
-          <li>Use-case submission workflow with council review gates</li>
-          <li>PR-preview deployments per branch via GitHub Actions</li>
-          <li>Key Vault secret references, no secrets in source</li>
-        </ul>
-
         <div class="stack">
           <span>React 18</span>
           <span>TypeScript</span>
           <span>Vite</span>
-          <span>Tailwind CSS</span>
-          <span>React Query</span>
-          <span>MSAL.js</span>
           <span>Azure Functions</span>
-          <span>Azure Static Web Apps</span>
+          <span>Static Web Apps</span>
           <span>Cosmos DB</span>
           <span>Entra ID</span>
           <span>Bicep IaC</span>
-          <span>GitHub Actions</span>
-          <span>Playwright</span>
         </div>
 
         <div class="meta">
           <span class="meta__item">Scale <strong>~600 employees · 20 countries</strong></span>
           <span class="meta__item">Volume <strong>~100 submissions / month</strong></span>
-          <span class="meta__item">Status <strong>Production</strong></span>
         </div>
+
+        <a class="work__more" href="/work/governance-platform/">Read case study</a>
       </article>
 
-      <!-- Entry 3 -->
       <article class="work__item">
         <header class="work__head">
-          <h2 class="work__name">Spire</h2>
+          <h2 class="work__name"><a href="/work/spire/">Spire</a></h2>
           <p class="work__tag">AI-native infrastructure control plane · Rust · single-binary deploy</p>
         </header>
 
         <p class="work__desc">
           Operator surface for running agents against real infrastructure without handing them master keys. Policy-gated approval flows for critical actions, per-object audit log, MCP-based tool access with read-only guards and per-server auth boundaries, staged remediation with confidence-based auto-apply thresholds and explicit override for high-risk operations.
         </p>
-
-        <div class="diagram" aria-label="Agent execution flow">
-<pre><span class="dim">Agent</span> → <span class="accent">MCP tool layer</span> <span class="dim">(scoped, read-only guards)</span>
-           ↓
-  <span class="accent">Policy check</span> <span class="dim">(is this a protected resource?)</span>
-           ↓
-  <span class="accent">Confidence gate</span> <span class="dim">(≥ threshold → auto-apply · &lt; threshold → queue approval)</span>
-           ↓
-  <span class="accent">Staged remediation</span> <span class="dim">(dry-run → apply → verify → audit)</span>
-           ↓
-       <span class="dim">Audit event · reversible · reviewable</span></pre>
-        </div>
-
-        <ul class="patterns">
-          <li>Policy-gated approval flow for critical services</li>
-          <li>Confidence-based auto-apply thresholds</li>
-          <li>MCP tool access with per-server scopes — no master keys</li>
-          <li>Per-object audit log covers every action + override</li>
-          <li>Read-only query guards reject anything outside allowlist</li>
-          <li>Three-second cancellable countdown on auto-applied actions</li>
-        </ul>
 
         <div class="stack">
           <span>Rust</span>
@@ -579,73 +197,35 @@
           <span>bollard</span>
           <span>tokio</span>
           <span>React</span>
-          <span>Vite</span>
-          <span>Tailwind</span>
-          <span>Motion</span>
-          <span>xyflow</span>
           <span>Model Context Protocol</span>
-          <span>rust-embed</span>
         </div>
 
-        <div class="meta">
-          <span class="meta__item">Role <strong>Sole designer &amp; maintainer</strong></span>
-          <span class="meta__item">Shape <strong>Single-binary Docker image</strong></span>
-          <span class="meta__item">Status <strong>Active development</strong></span>
-        </div>
+        <a class="work__more" href="/work/spire/">Read case study</a>
       </article>
 
     </div>
   </section>
 
-  <!-- ─── DEEP DIVE: Pattern essay ─── -->
+  <!-- ─── PATTERN TEASER → /writing/ ─── -->
   <section>
     <div class="section__head">
-      <span class="section__label">Pattern</span>
+      <span class="section__label">Writing</span>
       <span class="section__rule"></span>
+      <a class="section__more" href="/writing/">All essays →</a>
     </div>
 
-    <div class="deepdive">
-      <h2 class="work__name" style="margin-bottom: 0.25rem;">Making agent deployments pass security review</h2>
-      <p class="work__tag" style="font-family: var(--mono); font-size: 0.78125rem; color: var(--text-dim); margin-bottom: 0.5rem;">A five-layer architecture distilled from shipping three agent systems in regulated environments</p>
+    <div class="writing-list">
+      <article class="writing-list__item">
+        <span class="writing-list__date">2026 · Pattern</span>
+        <h3 class="writing-list__title"><a href="/writing/agent-security-review/">Making agent deployments pass security review</a></h3>
+        <p class="writing-list__dek">A five-layer architecture distilled from shipping three agent systems in regulated environments — identity, credential broker, scoped tools, policy gating, audit. Skip a layer and the review fails.</p>
+      </article>
 
-      <p>
-        Most agent projects hit the same wall. The demo looks great. The pilot works. Then it meets security review, and every layer of the system turns out to be wrong: one service account with god-mode, secrets in environment variables, no audit trail, no way to tell if the agent did something it shouldn&rsquo;t have. The project either ships with a risk exception that auto-expires, or dies quietly on a compliance spreadsheet.
-      </p>
-
-      <p>
-        The pattern that actually ships is a five-layer separation of concerns. Each layer exists because it maps directly to a compliance control an enterprise InfoSec team will ask about. Skip any layer and the review fails.
-      </p>
-
-      <ol>
-        <li>
-          <strong>Identity</strong>
-          Every agent action is attributed to a specific actor — a machine account for autonomous runs, an on-behalf-of delegation for user-triggered actions. &ldquo;The agent did it&rdquo; is not an answer. Entra ID, Okta, Google Workspace all support workload identities; use them. The audit log has to answer <em>who</em>.
-        </li>
-        <li>
-          <strong>Credential broker</strong>
-          Agents never hold long-lived secrets. They request short-lived, scoped tokens from a broker (Vault, Key Vault, cloud-native secret manager) on each call. The broker knows which tools the agent is authorized to call, mints a narrow token, and logs the request. Compromising the agent&rsquo;s runtime doesn&rsquo;t compromise the kingdom.
-        </li>
-        <li>
-          <strong>Scoped tool access</strong>
-          Tools expose the smallest surface the agent needs. Read-only views of production databases. Action-specific API wrappers instead of admin SDKs. Model Context Protocol servers with per-server auth boundaries. When the agent goes off-rails — and sometimes it will — the blast radius is bounded by design, not by hope.
-        </li>
-        <li>
-          <strong>Policy + approval gating</strong>
-          Every action goes through a policy check before execution. Safe, reversible operations (read a record, propose an update) auto-execute. Irreversible or high-risk operations (issue a refund, modify production config, delete data) queue for human approval. Confidence thresholds decide the line. Humans own the risky calls; the pattern is explicit about which calls those are.
-        </li>
-        <li>
-          <strong>Audit layer</strong>
-          Every suggestion, every approval, every override, every failure produces a structured event. Logs are not enough — logs are for debugging. An audit layer is structured, queryable, retained, and reviewable. Compliance, incident response, and post-mortem all run against the same surface. This is the layer that turns a legal conversation into a technical one.
-        </li>
-      </ol>
-
-      <p>
-        None of these layers are exotic. They are how authentication, secrets management, least-privilege access, change control, and audit logging have worked in enterprise infrastructure for decades. The novelty of agent systems is not that they require new controls — it is that they require the same controls applied to a new kind of actor. Treating the agent as a first-class identity with scoped access, reviewable actions, and complete audit is what moves a project from demo to deployment.
-      </p>
-
-      <p>
-        The five layers are the minimum. Everything else — orchestration frameworks, prompt engineering, model selection — is downstream of this foundation.
-      </p>
+      <article class="writing-list__item">
+        <span class="writing-list__date">2026 · Pattern</span>
+        <h3 class="writing-list__title"><a href="/writing/mcp-server-boundaries/">Drawing the right boundaries for an MCP server</a></h3>
+        <p class="writing-list__dek">An MCP server is a security boundary, not a convenience layer. Six rules that keep tool surfaces narrow enough to defend without making them too narrow to use.</p>
+      </article>
     </div>
   </section>
 
@@ -684,25 +264,55 @@
     </div>
   </section>
 
-  <!-- ─── AVAILABLE FOR ─── -->
+  <!-- ─── ENGAGEMENT TIERS ─── -->
   <section>
     <div class="section__head">
-      <span class="section__label">Available for</span>
+      <span class="section__label">Engagements</span>
       <span class="section__rule"></span>
     </div>
 
-    <div class="engagements">
-      <div>Salesforce and CRM workflow automation with agent handlers</div>
-      <div>Agent orchestration on existing enterprise stacks</div>
-      <div>Production ops for internal AI platforms — LiteLLM, Langfuse, vLLM</div>
-      <div>MCP server design and deployment at team scale</div>
-      <div>Security and audit posture review for agent-driven workflows</div>
-      <div>Fixed-scope engagements; advisory retainers on ongoing work</div>
+    <div class="tiers">
+      <div class="tier">
+        <div class="tier__name">Discovery</div>
+        <div class="tier__shape">Architecture &amp; security review</div>
+        <div class="tier__duration">1–2 weeks · fixed-scope</div>
+        <p class="tier__body">A focused look at an existing or planned agent deployment. Output is a written report covering identity, credential surface, tool scope, approval flow, audit, and the specific compliance gaps you'll need to close.</p>
+        <ul class="tier__list">
+          <li>Threat model + control mapping</li>
+          <li>Concrete remediation list, prioritized</li>
+          <li>One-page summary for InfoSec / leadership</li>
+        </ul>
+      </div>
+
+      <div class="tier">
+        <div class="tier__name">Build</div>
+        <div class="tier__shape">Production agent infrastructure</div>
+        <div class="tier__duration">8–12 weeks · fixed-scope</div>
+        <p class="tier__body">End-to-end build of an agent system on your stack. Identity, credential broker, scoped tools, policy gating, audit layer — wired into your existing auth and observability. Ships behind a real approval flow, not a demo.</p>
+        <ul class="tier__list">
+          <li>Architecture, IaC, CI/CD</li>
+          <li>Tool surface + MCP server design</li>
+          <li>Audit + dashboard for governance review</li>
+          <li>Handoff with documentation and runbooks</li>
+        </ul>
+      </div>
+
+      <div class="tier">
+        <div class="tier__name">Advisory</div>
+        <div class="tier__shape">Ongoing retainer</div>
+        <div class="tier__duration">Monthly · flexible hours</div>
+        <p class="tier__body">For teams that already have engineers but need an experienced hand on agent deployments. Architecture review, design partnership, security posture checks, escalation on tricky calls.</p>
+        <ul class="tier__list">
+          <li>Weekly review on active work</li>
+          <li>Async review of PRs / designs</li>
+          <li>On-demand for production incidents</li>
+        </ul>
+      </div>
     </div>
   </section>
 
   <!-- ─── CONTACT ─── -->
-  <section>
+  <section id="contact">
     <div class="section__head">
       <span class="section__label">Contact</span>
       <span class="section__rule"></span>

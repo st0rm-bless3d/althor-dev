@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#1a1d22" />
+
+<title>Multi-model extraction pipeline · althor</title>
+<meta name="description" content="Production document-extraction system: multi-stage agent pipeline with field-level consensus voting and Raw → Suggested → Final audit layering. 30× throughput improvement." />
+<link rel="canonical" href="https://althor.dev/work/extraction-pipeline/" />
+
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+
+<meta property="og:site_name" content="Althor Consulting" />
+<meta property="og:title" content="Multi-model extraction pipeline" />
+<meta property="og:description" content="Field-level consensus voting, Raw → Suggested → Final audit layering, 30× throughput." />
+<meta property="og:url" content="https://althor.dev/work/extraction-pipeline/" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://althor.dev/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://althor.dev/assets/og.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+<div class="container container--narrow">
+
+  <header class="brand">
+    <span class="brand__cursor" aria-hidden="true">▋</span>
+    <span class="brand__word"><a href="/">althor</a></span>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/work/" aria-current="page">Work</a>
+      <a href="/writing/">Writing</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <a class="back-link" href="/work/">All work</a>
+
+  <article class="article">
+    <div class="article__eyebrow">Case study · Production</div>
+    <h1 class="article__title">Multi-model extraction pipeline</h1>
+    <p class="article__dek">A configurable multi-stage agent pipeline with field-level consensus voting, deterministic validators, and Raw → Suggested → Final audit layering — built to take a 15-minute manual entry process and make it a two-second one.</p>
+    <div class="article__meta">
+      <span>Domain <strong>Regulated nonprofit</strong></span>
+      <span>Role <strong>Architect &amp; builder</strong></span>
+      <span>Status <strong>Production</strong></span>
+    </div>
+  </article>
+
+  <div class="outcome">
+    <span class="outcome__label">Outcome</span>
+    <span>Eliminated a full-time contract position (~$60–70k annual). Manual throughput went from <strong style="color:var(--text)">4 entries per hour</strong> to <strong style="color:var(--text)">120 per hour</strong> — ~<strong style="color:var(--accent)">30× throughput improvement</strong>, with every decision auditable.</span>
+  </div>
+
+  <div class="prose">
+    <h2>The problem</h2>
+    <p>
+      Scanned documents arriving at a steady rate, each one needing a structured record extracted into a downstream system. The existing process was manual: someone opened the scan, typed the fields into a form, and moved on. Fifteen minutes per scan. The throughput ceiling was a person, and the person was a bottleneck.
+    </p>
+    <p>
+      LLM extraction was the obvious tool. The hard part was making it trustworthy enough to remove the person from the loop without removing the audit trail.
+    </p>
+
+    <h2>Architecture</h2>
+    <div class="diagram" aria-label="Extraction pipeline flow">
+<pre><span class="dim">upload →</span> render → segment → extract → <span class="accent">consensus</span> → validate → research → persist
+<span class="dim">                                        ↑                     ↑</span>
+<span class="dim">                                   agreement score       address/format rules</span>
+
+<span class="dim">data layering:</span>   <span class="accent">Raw</span> <span class="dim">(model outputs)</span>  →  <span class="accent">Suggested</span> <span class="dim">(consensus)</span>  →  <span class="accent">Final</span> <span class="dim">(human-confirmed)</span>
+<span class="dim">                 └── no silent overwrites. every layer is auditable ──┘</span></pre>
+    </div>
+
+    <p>
+      Each stage of the pipeline is a separately addressable Azure Function inside a Durable orchestration. A scan goes in; a structured record comes out; every intermediate state is persisted. The orchestration is the audit trail.
+    </p>
+
+    <h3>Why consensus voting</h3>
+    <p>
+      One model is one opinion. The interesting failures aren't refusals or hallucinations — they're plausible-but-wrong values that pass eyeballing. Field-level consensus across multiple extraction models gives you an agreement score per field. When models agree, you trust the value and let it through. When they disagree, you know exactly which field to look at.
+    </p>
+    <p>
+      This isn't about averaging the models. It's about <strong>locating uncertainty</strong>. The tool surfaces the disagreement at the field level so a human reviews thirty seconds of work, not a fifteen-minute form.
+    </p>
+
+    <h3>Why three data layers</h3>
+    <p>
+      Raw, Suggested, Final. Raw is what each model returned. Suggested is consensus. Final is what a human confirmed (or auto-confirmed under threshold). Each layer is preserved on disk. Nothing is silently overwritten.
+    </p>
+    <p>
+      This is the layer that turns "the AI is making decisions" into "the AI is making suggestions you can review and override." It's also what made the compliance conversation tractable — every record has a complete provenance chain.
+    </p>
+
+    <h3>Deterministic validators</h3>
+    <p>
+      LLMs are not the right tool for "is this a valid US address." A Smarty / USPS lookup is. The pipeline runs deterministic validators after extraction — address verification, format rules, range checks — and pushes failures back into the review queue. Models propose; validators dispose.
+    </p>
+
+    <h3>Learning loop</h3>
+    <p>
+      Every human correction produces a structured event: which field, what the model said, what the human changed it to, and why. Those events feed few-shot examples into subsequent extractions. The accuracy curve trends up over time without anyone retraining a model.
+    </p>
+
+    <h2>Decisions and trade-offs</h2>
+
+    <h3>Auto-approve threshold</h3>
+    <p>
+      Auto-apply gates exist because review time is the constraint, not extraction accuracy. The threshold is configurable per field — high-stakes fields (amounts, identifiers) require higher confidence than low-stakes ones (categorization, optional notes). The threshold is exposed in the admin UI; it's not buried in a config file.
+    </p>
+
+    <h3>No fine-tuned model</h3>
+    <p>
+      The pipeline runs general-purpose models with structured prompts. Fine-tuning was considered and skipped — the consensus + validator + correction loop got accuracy past the threshold without it, and a fine-tuned model would have locked the architecture to a specific provider. The pipeline is provider-agnostic and can swap models per stage.
+    </p>
+
+    <h3>Audit-first failure mode</h3>
+    <p>
+      When something goes wrong — a model returns malformed JSON, a validator times out, a stage crashes — the orchestration captures the failure as a first-class event. The record is preserved in its last good state with the failure attached. There is no failure mode where work is silently lost.
+    </p>
+
+    <h2>Stack</h2>
+    <div class="stack">
+      <span>TypeScript</span>
+      <span>Next.js</span>
+      <span>Azure Functions</span>
+      <span>Durable Orchestration</span>
+      <span>Static Web Apps</span>
+      <span>Azure SQL</span>
+      <span>Blob Storage</span>
+      <span>Entra ID</span>
+      <span>Bicep IaC</span>
+      <span>Key Vault RBAC</span>
+      <span>Zod</span>
+      <span>Playwright E2E</span>
+      <span>Vitest</span>
+      <span>Sentry (PII-scrubbed)</span>
+    </div>
+
+    <h2>What I'd do again</h2>
+    <ul>
+      <li>The Raw / Suggested / Final pattern. It is the single feature that made compliance review easy.</li>
+      <li>Field-level consensus over document-level. Locating uncertainty at the field is the difference between "review everything" and "review the two fields that disagree."</li>
+      <li>Deterministic validators on top. The LLM proposes; the validator decides what's actually a valid value.</li>
+    </ul>
+
+    <h2>What I'd do differently</h2>
+    <ul>
+      <li>Treat the correction-event log as a first-class dataset earlier. It has more downstream uses than I planned for.</li>
+      <li>Bake provider-swap into the prompt registry from day one rather than retrofitting it.</li>
+    </ul>
+  </div>
+
+  <a class="back-link" href="/work/" style="margin-top: 2rem;">All work</a>
+
+</div>
+
+<footer>
+  <span>Althor Consulting LLC</span>
+  <span>© 2026</span>
+</footer>
+</body>
+</html>

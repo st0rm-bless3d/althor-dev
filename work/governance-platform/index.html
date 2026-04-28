@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#1a1d22" />
+
+<title>Enterprise AI governance platform · althor</title>
+<meta name="description" content="AI-adoption governance system for ~600 employees across 20 countries — four-tier RBAC, council review, native Microsoft Teams + SharePoint embedding." />
+<link rel="canonical" href="https://althor.dev/work/governance-platform/" />
+
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+
+<meta property="og:site_name" content="Althor Consulting" />
+<meta property="og:title" content="Enterprise AI governance platform" />
+<meta property="og:description" content="Four-tier RBAC, council review, native Teams + SharePoint embedding." />
+<meta property="og:url" content="https://althor.dev/work/governance-platform/" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://althor.dev/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://althor.dev/assets/og.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+<div class="container container--narrow">
+
+  <header class="brand">
+    <span class="brand__cursor" aria-hidden="true">▋</span>
+    <span class="brand__word"><a href="/">althor</a></span>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/work/" aria-current="page">Work</a>
+      <a href="/writing/">Writing</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <a class="back-link" href="/work/">All work</a>
+
+  <article class="article">
+    <div class="article__eyebrow">Case study · Production</div>
+    <h1 class="article__title">Enterprise AI governance platform</h1>
+    <p class="article__dek">An AI-adoption governance system spanning submission, review, tool approval, and policy enforcement across a global workforce — built so adoption tracking and compliance review run against the same surface.</p>
+    <div class="article__meta">
+      <span>Scale <strong>~600 employees · 20 countries</strong></span>
+      <span>Volume <strong>~100 submissions / month</strong></span>
+      <span>Status <strong>Production</strong></span>
+    </div>
+  </article>
+
+  <div class="prose">
+    <h2>The problem</h2>
+    <p>
+      A global organization with employees experimenting with AI tools faster than the policy team could track them. Some experimentation was harmless. Some involved customer data going into consumer chat interfaces. The existing process — an email chain to a shared mailbox — produced exactly zero usable records and no signal about what was actually happening.
+    </p>
+    <p>
+      The brief was to build a governance surface that didn't get in the way of adoption — fast enough that people would use it, structured enough that the governance council could actually review what was submitted.
+    </p>
+
+    <h2>Architecture</h2>
+    <div class="diagram" aria-label="Platform architecture">
+<pre><span class="dim">Users</span> → <span class="accent">Azure Static Web Apps</span> → <span class="accent">Azure Functions</span> → <span class="accent">Cosmos DB</span>
+                                    ↓
+                           <span class="dim">Azure Communication Services</span> <span class="dim">(notify)</span>
+                                    ↓
+                                <span class="dim">Azure Key Vault</span> <span class="dim">(secrets)</span>
+
+<span class="dim">RBAC tiers:</span>   End Users  →  AI Champions  →  AI Council  →  System Admins
+<span class="dim">             (submit)      (review)         (approve)        (operate)</span></pre>
+    </div>
+
+    <p>
+      The architecture is deliberately boring. Static frontend, serverless backend, document store. The interesting decisions are upstream of the stack — in the role model, the workflow shape, and where the platform meets the existing Microsoft 365 surface.
+    </p>
+
+    <h3>Four-tier RBAC, by Entra ID security group</h3>
+    <p>
+      The role model maps directly to existing organizational reality:
+    </p>
+    <ul>
+      <li><strong>End users</strong> submit use cases. This is the largest group; the form is short and forgiving.</li>
+      <li><strong>AI champions</strong> are department-level reviewers. They triage submissions, ask clarifying questions, and either escalate to the council or close as resolved.</li>
+      <li><strong>AI council</strong> is a small cross-functional group with approval authority for higher-risk submissions. The platform queues these and surfaces a council view.</li>
+      <li><strong>System admins</strong> operate the platform itself — manage roles, edit taxonomies, run reports.</li>
+    </ul>
+    <p>
+      Membership is owned by Entra ID security groups, not the application database. Adding someone to the AI council is a security-group change, not a database edit. This is the first thing IT asks for and the last thing most platforms get right.
+    </p>
+
+    <h3>Embedded where users already work</h3>
+    <p>
+      The platform ships as a native Microsoft Teams app and a SharePoint web part. Users don't have to learn a new surface; they file submissions from where they were already working. The same React app boots inside Teams' iframe with MSAL acquiring a Teams-context token, and inside SharePoint via SPFx.
+    </p>
+    <p>
+      This is the difference between a tool people grudgingly use and a tool people actually use. The compliance surface meets users at their desk, not at a separate URL with a separate login.
+    </p>
+
+    <h3>Audit-first data model</h3>
+    <p>
+      Every state transition on a submission produces an event: who, when, what changed, and why. The submission itself is a projection over the event stream. Council review reads the events; reports read the events; nothing reconstructs history from a current-state snapshot.
+    </p>
+
+    <h2>Decisions and trade-offs</h2>
+
+    <h3>Cosmos DB over relational</h3>
+    <p>
+      Submissions are document-shaped: a top-level record plus an event log plus a comments thread. The query patterns are mostly per-submission and per-user. A document store fits the shape. The cost model also fits — bursty usage with quiet periods.
+    </p>
+
+    <h3>Bicep + per-branch preview environments</h3>
+    <p>
+      Every PR spins up its own static web app slot for design review. Reviewers click a link, see the change in the actual UI, comment on the PR. The cycle time on UX feedback dropped from days to hours.
+    </p>
+
+    <h3>No secrets in source</h3>
+    <p>
+      Every secret is a Key Vault reference resolved at runtime via managed identity. No app settings panel with API keys. No <code>.env</code> file in a repo. The first audit question — "where do secrets live?" — has a one-sentence answer.
+    </p>
+
+    <h2>Stack</h2>
+    <div class="stack">
+      <span>React 18</span>
+      <span>TypeScript</span>
+      <span>Vite</span>
+      <span>Tailwind CSS</span>
+      <span>React Query</span>
+      <span>MSAL.js</span>
+      <span>Azure Functions</span>
+      <span>Azure Static Web Apps</span>
+      <span>Cosmos DB</span>
+      <span>Entra ID</span>
+      <span>Bicep IaC</span>
+      <span>GitHub Actions</span>
+      <span>Playwright</span>
+    </div>
+
+    <h2>What I'd do again</h2>
+    <ul>
+      <li>Map roles to Entra ID security groups, not application tables. The audit story writes itself.</li>
+      <li>Embed in the surfaces users already use — Teams + SharePoint — instead of building "yet another portal."</li>
+      <li>PR-preview environments. The feedback loop on UX changes pays for the IaC complexity ten times over.</li>
+    </ul>
+
+    <h2>What I'd do differently</h2>
+    <ul>
+      <li>Bake council-view dashboards into the platform from day one rather than treating them as a Phase 2.</li>
+      <li>Start with a clearer taxonomy of submission types. Adding categories later is harder than starting with too many and pruning.</li>
+    </ul>
+  </div>
+
+  <a class="back-link" href="/work/" style="margin-top: 2rem;">All work</a>
+
+</div>
+
+<footer>
+  <span>Althor Consulting LLC</span>
+  <span>© 2026</span>
+</footer>
+</body>
+</html>

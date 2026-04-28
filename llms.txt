@@ -18,7 +18,22 @@ Althor Consulting LLC is a solo consulting practice (Maryland, US) specializing 
 
 ## Engagements
 
-Fixed-scope engagements and advisory retainers. Remote-first.
+- Discovery (1–2 weeks, fixed-scope) — architecture and security review of an existing or planned agent deployment.
+- Build (8–12 weeks, fixed-scope) — end-to-end build of an agent system: identity, credential broker, scoped tools, policy gating, audit layer.
+- Advisory (monthly retainer) — ongoing architecture review, design partnership, and escalation on tricky calls.
+
+Remote-first.
+
+## Case studies
+
+- Multi-model extraction pipeline — https://althor.dev/work/extraction-pipeline/
+- Enterprise AI governance platform — https://althor.dev/work/governance-platform/
+- Spire (AI infrastructure control plane) — https://althor.dev/work/spire/
+
+## Writing
+
+- Making agent deployments pass security review — https://althor.dev/writing/agent-security-review/
+- Drawing the right boundaries for an MCP server — https://althor.dev/writing/mcp-server-boundaries/
 
 ## Contact
 

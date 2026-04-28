@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#1a1d22" />
+
+<title>Drawing the right boundaries for an MCP server · althor</title>
+<meta name="description" content="An MCP server is a security boundary, not a convenience layer. Six rules for keeping tool surfaces narrow enough to defend without making them too narrow to use." />
+<link rel="canonical" href="https://althor.dev/writing/mcp-server-boundaries/" />
+
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+
+<meta property="og:site_name" content="Althor Consulting" />
+<meta property="og:title" content="Drawing the right boundaries for an MCP server" />
+<meta property="og:description" content="An MCP server is a security boundary, not a convenience layer. Six rules that keep tool surfaces defensible." />
+<meta property="og:url" content="https://althor.dev/writing/mcp-server-boundaries/" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://althor.dev/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Drawing the right boundaries for an MCP server" />
+<meta name="twitter:description" content="Six rules for designing MCP servers that survive contact with a real agent." />
+<meta name="twitter:image" content="https://althor.dev/assets/og.png" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Drawing the right boundaries for an MCP server",
+  "description": "Six rules for keeping MCP tool surfaces narrow enough to defend without making them too narrow to use.",
+  "author": { "@type": "Person", "name": "Samuel S.", "url": "https://althor.dev/" },
+  "publisher": { "@type": "Organization", "name": "Althor Consulting", "url": "https://althor.dev/" },
+  "url": "https://althor.dev/writing/mcp-server-boundaries/",
+  "image": "https://althor.dev/assets/og.png",
+  "inLanguage": "en"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+<div class="container container--narrow">
+
+  <header class="brand">
+    <span class="brand__cursor" aria-hidden="true">▋</span>
+    <span class="brand__word"><a href="/">althor</a></span>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/work/">Work</a>
+      <a href="/writing/" aria-current="page">Writing</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <a class="back-link" href="/writing/">All writing</a>
+
+  <article class="article">
+    <div class="article__eyebrow">Pattern · 2026</div>
+    <h1 class="article__title">Drawing the right boundaries for an MCP server</h1>
+    <p class="article__dek">An MCP server is a security boundary, not a convenience layer. Six rules that keep tool surfaces narrow enough to defend without making them too narrow to use.</p>
+    <div class="article__meta">
+      <span>Reading time <strong>~5 min</strong></span>
+      <span>Audience <strong>Engineers, platform teams</strong></span>
+    </div>
+  </article>
+
+  <div class="prose">
+    <p>
+      The Model Context Protocol gives agents a clean way to reach into the rest of your stack — databases, dashboards, ticket systems, file stores. The protocol itself is small and well-specified. The interesting work is upstream of it: deciding what an MCP server is allowed to do, what shape its tools take, and where the boundary sits between the agent and your production systems.
+    </p>
+
+    <p>
+      Treat each MCP server as a security boundary, not a convenience layer. The rules below come from running production agents against real internal systems and watching where the failure modes show up.
+    </p>
+
+    <h2>Six rules</h2>
+
+    <h3>01 · One server, one trust boundary</h3>
+    <p>
+      An MCP server bundles a set of tools that share an auth context. Don't mix concerns. A "homelab tools" server that exposes infrastructure controls, secret reads, and media-library queries is three servers pretending to be one. When something goes wrong, you can't revoke just the part that misbehaved. Split servers along blast-radius lines: infra, observability, data, library — each with its own credentials and its own scope of what it's allowed to touch.
+    </p>
+
+    <h3>02 · Read-only by default; writes are explicit and tagged</h3>
+    <p>
+      The cheapest control is the one you don't have to revoke. A server with only read tools is unsurprising. The moment you introduce a write tool, the server's threat model changes — every read tool is now a potential reconnaissance step before a write. Mark write tools clearly in their names (<code>create_</code>, <code>delete_</code>, <code>update_</code>) so the agent's planner can see them and so policy gates can intercept them.
+    </p>
+
+    <h3>03 · Tool names describe intent, not implementation</h3>
+    <p>
+      <code>prom_query</code> beats <code>http_get</code>. <code>list_open_tickets</code> beats <code>db_select</code>. The name is a contract with the model — it's how the planner reasons about which tool to reach for. A generic transport-shaped tool is a foot-cannon: it forces the model to invent the right query, and gives you nowhere to put a guardrail. Wrap the transport in a domain-shaped tool and put the guardrail inside the wrapper.
+    </p>
+
+    <h3>04 · Bounded outputs, always</h3>
+    <p>
+      Every tool result lands in the model's context window. An unbounded tool — one that can return a thousand log lines, or a database row at any size — turns a single tool call into a context-budget exhaustion event. Paginate by default. Truncate large fields with an explicit marker. Document the maximums in the tool description so the model knows when to ask for more rather than re-running the same query and hoping for less.
+    </p>
+
+    <h3>05 · Errors are first-class</h3>
+    <p>
+      A failed tool call is not a stack trace. Return a structured error with a code, a short human description, and — when relevant — a suggested next action. Raw exception text is at best noise and at worst a leak of internal paths, hostnames, or schemas. The model handles structured errors gracefully; it spirals on unstructured ones.
+    </p>
+
+    <h3>06 · Auth at the server boundary, not the tool</h3>
+    <p>
+      MCP isn't a permissions system. It's a transport. The server is where you decide which tools exist for this caller, what the caller's identity is, and what credentials each tool will use downstream. Don't pass agent-supplied tokens into tool implementations. Don't read auth headers inside the tool. Establish the trust context once, at the server boundary, and let the tools execute against an already-resolved identity.
+    </p>
+
+    <h2>What good looks like</h2>
+
+    <div class="diagram" aria-label="MCP server boundary">
+<pre><span class="dim">agent</span>
+   │
+   │  <span class="dim">stdio / sse</span>
+   ▼
+<span class="accent">MCP server</span> <span class="dim">(one trust boundary)</span>
+   │
+   ├── <span class="accent">auth resolution</span> <span class="dim">— shared secret · workload identity · OBO</span>
+   │
+   ├── <span class="accent">tool: prom_query</span>     <span class="dim">read · bounded</span>
+   ├── <span class="accent">tool: prom_alerts</span>    <span class="dim">read · bounded</span>
+   └── <span class="accent">tool: silence_alert</span>  <span class="dim">write · policy-gated</span>
+            │
+            ▼
+        <span class="dim">downstream system</span> <span class="dim">(narrow API wrapper, never raw SDK)</span></pre>
+    </div>
+
+    <p>
+      The combination is what matters. A server with the right boundary, the right tool shapes, the right output bounds, and the right auth model is something you can hand to an agent without losing sleep. Get any of the six wrong and the failure mode shows up in production, where it's expensive to fix.
+    </p>
+
+    <p>
+      The protocol itself is the easy part. The discipline of where to draw the line — that's the work.
+    </p>
+  </div>
+
+  <a class="back-link" href="/writing/" style="margin-top: 2rem;">All writing</a>
+
+</div>
+
+<footer>
+  <span>Althor Consulting LLC</span>
+  <span>© 2026</span>
+</footer>
+</body>
+</html>

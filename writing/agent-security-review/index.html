@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#1a1d22" />
+
+<title>Making agent deployments pass security review · althor</title>
+<meta name="description" content="A five-layer architecture for agent systems that ship in regulated environments — identity, credential broker, scoped tools, policy gating, audit." />
+<link rel="canonical" href="https://althor.dev/writing/agent-security-review/" />
+
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+
+<meta property="og:site_name" content="Althor Consulting" />
+<meta property="og:title" content="Making agent deployments pass security review" />
+<meta property="og:description" content="A five-layer architecture distilled from shipping three agent systems in regulated environments." />
+<meta property="og:url" content="https://althor.dev/writing/agent-security-review/" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://althor.dev/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Making agent deployments pass security review" />
+<meta name="twitter:description" content="Five layers that map to the compliance controls an enterprise InfoSec team will ask about." />
+<meta name="twitter:image" content="https://althor.dev/assets/og.png" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Making agent deployments pass security review",
+  "description": "A five-layer architecture distilled from shipping three agent systems in regulated environments.",
+  "author": { "@type": "Person", "name": "Samuel S.", "url": "https://althor.dev/" },
+  "publisher": { "@type": "Organization", "name": "Althor Consulting", "url": "https://althor.dev/" },
+  "url": "https://althor.dev/writing/agent-security-review/",
+  "image": "https://althor.dev/assets/og.png",
+  "inLanguage": "en"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+<div class="container container--narrow">
+
+  <header class="brand">
+    <span class="brand__cursor" aria-hidden="true">▋</span>
+    <span class="brand__word"><a href="/">althor</a></span>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/work/">Work</a>
+      <a href="/writing/" aria-current="page">Writing</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <a class="back-link" href="/writing/">All writing</a>
+
+  <article class="article">
+    <div class="article__eyebrow">Pattern · 2026</div>
+    <h1 class="article__title">Making agent deployments pass security review</h1>
+    <p class="article__dek">A five-layer architecture distilled from shipping three agent systems in regulated environments.</p>
+    <div class="article__meta">
+      <span>Reading time <strong>~6 min</strong></span>
+      <span>Audience <strong>Architects, security leads</strong></span>
+    </div>
+  </article>
+
+  <div class="prose">
+    <p>
+      Most agent projects hit the same wall. The demo looks great. The pilot works. Then it meets security review, and every layer of the system turns out to be wrong: one service account with god-mode, secrets in environment variables, no audit trail, no way to tell if the agent did something it shouldn't have. The project either ships with a risk exception that auto-expires, or dies quietly on a compliance spreadsheet.
+    </p>
+
+    <p>
+      The pattern that actually ships is a five-layer separation of concerns. Each layer exists because it maps directly to a compliance control an enterprise InfoSec team will ask about. Skip any layer and the review fails.
+    </p>
+
+    <h2>The five layers</h2>
+
+    <h3>01 · Identity</h3>
+    <p>
+      Every agent action is attributed to a specific actor — a machine account for autonomous runs, an on-behalf-of delegation for user-triggered actions. "The agent did it" is not an answer. Entra ID, Okta, Google Workspace all support workload identities; use them. The audit log has to answer <em>who</em>.
+    </p>
+
+    <h3>02 · Credential broker</h3>
+    <p>
+      Agents never hold long-lived secrets. They request short-lived, scoped tokens from a broker (Vault, Key Vault, cloud-native secret manager) on each call. The broker knows which tools the agent is authorized to call, mints a narrow token, and logs the request. Compromising the agent's runtime doesn't compromise the kingdom.
+    </p>
+
+    <h3>03 · Scoped tool access</h3>
+    <p>
+      Tools expose the smallest surface the agent needs. Read-only views of production databases. Action-specific API wrappers instead of admin SDKs. Model Context Protocol servers with per-server auth boundaries. When the agent goes off-rails — and sometimes it will — the blast radius is bounded by design, not by hope.
+    </p>
+
+    <h3>04 · Policy + approval gating</h3>
+    <p>
+      Every action goes through a policy check before execution. Safe, reversible operations (read a record, propose an update) auto-execute. Irreversible or high-risk operations (issue a refund, modify production config, delete data) queue for human approval. Confidence thresholds decide the line. Humans own the risky calls; the pattern is explicit about which calls those are.
+    </p>
+
+    <h3>05 · Audit layer</h3>
+    <p>
+      Every suggestion, every approval, every override, every failure produces a structured event. Logs are not enough — logs are for debugging. An audit layer is structured, queryable, retained, and reviewable. Compliance, incident response, and post-mortem all run against the same surface. This is the layer that turns a legal conversation into a technical one.
+    </p>
+
+    <h2>Why the pattern works</h2>
+
+    <p>
+      None of these layers are exotic. They are how authentication, secrets management, least-privilege access, change control, and audit logging have worked in enterprise infrastructure for decades. The novelty of agent systems is not that they require new controls — it is that they require the same controls applied to a new kind of actor. Treating the agent as a first-class identity with scoped access, reviewable actions, and complete audit is what moves a project from demo to deployment.
+    </p>
+
+    <p>
+      The five layers are the minimum. Everything else — orchestration frameworks, prompt engineering, model selection — is downstream of this foundation.
+    </p>
+
+    <h2>What it looks like end-to-end</h2>
+
+    <div class="diagram" aria-label="Layered execution flow">
+<pre><span class="dim">user / scheduler</span>
+       ↓
+  <span class="accent">Identity</span> <span class="dim">— who is asking? machine acct or on-behalf-of?</span>
+       ↓
+  <span class="accent">Credential broker</span> <span class="dim">— mint short-lived, scoped token</span>
+       ↓
+  <span class="accent">Scoped tool</span> <span class="dim">— narrow API wrapper, read-only by default</span>
+       ↓
+  <span class="accent">Policy gate</span> <span class="dim">— auto-apply if safe, queue if risky</span>
+       ↓
+  <span class="accent">Audit event</span> <span class="dim">— structured, queryable, retained</span></pre>
+    </div>
+
+    <p>
+      Build the layers once and every new agent gets them for free. Skip them and the next agent re-litigates the same security review.
+    </p>
+  </div>
+
+  <a class="back-link" href="/writing/" style="margin-top: 2rem;">All writing</a>
+
+</div>
+
+<footer>
+  <span>Althor Consulting LLC</span>
+  <span>© 2026</span>
+</footer>
+</body>
+</html>
