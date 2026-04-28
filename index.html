@@ -40,44 +40,59 @@
   "@graph": [
     {
       "@type": "Person",
-      "@id": "https://althor.dev/#person",
-      "name": "Samuel S.",
-      "url": "https://althor.dev/",
-      "sameAs": [ "https://www.linkedin.com/in/samuel-s-a95912248" ],
+      "@id": "https://althor.dev/#samuel",
+      "name": "Samuel Swegart",
+      "url": "https://althor.dev",
       "jobTitle": "AI Infrastructure Consultant",
-      "worksFor": { "@id": "https://althor.dev/#service" },
+      "description": "Solo consultant specializing in agent infrastructure for regulated environments. Builds the credential brokers, scoped tool layers, policy gating, and audit surface that make AI agents deployable in enterprise systems.",
+      "sameAs": [
+        "https://www.linkedin.com/in/samuel-s-a95912248",
+        "https://github.com/st0rm-bless3d"
+      ],
       "knowsAbout": [
         "AI agent infrastructure",
         "Model Context Protocol",
-        "credential brokering",
-        "audit and compliance for AI systems",
-        "Azure Functions",
-        "enterprise AI governance",
-        "Salesforce automation"
-      ]
+        "Microsoft Copilot Studio",
+        "Entra ID",
+        "Azure",
+        "Rust",
+        "TypeScript",
+        "Enterprise security architecture"
+      ],
+      "worksFor": { "@id": "https://althor.dev/#althor" }
     },
     {
-      "@type": "ProfessionalService",
-      "@id": "https://althor.dev/#service",
+      "@type": "Organization",
+      "@id": "https://althor.dev/#althor",
       "name": "Althor Consulting",
       "legalName": "Althor Consulting LLC",
-      "url": "https://althor.dev/",
-      "logo": "https://althor.dev/assets/apple-touch-icon.png",
-      "image": "https://althor.dev/assets/og.png",
-      "description": "Consulting practice specializing in production infrastructure for AI agent systems — credential brokering, approval gating, audit layers, and MCP integration for enterprise teams.",
-      "founder": { "@id": "https://althor.dev/#person" },
+      "url": "https://althor.dev",
+      "founder": { "@id": "https://althor.dev/#samuel" },
+      "foundingDate": "2026-04-28",
+      "foundingLocation": {
+        "@type": "Place",
+        "address": { "@type": "PostalAddress", "addressRegion": "MD", "addressCountry": "US" }
+      },
+      "description": "AI agent infrastructure consulting for enterprise teams in regulated environments. Architecture review, end-to-end builds, and ongoing advisory for production agent deployments.",
       "areaServed": "United States",
-      "address": { "@type": "PostalAddress", "addressRegion": "MD", "addressCountry": "US" },
-      "email": "contact@althor.dev",
-      "knowsAbout": [
-        "AI agent infrastructure",
-        "Model Context Protocol",
-        "credential brokering",
-        "audit and compliance for AI systems",
-        "Salesforce automation",
-        "Azure Functions",
-        "enterprise AI governance"
-      ]
+      "serviceType": [
+        "AI architecture review",
+        "Agent infrastructure development",
+        "Security architecture for AI systems",
+        "Model Context Protocol integration"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "contact@althor.dev",
+        "contactType": "Sales"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://althor.dev/#site",
+      "url": "https://althor.dev",
+      "name": "Althor Consulting",
+      "publisher": { "@id": "https://althor.dev/#althor" }
     }
   ]
 }
@@ -97,6 +112,7 @@
     <nav class="site-nav" aria-label="Primary">
       <a href="/work/">Work</a>
       <a href="/writing/">Writing</a>
+      <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
@@ -107,8 +123,12 @@
       The guardrails, orchestration, and audit between a <em>prompt</em> and a production deployment.
     </h1>
     <p class="hero__sub">
-      Most AI work stops at the prompt. I build the infrastructure underneath — credential brokers, tool access layers, approval gating, audit trails, and the operational discipline that makes agents deployable in environments where getting it wrong costs real money. Consulting for enterprise teams that need more than a prompt library.
+      Most AI work stops at the prompt. I build the infrastructure underneath — credential brokers, scoped tool access, policy-gated approvals, and the audit surface that makes agents deployable in environments where getting it wrong costs real money. Consulting for enterprise teams that have moved past the prompt library.
     </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="mailto:contact@althor.dev?subject=Architecture%20review%20%E2%80%94%20discovery%20call">Book a 30-min architecture review</a>
+      <a class="btn btn-secondary" href="#engagements">See engagement options</a>
+    </div>
   </div>
 
   <!-- ─── PROJECT PROOFS ─── -->
@@ -133,7 +153,7 @@
 
         <div class="outcome">
           <span class="outcome__label">Outcome</span>
-          <span>Eliminated a full-time contract position (~$60–70k annual). Manual throughput went from <strong style="color:var(--text)">4 entries per hour</strong> (15 min per scan) to <strong style="color:var(--text)">120 per hour</strong> (two per minute) — ~<strong style="color:var(--accent)">30× throughput improvement</strong>.</span>
+          <span>Throughput went from <strong style="color:var(--text)">4 entries per hour</strong> (15 min per scan) to <strong style="color:var(--text)">120 per hour</strong> — a ~<strong style="color:var(--accent)">30× improvement</strong> that retired an ongoing ~$60–70k/yr contractor spend and freed reviewer time for higher-judgment work.</span>
         </div>
 
         <div class="stack">
@@ -261,11 +281,34 @@
           Confidence thresholds decide what auto-runs and what queues for approval. Safe, reversible actions execute immediately. Anything touching production state, payments, or customer-facing data waits for a human.
         </p>
       </div>
+      <div class="method__item">
+        <div class="method__title">Documentation that survives me</div>
+        <p class="method__body">
+          Every engagement ships with IaC, runbooks, and architecture docs that let your team operate the system without me. Code is reviewable; nothing is locked behind tribal knowledge. Handoff is a milestone, not an afterthought.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ABOUT ─── -->
+  <section id="about">
+    <div class="section__head">
+      <span class="section__label">About</span>
+      <span class="section__rule"></span>
+    </div>
+
+    <div class="about">
+      <p>
+        I'm <strong>Samuel Swegart</strong> — currently AI Platform Engineer at a U.S. research university; previously enterprise applications lead at a global humanitarian nonprofit (~600 employees, 20 countries). Most of my last decade has been spent shipping line-of-business systems on the Microsoft stack — Azure, Entra ID, M365, Power Platform — with a Rust/TypeScript/Python sideline for the parts of the stack where Microsoft doesn't reach.
+      </p>
+      <p>
+        Althor is the consulting practice for the agent-infrastructure work that doesn't fit inside a job title. Three production systems documented here; more in the pipeline. Every engagement ships with IaC, runbooks, and architecture docs that let your team operate without me. Based in the Washington, D.C. metro · remote-first · regulated environments preferred.
+      </p>
     </div>
   </section>
 
   <!-- ─── ENGAGEMENT TIERS ─── -->
-  <section>
+  <section id="engagements">
     <div class="section__head">
       <span class="section__label">Engagements</span>
       <span class="section__rule"></span>
@@ -275,19 +318,22 @@
       <div class="tier">
         <div class="tier__name">Discovery</div>
         <div class="tier__shape">Architecture &amp; security review</div>
-        <div class="tier__duration">1–2 weeks · fixed-scope</div>
+        <div class="tier__duration">1–2 weeks · fixed-fee · <span class="tier__price">starting at $5k</span></div>
         <p class="tier__body">A focused look at an existing or planned agent deployment. Output is a written report covering identity, credential surface, tool scope, approval flow, audit, and the specific compliance gaps you'll need to close.</p>
         <ul class="tier__list">
           <li>Threat model + control mapping</li>
           <li>Concrete remediation list, prioritized</li>
           <li>One-page summary for InfoSec / leadership</li>
         </ul>
+        <div class="tier__cta">
+          <a class="btn-link" href="mailto:contact@althor.dev?subject=Discovery%20call%20%E2%80%94%20althor.dev">Book a discovery call →</a>
+        </div>
       </div>
 
       <div class="tier">
         <div class="tier__name">Build</div>
         <div class="tier__shape">Production agent infrastructure</div>
-        <div class="tier__duration">8–12 weeks · fixed-scope</div>
+        <div class="tier__duration">8–12 weeks · fixed-fee · <span class="tier__price">starting at $80k</span></div>
         <p class="tier__body">End-to-end build of an agent system on your stack. Identity, credential broker, scoped tools, policy gating, audit layer — wired into your existing auth and observability. Ships behind a real approval flow, not a demo.</p>
         <ul class="tier__list">
           <li>Architecture, IaC, CI/CD</li>
@@ -295,18 +341,24 @@
           <li>Audit + dashboard for governance review</li>
           <li>Handoff with documentation and runbooks</li>
         </ul>
+        <div class="tier__cta">
+          <a class="btn-link" href="mailto:contact@althor.dev?subject=Build%20engagement%20%E2%80%94%20althor.dev">Discuss a build →</a>
+        </div>
       </div>
 
       <div class="tier">
         <div class="tier__name">Advisory</div>
         <div class="tier__shape">Ongoing retainer</div>
-        <div class="tier__duration">Monthly · flexible hours</div>
+        <div class="tier__duration">Monthly · flexible hours · <span class="tier__price">from $4k/mo</span></div>
         <p class="tier__body">For teams that already have engineers but need an experienced hand on agent deployments. Architecture review, design partnership, security posture checks, escalation on tricky calls.</p>
         <ul class="tier__list">
           <li>Weekly review on active work</li>
           <li>Async review of PRs / designs</li>
           <li>On-demand for production incidents</li>
         </ul>
+        <div class="tier__cta">
+          <a class="btn-link" href="mailto:contact@althor.dev?subject=Advisory%20retainer%20%E2%80%94%20althor.dev">Discuss a retainer →</a>
+        </div>
       </div>
     </div>
   </section>
@@ -319,22 +371,24 @@
     </div>
 
     <dl class="contact-grid">
+      <dt>Book</dt>
+      <dd><a href="mailto:contact@althor.dev?subject=Architecture%20review%20%E2%80%94%20discovery%20call">Schedule a 30-min architecture review</a></dd>
       <dt>Email</dt>
       <dd><a href="mailto:contact@althor.dev">contact@althor.dev</a></dd>
       <dt>LinkedIn</dt>
-      <dd><a href="https://www.linkedin.com/in/samuel-s-a95912248" rel="me noopener noreferrer" target="_blank">Samuel S. · linkedin.com</a></dd>
-      <dt>Response</dt>
-      <dd>Within two business days</dd>
+      <dd><a href="https://www.linkedin.com/in/samuel-s-a95912248" rel="me noopener noreferrer" target="_blank">Samuel Swegart · linkedin.com</a></dd>
+      <dt>Currently</dt>
+      <dd>Accepting Q2 / Q3 2026 engagements</dd>
       <dt>Based</dt>
-      <dd>Maryland, United States — remote-first</dd>
+      <dd>Washington, D.C. metro — remote-first</dd>
     </dl>
   </section>
 
 </div>
 
 <footer>
-  <span>Althor Consulting LLC</span>
-  <span>© 2026</span>
+  <span>Althor Consulting (Maryland LLC, in formation)</span>
+  <span>© 2026 Samuel Swegart</span>
 </footer>
 </body>
 </html>
