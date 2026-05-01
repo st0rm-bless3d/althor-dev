@@ -24,10 +24,13 @@ Althor Consulting LLC is a solo consulting practice (Maryland, US) specializing 
 
 Remote-first.
 
-## Case studies
+## Work (client engagements)
 
 - Multi-model extraction pipeline — https://althor.dev/work/extraction-pipeline/
 - Enterprise AI governance platform — https://althor.dev/work/governance-platform/
+
+## Building (own project)
+
 - Spire (AI infrastructure control plane) — https://althor.dev/work/spire/
 
 ## Writing

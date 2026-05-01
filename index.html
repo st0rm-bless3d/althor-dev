@@ -125,7 +125,7 @@
       The guardrails, orchestration, and audit between a <em>prompt</em> and a production deployment.
     </h1>
     <p class="hero__sub">
-      Most AI work stops at the prompt. I build the infrastructure underneath — credential brokers, scoped tool access, policy-gated approvals, and the audit surface that makes agents deployable in environments where getting it wrong costs real money. Consulting for enterprise teams that have moved past the prompt library.
+      Most AI work stops at the prompt. I build what goes underneath — credential brokers, scoped tool access, policy-gated approvals, and the audit surface that makes agents deployable in regulated environments. Consulting for enterprise teams.
     </p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="mailto:contact@althor.dev?subject=Architecture%20review%20%E2%80%94%20discovery%20call">Book a 30-min architecture review</a>
@@ -133,10 +133,10 @@
     </div>
   </div>
 
-  <!-- ─── PROJECT PROOFS ─── -->
+  <!-- ─── WORK ─── -->
   <section>
     <div class="section__head">
-      <span class="section__label">Project proofs</span>
+      <span class="section__label">Work</span>
       <span class="section__rule"></span>
       <a class="section__more" href="/work/">All work →</a>
     </div>
@@ -150,12 +150,12 @@
         </header>
 
         <p class="work__desc">
-          Production document-extraction system built on a configurable multi-stage agent pipeline with field-level consensus voting across multiple extraction models. Deterministic validators, Raw → Suggested → Final audit layering so nothing is silently overwritten, and human-in-the-loop correction that feeds structured learning loops.
+          Multi-stage agent pipeline with field-level consensus voting across extraction models. Deterministic validators, Raw → Suggested → Final audit layering, human-in-the-loop correction feeding structured learning loops.
         </p>
 
         <div class="outcome">
           <span class="outcome__label">Outcome</span>
-          <span>Throughput went from <strong style="color:var(--text)">4 entries per hour</strong> (15 min per scan) to <strong style="color:var(--text)">120 per hour</strong> — a ~<strong style="color:var(--accent)">30× improvement</strong> that retired an ongoing ~$60–70k/yr contractor spend and freed reviewer time for higher-judgment work.</span>
+          <span><strong style="color:var(--text)">4 → 120 entries/hr</strong> (~<strong style="color:var(--accent)">30×</strong>), retiring ~$60–70k/yr of contractor spend.</span>
         </div>
 
         <div class="stack">
@@ -169,7 +169,7 @@
           <span>Playwright E2E</span>
         </div>
 
-        <a class="work__more" href="/work/extraction-pipeline/">Read case study</a>
+        <a class="work__more" href="/work/extraction-pipeline/">Full write-up →</a>
       </article>
 
       <article class="work__item">
@@ -179,7 +179,7 @@
         </header>
 
         <p class="work__desc">
-          AI-adoption governance system spanning submission, review, tool approval, and policy enforcement across a global workforce. Four-tier security-group RBAC, full audit trail for governance-council review, and native Microsoft Teams + SharePoint embedding so the tool meets users where they already work.
+          Adoption governance for a global workforce — submission, review, tool approval, policy enforcement. Four-tier RBAC, audit trail for council review, native Teams + SharePoint embedding so the tool meets users where they already work.
         </p>
 
         <div class="stack">
@@ -198,8 +198,20 @@
           <span class="meta__item">Volume <strong>~100 submissions / month</strong></span>
         </div>
 
-        <a class="work__more" href="/work/governance-platform/">Read case study</a>
+        <a class="work__more" href="/work/governance-platform/">Full write-up →</a>
       </article>
+
+    </div>
+  </section>
+
+  <!-- ─── BUILDING ─── -->
+  <section>
+    <div class="section__head">
+      <span class="section__label">Building</span>
+      <span class="section__rule"></span>
+    </div>
+
+    <div class="work">
 
       <article class="work__item">
         <header class="work__head">
@@ -208,7 +220,7 @@
         </header>
 
         <p class="work__desc">
-          Operator surface for running agents against real infrastructure without handing them master keys. Policy-gated approval flows for critical actions, per-object audit log, MCP-based tool access with read-only guards and per-server auth boundaries, staged remediation with confidence-based auto-apply thresholds and explicit override for high-risk operations.
+          Operator surface for running agents against real infrastructure without handing them master keys. Policy-gated approvals, per-object audit log, MCP tools with read-only guards and per-server auth boundaries. My own project, in active development.
         </p>
 
         <div class="stack">
@@ -222,7 +234,7 @@
           <span>Model Context Protocol</span>
         </div>
 
-        <a class="work__more" href="/work/spire/">Read case study</a>
+        <a class="work__more" href="/work/spire/">Full write-up →</a>
       </article>
 
     </div>
@@ -268,31 +280,31 @@
       <div class="method__item">
         <div class="method__title">Architecture before code</div>
         <p class="method__body">
-          Auth boundaries, tool scopes, audit surface, and failure modes get modeled before the first function is written. Agent systems that skip this get rewritten later under worse conditions.
+          Auth boundaries, tool scopes, audit surface, and failure modes get modeled before the first function is written. Skip this and you'll rewrite it later, under worse conditions.
         </p>
       </div>
       <div class="method__item">
         <div class="method__title">Scoped tools, never master keys</div>
         <p class="method__body">
-          Agents get short-lived, scoped credentials per call. No service accounts with god-mode access hiding in a prompt. Credentials live in a broker; tools expose narrow surface areas with explicit allowlists.
+          An agent that reads invoices doesn't get a credential that can write them. One scope, one tool, one expiry — credentials live in a broker, tools expose narrow surfaces with explicit allowlists.
         </p>
       </div>
       <div class="method__item">
         <div class="method__title">Audit everything that matters</div>
         <p class="method__body">
-          Every decision, every suggestion, every override produces a structured event. Compliance review, debugging, and post-incident work all run against the same audit surface — not reconstructed from logs after the fact.
+          Every decision, suggestion, and override produces a structured event. Compliance review, debugging, and post-incident work all run against the same surface — not reconstructed from logs after the fact.
         </p>
       </div>
       <div class="method__item">
         <div class="method__title">Humans own the risky calls</div>
         <p class="method__body">
-          Confidence thresholds decide what auto-runs and what queues for approval. Safe, reversible actions execute immediately. Anything touching production state, payments, or customer-facing data waits for a human.
+          Reversible, low-risk actions auto-run. Anything touching production state, payments, or customer-facing data queues for human approval. The default is "ask."
         </p>
       </div>
       <div class="method__item">
         <div class="method__title">Documentation that survives me</div>
         <p class="method__body">
-          Every engagement ships with IaC, runbooks, and architecture docs that let your team operate the system without me. Code is reviewable; nothing is locked behind tribal knowledge. Handoff is a milestone, not an afterthought.
+          Every engagement ships with IaC, runbooks, and architecture docs your team can operate without me. Nothing locked behind tribal knowledge. Handoff is a milestone, not an afterthought.
         </p>
       </div>
     </div>
@@ -307,10 +319,10 @@
 
     <div class="about">
       <p>
-        I'm <strong>Samuel Swegart</strong> — currently AI Platform Engineer at a U.S. research university; previously enterprise applications lead at a global humanitarian nonprofit (~600 employees, 20 countries). Most of my last decade has been spent shipping line-of-business systems on the Microsoft stack — Azure, Entra ID, M365, Power Platform — with a Rust/TypeScript/Python sideline for the parts of the stack where Microsoft doesn't reach.
+        I'm <strong>Samuel Swegart</strong>. Most of the last decade I've shipped line-of-business systems on the Microsoft stack — Azure, Entra ID, M365, Power Platform — for a global humanitarian nonprofit (~600 employees, 20 countries), with a Rust/TypeScript/Python sideline for the parts of the stack Microsoft doesn't reach.
       </p>
       <p>
-        Althor is the consulting practice for the agent-infrastructure work that doesn't fit inside a job title. Three production systems documented here; more in the pipeline. Every engagement ships with IaC, runbooks, and architecture docs that let your team operate without me. Based in the Washington, D.C. metro · remote-first · regulated environments preferred.
+        Althor is the consulting practice for the agent-infrastructure work that doesn't fit inside a job title. Every engagement ships with IaC, runbooks, and docs your team can operate without me. D.C. metro · remote-first · regulated environments preferred.
       </p>
     </div>
   </section>
@@ -395,7 +407,7 @@
 </div>
 
 <footer>
-  <span>Althor Consulting (Maryland LLC, in formation)</span>
+  <span>Althor Consulting LLC</span>
   <span>© 2026 Samuel Swegart</span>
 </footer>
 </body>
