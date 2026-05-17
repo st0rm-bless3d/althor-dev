@@ -107,25 +107,145 @@
       Each layer also includes the questions InfoSec will actually ask in review, and the common gaps that show up in the wild. The intent is that you can read each section and immediately know whether your system would pass or fail.
     </p>
 
-    <h2>Download</h2>
+    <h2>Get the checklist</h2>
     <p>
-      One PDF, no email required. Save it, share it inside your team, fill it out as a working doc.
+      Enter your email below. The PDF link lands in your inbox immediately. You'll also get a short series of follow-up notes — practical, no pitch — over the next few weeks.
     </p>
 
   </div>
 
-  <aside class="cta-aside" style="margin-top: 0;">
-    <h3>Get the checklist</h3>
-    <p>8 pages · ~80 KB · matches the typography of this site, prints clean on Letter or A4.</p>
-    <div class="cta-aside__buttons">
-      <a class="btn btn-primary" href="/assets/agent-security-review-checklist.pdf" download>
-        Download the PDF →
-      </a>
-      <a class="btn-link" href="/writing/agent-security-review/">
-        Or read the essay first →
-      </a>
+  <!-- Lead-magnet email capture form.
+       POSTs to Listmonk's public subscribe API at lists.althor.dev.
+       Progressive enhancement: works without JS (Listmonk shows its own confirmation page).
+       With JS: async fetch + inline success state, no page reload. -->
+  <aside class="cta-aside" style="margin-top: 0;" id="checklist-form-block">
+    <h3>Send me the checklist</h3>
+    <p>8 pages · ~80 KB · prints clean on Letter or A4.</p>
+
+    <!-- JS-enhanced state: shown on success -->
+    <div id="checklist-success" style="display:none;" aria-live="polite">
+      <p style="color: var(--accent); font-weight: 500; margin-bottom: 0.75rem;">Check your inbox — the link is on its way.</p>
+      <p style="font-size: 0.9375rem; color: var(--text-2); margin: 0;">
+        While you wait:
+        <a href="/assets/agent-security-review-checklist.pdf" download style="color: var(--text-2);">download the PDF directly →</a>
+      </p>
     </div>
+
+    <!-- Subscription form — POSTs to Listmonk public API -->
+    <!-- list_id 3 = althor-readers; double opt-in enabled -->
+    <form
+      id="checklist-form"
+      action="https://lists.althor.dev/api/public/subscription"
+      method="post"
+      style="display: flex; flex-direction: column; gap: 0.75rem; max-width: 26rem;"
+      novalidate
+    >
+      <input type="hidden" name="list_ids" value="[3]" />
+      <input type="hidden" name="referrer_url" value="https://althor.dev/checklist/" />
+
+      <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+        <label for="cf-email" style="font-size: 0.8125rem; font-weight: 500; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em;">Work email</label>
+        <input
+          id="cf-email"
+          type="email"
+          name="email"
+          placeholder="you@company.com"
+          required
+          autocomplete="email"
+          style="background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0.6rem 0.85rem; border-radius: 4px; font-size: 0.9375rem; font-family: inherit; outline: none; transition: border-color 140ms ease;"
+          onfocus="this.style.borderColor='var(--accent)'"
+          onblur="this.style.borderColor='var(--border)'"
+        />
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+        <label for="cf-name" style="font-size: 0.8125rem; font-weight: 500; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em;">Name <span style="color: var(--text-dim); font-weight: 400;">(optional)</span></label>
+        <input
+          id="cf-name"
+          type="text"
+          name="name"
+          placeholder="Your name"
+          autocomplete="name"
+          style="background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0.6rem 0.85rem; border-radius: 4px; font-size: 0.9375rem; font-family: inherit; outline: none; transition: border-color 140ms ease;"
+          onfocus="this.style.borderColor='var(--accent)'"
+          onblur="this.style.borderColor='var(--border)'"
+        />
+      </div>
+
+      <div id="checklist-error" role="alert" style="display:none; color: #f87171; font-size: 0.875rem;"></div>
+
+      <button
+        type="submit"
+        id="checklist-submit"
+        class="btn btn-primary"
+        style="align-self: flex-start;"
+      >
+        Send me the checklist →
+      </button>
+
+      <p style="font-size: 0.8125rem; color: var(--text-dim); margin: 0;">
+        You'll get a confirmation email first — click the link in it and the PDF link follows immediately.
+        Unsubscribe any time.
+      </p>
+    </form>
+
+    <!-- Fallback: direct download link always visible below the form -->
+    <p style="font-size: 0.8125rem; color: var(--text-dim); margin-top: 0.5rem;">
+      Prefer no email? <a href="/assets/agent-security-review-checklist.pdf" download style="color: var(--text-dim);">Download the PDF directly →</a>
+    </p>
   </aside>
+
+  <script>
+  (function () {
+    var form = document.getElementById('checklist-form');
+    var success = document.getElementById('checklist-success');
+    var error = document.getElementById('checklist-error');
+    var submit = document.getElementById('checklist-submit');
+    if (!form || !window.fetch) return; // no JS enhancement, native form POST takes over
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = form.querySelector('[name="email"]').value.trim();
+      if (!email) {
+        error.textContent = 'Please enter your email address.';
+        error.style.display = '';
+        return;
+      }
+      error.style.display = 'none';
+      submit.disabled = true;
+      submit.textContent = 'Sending…';
+
+      // Listmonk public subscription API: JSON body
+      fetch('https://lists.althor.dev/api/public/subscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          name: (form.querySelector('[name="name"]').value || '').trim() || undefined,
+          list_uuids: ['607aa489-ea54-4daa-b37d-d5b1390d05ca'],
+          referrer_url: 'https://althor.dev/checklist/'
+        })
+      })
+        .then(function (r) {
+          if (r.ok || r.status === 409) {
+            // 200 = subscribed; 409 = already subscribed (also fine)
+            form.style.display = 'none';
+            success.style.display = '';
+          } else {
+            return r.json().then(function (d) {
+              throw new Error(d.message || 'Something went wrong. Please try again.');
+            });
+          }
+        })
+        .catch(function (err) {
+          submit.disabled = false;
+          submit.textContent = 'Send me the checklist →';
+          error.textContent = err.message || 'Something went wrong. Please try again.';
+          error.style.display = '';
+        });
+    });
+  })();
+  </script>
 
   <div class="prose">
 

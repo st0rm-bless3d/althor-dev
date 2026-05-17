@@ -36,7 +36,7 @@
   "headline": "Making agent deployments pass security review",
   "description": "A five-layer architecture distilled from shipping three agent systems in regulated environments.",
   "datePublished": "2026-04-21",
-  "dateModified": "2026-04-28",
+  "dateModified": "2026-05-17",
   "author": { "@type": "Person", "name": "Samuel", "url": "https://althor.dev/" },
   "publisher": { "@type": "Organization", "name": "Althor Consulting", "url": "https://althor.dev/" },
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://althor.dev/writing/agent-security-review/" },
@@ -75,7 +75,7 @@
     <div class="article__meta">
       <span>Reading time <strong>~6 min</strong></span>
       <span>Audience <strong>Architects, security leads</strong></span>
-      <span>Last reviewed <strong>2026-04-28</strong></span>
+      <span>Last reviewed <strong>2026-05-17</strong></span>
     </div>
   </article>
 
@@ -93,6 +93,9 @@
     <h3>01 · Identity</h3>
     <p>
       Every agent action is attributed to a specific actor — a machine account for autonomous runs, an on-behalf-of delegation for user-triggered actions. "The agent did it" is not an answer. Entra ID, Okta, Google Workspace all support workload identities; use them. The audit log has to answer <em>who</em>.
+    </p>
+    <p>
+      Deep dive on this layer for Microsoft tenants: <a href="/writing/entra-workload-identities/">Entra ID workload identities for agent systems</a> — the four-way decision matrix between app-only, on-behalf-of, federated credentials, and managed identity, plus the gotchas the wizard doesn't surface.
     </p>
 
     <h3>02 · Credential broker</h3>

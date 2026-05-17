@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#1a1d22" />
+
+<title>Entra ID workload identities for agent systems · althor</title>
+<meta name="description" content="A decision matrix for picking the right Entra ID workload identity for an AI agent — service principal, OBO, federated credentials, managed identity." />
+<link rel="canonical" href="https://althor.dev/writing/entra-workload-identities/" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+<meta property="og:site_name" content="Althor Consulting" />
+<meta property="og:title" content="Entra ID workload identities for agent systems" />
+<meta property="og:description" content="A decision matrix for picking the right Entra ID workload identity for an AI agent — service principal, OBO, federated credentials, managed identity." />
+<meta property="og:url" content="https://althor.dev/writing/entra-workload-identities/" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://althor.dev/og-essay.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Entra ID workload identities for agent systems" />
+<meta name="twitter:description" content="The four-way decision behind every agent that needs to attribute its actions in an Entra tenant." />
+<meta name="twitter:image" content="https://althor.dev/og-essay.png" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Entra ID workload identities for agent systems",
+  "description": "A decision matrix for picking the right Entra ID workload identity for an AI agent — service principal, on-behalf-of, federated credentials, managed identity.",
+  "datePublished": "2026-05-17",
+  "dateModified": "2026-05-17",
+  "author": { "@type": "Person", "name": "Samuel", "url": "https://althor.dev/" },
+  "publisher": { "@type": "Organization", "name": "Althor Consulting", "url": "https://althor.dev/" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://althor.dev/writing/entra-workload-identities/" },
+  "image": "https://althor.dev/og-essay.png",
+  "inLanguage": "en"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/style.css" />
+<link rel="alternate" type="application/atom+xml" title="althor · Writing" href="/writing/feed.xml" />
+<script defer src="https://analytics.althor.dev/script.js" data-website-id="27dfcf34-3bbc-43d4-8f8d-810b9d9b9f47"></script>
+</head>
+<body>
+<div class="container container--narrow">
+
+  <header class="brand">
+    <span class="brand__cursor" aria-hidden="true">▋</span>
+    <span class="brand__word"><a href="/">althor</a></span>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/work/">Work</a>
+      <a href="/writing/" aria-current="page">Writing</a>
+      <a href="/#about">About</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <a class="back-link" href="/writing/">All writing</a>
+
+  <article class="article">
+    <div class="article__eyebrow">Pattern · 2026</div>
+    <h1 class="article__title">Entra ID workload identities for agent systems</h1>
+    <p class="article__dek">Four identity options, one decision you're making whether you realize it or not. A working note on picking — and configuring — the right Entra ID workload identity for an AI agent in a Microsoft tenant.</p>
+    <div class="article__meta">
+      <span>Reading time <strong>~9 min</strong></span>
+      <span>Audience <strong>Platform engineers, security architects</strong></span>
+      <span>Last reviewed <strong>2026-05-17</strong></span>
+    </div>
+  </article>
+
+  <div class="prose">
+    <p>
+      This is the deep dive on layer 01 of <a href="/writing/agent-security-review/">Making agent deployments pass security review</a> — identity. Most agent projects in M365 / Azure tenants hit the same wall at the same moment: the security architect asks who the agent is acting as, and the answer is "a service account I made last Tuesday with Global Administrator and a 90-day-rotation policy." That answer is the audit-review killer. Workload identities are how you make a different one available.
+    </p>
+
+    <h2>Why this matters now</h2>
+    <p>
+      An AI agent that reaches into Microsoft Graph, SharePoint, Dynamics, Cosmos, or any custom internal API is making API calls under <em>some</em> identity. That identity is what shows up in the downstream audit log — Entra sign-in logs, Graph audit logs, your own application's audit trail. There are exactly two outcomes:
+    </p>
+    <ul>
+      <li>The downstream log reads <strong>"<code>agent-svc-prod</code> did it"</strong> — a single machine account, frequently with broad scopes, that every agent action funnels through. Compliance review flags it. Incident response can't tell whose request triggered the action. Insurance carriers ask hard questions.</li>
+      <li>The downstream log reads <strong>"Samuel's agent, acting on behalf of Samuel, did it"</strong> — the user's UPN is in the log, the agent's app identity is in the log, and the action is attributable to a specific human request. Compliance review nods. Incident response replays the chain.</li>
+    </ul>
+    <p>
+      Workload identities are the structural difference between those two outcomes. They've existed in Entra ID for years; what's changed is that agents now make many requests fast, against scoped data, and the audit shape of those requests is what determines whether the deployment survives review. Microsoft has explicitly named this problem space with <a href="https://learn.microsoft.com/en-us/entra/agent-id/what-is-microsoft-entra-agent-id">Entra Agent ID</a> as of 2026 — but the building blocks below predate it and remain the foundation for non-Microsoft-platform agents too.
+    </p>
+
+    <h2>The four-way decision matrix</h2>
+    <p>
+      Four identity shapes cover the realistic option space. The decision is not "which is best" — it's "which fits this call's downstream-attribution requirement." Multiple options can coexist in one agent system; the wrong one is the one that hides whose action it was.
+    </p>
+
+    <div class="diagram" aria-label="Entra ID workload identity decision matrix for agent systems">
+<pre><span class="dim">option</span>                    <span class="dim">downstream identity</span>   <span class="dim">RBAC inherits</span>     <span class="dim">token lifetime</span>      <span class="dim">audit clarity</span>
+<span class="accent">App-only (SP)</span>             agent app's SPN        app role assignment 60–90 min          "the agent did it"
+<span class="accent">On-behalf-of (OBO)</span>        signed-in user's UPN   user's directory    60–90 min          "user X's agent did it"
+<span class="accent">Federated cred (FIC)</span>      agent app's SPN        app role assignment ~60 min (exchanged) "the agent did it"
+                                                                                       <span class="dim">+ external IdP trail</span>
+<span class="accent">Managed identity</span>          managed identity SPN   identity role asgn  ~24h (platform)    "the resource did it"</pre>
+    </div>
+
+    <p>
+      Read the matrix this way. <strong>App-only</strong> is the agent acting as itself — fine when the agent operates on shared, non-user-scoped data (an alerting bot reading a tenant-wide telemetry table). <strong>OBO</strong> is the agent acting as a specific user — the only correct answer when the agent reads or writes user-scoped data. <strong>FIC</strong> is the agent runtime authenticating without a stored client secret — same downstream identity as app-only, but the credential bootstrap is a federated token exchange instead of <code>client_secret</code>. <strong>Managed identity</strong> is the platform-managed version of the agent's machine identity — applies when the agent runs on Azure compute.
+    </p>
+    <p>
+      The matrix above flattens nuance for legibility. Microsoft's own taxonomy folds applications, service principals, and managed identities into one umbrella — <a href="https://learn.microsoft.com/en-us/entra/workload-id/workload-identities-overview">"workload identities"</a> — with FIC as a credential type rather than an identity type. Mentally hold it both ways: four credential-and-attribution shapes, three Entra object types.
+    </p>
+
+    <h2>Federated credentials for agent runtimes</h2>
+    <p>
+      Federated identity credentials (FIC) are the path that doesn't get enough airtime in the agent-identity discussion. The premise is straightforward: an agent runtime outside Azure — a Vercel function, a GitHub Actions job, an on-prem Kubernetes pod, an AWS Lambda — can authenticate to an Entra app registration <em>without storing a client secret</em>. The runtime's native identity provider (GitHub's OIDC issuer, Kubernetes' service-account token, AWS's STS) issues a token; Entra trusts that token via a pre-configured trust relationship and exchanges it for an Entra access token. <a href="https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation">Workload identity federation</a> is the canonical doc.
+    </p>
+    <p>
+      Why this matters for agents: the alternative is a long-lived <code>client_secret</code> sitting in Vercel env vars, GitHub repo secrets, or a Kubernetes Secret. Every one of those is a credential rotation problem with a non-zero leak surface. FIC eliminates the secret entirely. The cost is a one-time trust setup with three values you need to get right:
+    </p>
+    <ul>
+      <li><strong><code>issuer</code></strong> — the OIDC issuer URL of the external IdP (e.g. <code>https://token.actions.githubusercontent.com</code> for GitHub Actions). Must match the <code>iss</code> claim in the runtime's token character-for-character. Trailing-slash drift is a common silent failure.</li>
+      <li><strong><code>subject</code></strong> — identifies the specific runtime workload. For GitHub Actions this is <code>repo:&lt;org&gt;/&lt;repo&gt;:environment:&lt;name&gt;</code> or <code>repo:&lt;org&gt;/&lt;repo&gt;:ref:refs/heads/&lt;branch&gt;</code>. For Kubernetes it's <code>system:serviceaccount:&lt;namespace&gt;:&lt;sa-name&gt;</code>. Wildcards are not supported anywhere — every workload variant needs its own FIC entry, up to the per-app limit of 20.</li>
+      <li><strong><code>audience</code></strong> — what Entra accepts in the token's <code>aud</code> claim. The recommended value is <code>api://AzureADTokenExchange</code>. Other clouds (USGov) have their own audience values.</li>
+    </ul>
+    <p>
+      The trust-setup gotchas: subject mismatches fail silently (Entra rejects the exchange, returns nothing helpful), the issuer URL must exactly match what the IdP advertises in its OIDC discovery document, and FIC tokens issued by Entra ID itself are not eligible — federation is for <em>external</em> token issuers only. Microsoft documents the GitHub flow end-to-end in <a href="https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure-openid-connect">Authenticate to Azure from GitHub Actions by OpenID Connect</a>; the same shape applies for Kubernetes, GCP, and SPIFFE.
+    </p>
+
+    <h2>On-behalf-of for user-triggered agent actions</h2>
+    <p>
+      The OAuth 2.0 <a href="https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-on-behalf-of-flow">on-behalf-of flow</a> is the only correct answer for an agent that reads or writes user-scoped data. The shape is delegation: a user authenticates to your front-end (Teams app, Copilot Studio agent, custom web UI); the front-end gets an access token for the agent's API (token A); the agent's API exchanges token A — using its own client credentials plus token A as an <code>assertion</code> — for token B, which targets Microsoft Graph (or whatever downstream API the agent needs to call). Token B carries the user's identity.
+    </p>
+    <p>
+      The exchange happens at the Entra token endpoint with a specific shape — <code>grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer</code> and <code>requested_token_use=on_behalf_of</code> — and the resulting token B has the user's UPN in its claims. When the agent uses token B to call Graph, the resulting Graph audit-log entry attributes the action to the user, not the agent. The agent is a middle tier; the user is the principal.
+    </p>
+    <p>
+      Why API-key auth fails this case: an API key is the agent's identity. The downstream audit log reads "the agent's service principal did it" — and the user the agent was acting for is invisible. If your agent has 200 users and one of them triggers a sensitive Graph write, you cannot answer "which user" from the downstream log alone. OBO makes the answer the first claim in the token.
+    </p>
+    <p>
+      Practical OBO gotchas worth surfacing before you build:
+    </p>
+    <ul>
+      <li><strong>OBO only works for user principals.</strong> If a service principal sends an app-only token to your agent API, you can't OBO-exchange it. The right pattern for service-to-service is the client credentials flow against your downstream API directly.</li>
+      <li><strong>The <code>aud</code> claim of the incoming token must be the agent's API.</strong> An agent that accepts Graph tokens directly and tries to OBO them won't work — clients can't redeem a token meant for another app.</li>
+      <li><strong>Custom signing keys disqualify the middle tier.</strong> If your agent's app registration uses a custom signing key (common for enterprise SSO setups), OBO breaks because the downstream API can't validate the token.</li>
+      <li><strong>Conditional Access propagates.</strong> If the downstream API has a CA policy (MFA, location, claim challenge), OBO can return an <code>interaction_required</code> error that your agent must surface back to the front-end so the user can step up.</li>
+    </ul>
+
+    <h2>What this looks like in code</h2>
+    <p>
+      Two short examples — one for each of the two paths agent developers actually write. A managed-identity call to Graph (the simplest path when the agent runs on Azure compute), and an OBO exchange (the path you write once and reuse in every user-triggered agent endpoint). Python because most agent runtimes use it; the MSAL surface is similar in C# and Node.
+    </p>
+
+    <p><strong>Managed identity → Graph (agent on Azure compute, app-only call):</strong></p>
+    <div class="diagram" aria-label="Managed identity to Graph">
+<pre><span class="dim"># pip install azure-identity httpx</span>
+from azure.identity import DefaultAzureCredential
+import httpx
+
+<span class="dim"># DefaultAzureCredential picks up the managed identity automatically</span>
+<span class="dim"># when running on App Service / Functions / AKS with workload identity.</span>
+credential = DefaultAzureCredential()
+token = credential.get_token(<span class="accent">"https://graph.microsoft.com/.default"</span>)
+
+resp = httpx.get(
+    <span class="accent">"https://graph.microsoft.com/v1.0/groups"</span>,
+    headers={<span class="accent">"Authorization"</span>: f<span class="accent">"Bearer {token.token}"</span>},
+)
+resp.raise_for_status()</pre>
+    </div>
+
+    <p><strong>On-behalf-of exchange (agent API endpoint, acting as the calling user):</strong></p>
+    <div class="diagram" aria-label="On-behalf-of token exchange">
+<pre><span class="dim"># pip install msal httpx</span>
+import msal, httpx
+
+<span class="dim"># Confidential client app — agent's own app registration.</span>
+app = msal.ConfidentialClientApplication(
+    client_id=<span class="accent">AGENT_CLIENT_ID</span>,
+    client_credential=<span class="accent">AGENT_CLIENT_SECRET</span>,  <span class="dim"># or FIC in production</span>
+    authority=f<span class="accent">"https://login.microsoftonline.com/{TENANT_ID}"</span>,
+)
+
+<span class="dim"># user_token: the access token the front-end sent to this endpoint.</span>
+<span class="dim"># Its `aud` claim must be the agent's own API.</span>
+result = app.acquire_token_on_behalf_of(
+    user_assertion=user_token,
+    scopes=[<span class="accent">"https://graph.microsoft.com/User.Read"</span>],
+)
+
+if <span class="accent">"access_token"</span> not in result:
+    <span class="dim"># Surface CA challenges (interaction_required) back to the caller.</span>
+    raise RuntimeError(result.get(<span class="accent">"error_description"</span>))
+
+resp = httpx.get(
+    <span class="accent">"https://graph.microsoft.com/v1.0/me"</span>,
+    headers={<span class="accent">"Authorization"</span>: f<span class="accent">"Bearer {result['access_token']}"</span>},
+)</pre>
+    </div>
+
+    <p>
+      The OBO snippet is the one most agent developers end up rewriting because the wizard-driven guides hand them an API-key copy-paste instead. The 15 lines above are the difference between "the agent did it" and "Samuel's agent, acting as Samuel, did it" in the Graph audit log.
+    </p>
+
+    <h2>Five gotchas the wizard doesn't surface</h2>
+
+    <ul>
+      <li><strong>Conditional Access for workload identities is a separate license tier.</strong> Applying CA policies to service principals (location restriction, ID-Protection risk gating) requires <a href="https://learn.microsoft.com/en-us/entra/identity/conditional-access/workload-identity">Workload Identities Premium</a> on top of base Entra. Existing policies keep working without it; new or modified policies require the SKU. Managed identities aren't covered by CA at all — they live in access-review territory instead. If your security team's deployment design assumes CA covers the agent's SP, confirm the license before promising.</li>
+      <li><strong>Token caching versus short-lived rotation.</strong> Entra access tokens are valid ~60–90 minutes. MSAL's default cache is in-process — fine for long-running services, wrong for short-lived FaaS workers that re-acquire on every cold start (hammering the token endpoint and burning your throttling budget). Persist the MSAL cache to a fast store (Redis, encrypted file) for FaaS; let MSAL keep it in memory for long-running pods. Don't roll your own caching layer — MSAL handles refresh and rotation correctly.</li>
+      <li><strong>Log the requesting identity downstream or your audit is blind.</strong> When the agent calls your own internal API on behalf of the user, your API needs to log the user's UPN, not just "request from <code>agent-svc</code>." Trace ID, user UPN, agent app ID, tool name — those four make the audit trail reconstructable. Skipping the UPN is the most common audit-trail bug I find on first review.</li>
+      <li><strong>Group-based RBAC versus app-role RBAC for agent-callable APIs.</strong> If your downstream API checks <code>groups</code> claim, OBO works — the user's group membership flows through. If you use <code>roles</code> claim with app-role assignments, those are <em>assigned to the user</em> for the downstream API, not to the agent. Map the access model deliberately. App-only calls (FIC, managed identity) only see app-role assignments on the SPN itself, never group memberships.</li>
+      <li><strong>The GitHub-Actions FIC subject-claim glob trap.</strong> There is no wildcard support. A subject like <code>repo:contoso/agent-runtime:*</code> does not exist. Every distinct workflow target (per branch, per environment, per pull-request type) is a separate FIC entry, up to the 20-per-app cap. Teams that try to be clever with one "catch-all" FIC end up with an identity that quietly fails when the workflow trigger shape changes. Use environments (<code>repo:contoso/agent-runtime:environment:production</code>) to keep the count bounded.</li>
+    </ul>
+
+    <h2>What I'd ship before going live</h2>
+    <p>
+      A short pre-flight list specific to agent-identity work, ordered:
+    </p>
+    <ul>
+      <li><strong>OBO</strong> for every endpoint that touches user-scoped data. Verify the downstream audit log shows the user's UPN, not the agent's SPN, in a real call.</li>
+      <li><strong>FIC</strong> instead of <code>client_secret</code> wherever the agent runtime supports it (GitHub Actions, Kubernetes, AWS, GCP, Vercel via OIDC). One trust setup, zero rotation.</li>
+      <li><strong>Managed identity</strong> for any agent component running on Azure compute that doesn't need user attribution. Don't pay the operational cost of FIC when the platform already provides the identity.</li>
+      <li><strong>App-role RBAC</strong> on agent-callable APIs, not group-based, unless you have a specific reason. App roles assigned to the agent's SPN make the access model explicit and auditable.</li>
+      <li><strong>Conditional Access on the agent's service principal</strong> — location restriction at minimum, ID-Protection risk gating if you've licensed it. Treat the agent identity the way you'd treat a privileged user.</li>
+      <li><strong>Token-cache strategy</strong> matched to the runtime — in-process for long-running pods, persisted cache for FaaS. MSAL, not bespoke.</li>
+      <li><strong>Downstream UPN logging</strong> on every internal API the agent calls. Confirm by tail-grepping a real call.</li>
+      <li><strong>Revocation runbook</strong> — know how you'd disable the agent's app registration tenant-wide if something went wrong. "Delete the SPN" is destructive; "disable the SPN + invalidate refresh tokens via <code>revokeSignInSessions</code>" is correct.</li>
+    </ul>
+
+    <h2>Closing</h2>
+    <p>
+      Identity is layer 01 of the five-layer pattern in <a href="/writing/agent-security-review/">Making agent deployments pass security review</a> for a reason: get it wrong and every layer above it inherits the wrong audit shape. The four-way decision in this essay is the underlying machinery — Entra workload identities are how you separate "the agent did it" from "the user's agent did it" in the only log that matters during a compliance review.
+    </p>
+    <p>
+      None of these primitives are new. The OAuth flows are a decade old; managed identities have been GA for years; FIC has been GA since 2022. The novelty is that agents make many requests fast, against scoped data, and the audit shape of those requests is now the deployment-blocking question. The shape is fixable. The fix is upstream of the agent framework.
+    </p>
+  </div>
+
+  <aside class="cta-aside">
+    <h3>Building this for your team?</h3>
+    <p>I do fixed-scope reviews and builds for teams wiring agent systems into Entra ID — identity choice, OBO plumbing, FIC trust setup, audit-trail verification. Microsoft stack, regulated environments, done before.</p>
+    <div class="cta-aside__buttons">
+      <a class="btn btn-primary" href="https://cal.com/althorconsulting/architecture-review">Book a 30-min review</a>
+      <a class="btn-link" href="/#engagements">Or see engagement options →</a>
+    </div>
+  </aside>
+
+  <a class="back-link" href="/writing/" style="margin-top: 2rem;">All writing</a>
+
+</div>
+
+<footer>
+  <span>Althor Consulting LLC</span>
+  <span>© 2026</span>
+</footer>
+</body>
+</html>

@@ -5,13 +5,26 @@
   <link href="https://althor.dev/writing/feed.xml" rel="self"/>
   <link href="https://althor.dev/writing/"/>
   <id>https://althor.dev/writing/</id>
-  <updated>2026-04-29T00:00:00Z</updated>
+  <updated>2026-05-17T00:00:00Z</updated>
   <author>
     <name>Samuel</name>
     <email>contact@althor.dev</email>
     <uri>https://althor.dev/</uri>
   </author>
   <rights>© 2026 Althor Consulting</rights>
+
+  <entry>
+    <title>Entra ID workload identities for agent systems</title>
+    <link href="https://althor.dev/writing/entra-workload-identities/"/>
+    <id>https://althor.dev/writing/entra-workload-identities/</id>
+    <published>2026-05-17T00:00:00Z</published>
+    <updated>2026-05-17T00:00:00Z</updated>
+    <author>
+      <name>Samuel</name>
+      <uri>https://althor.dev/</uri>
+    </author>
+    <summary>A decision matrix for picking the right Entra ID workload identity for an AI agent — app-only service principal, on-behalf-of delegation, federated credentials, managed identity — plus the gotchas the wizard doesn't surface.</summary>
+  </entry>
 
   <entry>
     <title>Adding MCP servers to Copilot Studio in regulated environments</title>
@@ -44,7 +57,7 @@
     <link href="https://althor.dev/writing/agent-security-review/"/>
     <id>https://althor.dev/writing/agent-security-review/</id>
     <published>2026-04-21T00:00:00Z</published>
-    <updated>2026-04-28T00:00:00Z</updated>
+    <updated>2026-05-17T00:00:00Z</updated>
     <author>
       <name>Samuel</name>
       <uri>https://althor.dev/</uri>
