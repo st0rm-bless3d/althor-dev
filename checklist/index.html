@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#1a1d22" />
+
+<title>Agent Security Review Checklist · althor</title>
+<meta name="description" content="A pre-flight checklist for shipping AI agents into regulated environments. Free PDF — the same five-layer review Samuel runs during a Discovery engagement, distilled into yes/no items per layer." />
+<link rel="canonical" href="https://althor.dev/checklist/" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+<meta property="og:site_name" content="Althor Consulting" />
+<meta property="og:title" content="Agent Security Review Checklist" />
+<meta property="og:description" content="A pre-flight checklist for shipping AI agents into regulated environments. Five layers, yes/no items, decision tree. Free PDF." />
+<meta property="og:url" content="https://althor.dev/checklist/" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://althor.dev/og-essay.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Agent Security Review Checklist" />
+<meta name="twitter:description" content="A pre-flight checklist for shipping AI agents into regulated environments. Free PDF." />
+<meta name="twitter:image" content="https://althor.dev/og-essay.png" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Agent Security Review Checklist",
+  "description": "A pre-flight checklist for shipping AI agents into regulated environments. Identity, credential broker, scoped tools, policy gating, audit — yes/no items per layer, plus a decision tree for missing layers.",
+  "datePublished": "2026-04-21",
+  "dateModified": "2026-05-17",
+  "author": { "@type": "Person", "name": "Samuel", "url": "https://althor.dev/" },
+  "publisher": { "@type": "Organization", "name": "Althor Consulting", "url": "https://althor.dev/" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://althor.dev/checklist/" },
+  "image": "https://althor.dev/og-essay.png",
+  "inLanguage": "en",
+  "associatedMedia": {
+    "@type": "DigitalDocument",
+    "name": "Agent Security Review Checklist",
+    "encodingFormat": "application/pdf",
+    "contentUrl": "https://althor.dev/assets/agent-security-review-checklist.pdf"
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/style.css" />
+<link rel="alternate" type="application/atom+xml" title="althor · Writing" href="/writing/feed.xml" />
+<script defer src="https://analytics.althor.dev/script.js" data-website-id="27dfcf34-3bbc-43d4-8f8d-810b9d9b9f47"></script>
+</head>
+<body>
+<div class="container container--narrow">
+
+  <header class="brand">
+    <span class="brand__cursor" aria-hidden="true">▋</span>
+    <span class="brand__word"><a href="/">althor</a></span>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/work/">Work</a>
+      <a href="/writing/">Writing</a>
+      <a href="/#about">About</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <article class="article">
+    <div class="article__eyebrow">Free PDF · Pattern</div>
+    <h1 class="article__title">Agent Security Review Checklist</h1>
+    <p class="article__dek">
+      A pre-flight checklist for shipping AI agents into regulated environments. Run it against any agent system that touches production data, customer information, or financial records — before InfoSec runs it against you.
+    </p>
+    <div class="article__meta">
+      <span>Format <strong>PDF · 8 pages</strong></span>
+      <span>Version <strong>v1.0 · April 2026</strong></span>
+      <span>Audience <strong>Architects, security leads</strong></span>
+    </div>
+  </article>
+
+  <div class="prose">
+
+    <h2>Why this exists</h2>
+    <p>
+      This is the same checklist I run during the first phase of a Discovery engagement, distilled to a self-serve format. Five layers — identity, credential broker, scoped tools, policy gating, audit — with yes/no items per layer and a decision tree for what to fix first when you're short on time. No fluff, no marketing pages padding the page count.
+    </p>
+
+    <h2>What's inside</h2>
+    <ul>
+      <li><strong>How to use it</strong> — a 4-sentence read on scoring and where to start.</li>
+      <li><strong>Layer 1 · Identity</strong> — 6 checks. Workload identity, OBO delegation, ownership, rotation.</li>
+      <li><strong>Layer 2 · Credential broker</strong> — 7 checks. Where secrets live, how tokens are minted, what's logged.</li>
+      <li><strong>Layer 3 · Scoped tool access</strong> — 7 checks. Domain-shaped tools, read/write separation, blast-radius bounds.</li>
+      <li><strong>Layer 4 · Policy + approval gating</strong> — 7 checks. Auto vs. queue, approval as a workflow object, revocation paths.</li>
+      <li><strong>Layer 5 · Audit</strong> — 7 checks. Structured events, retention, what compliance actually queries.</li>
+      <li><strong>Decision tree</strong> — when you're missing a whole layer, what's the minimum fix and how long does it take.</li>
+      <li><strong>What good looks like</strong> — the patterns production-grade systems add on top of the five-layer minimum.</li>
+    </ul>
+    <p>
+      Each layer also includes the questions InfoSec will actually ask in review, and the common gaps that show up in the wild. The intent is that you can read each section and immediately know whether your system would pass or fail.
+    </p>
+
+    <h2>Download</h2>
+    <p>
+      One PDF, no email required. Save it, share it inside your team, fill it out as a working doc.
+    </p>
+
+  </div>
+
+  <aside class="cta-aside" style="margin-top: 0;">
+    <h3>Get the checklist</h3>
+    <p>8 pages · ~80 KB · matches the typography of this site, prints clean on Letter or A4.</p>
+    <div class="cta-aside__buttons">
+      <a class="btn btn-primary" href="/assets/agent-security-review-checklist.pdf" download>
+        Download the PDF →
+      </a>
+      <a class="btn-link" href="/writing/agent-security-review/">
+        Or read the essay first →
+      </a>
+    </div>
+  </aside>
+
+  <div class="prose">
+
+    <h2>Pairs with the methodology essay</h2>
+    <p>
+      This checklist pairs with the essay <a href="/writing/agent-security-review/">Making agent deployments pass security review</a> — the longer piece walks through <em>why</em> each layer exists and how they map to enterprise compliance controls. The checklist is the operational version: skip the prose, score yourself, and find the layer that needs work.
+    </p>
+
+  </div>
+
+  <aside class="cta-aside">
+    <h3>Want this run on your actual deployment?</h3>
+    <p>
+      A self-serve checklist gets you 80% of the way there. The Discovery engagement gets you the other 20% — a written report mapping your current state to the five layers, a prioritized remediation list, and a one-page summary you can hand to InfoSec.
+    </p>
+    <div class="cta-aside__buttons">
+      <a class="btn btn-primary" href="https://cal.com/althorconsulting/architecture-review">Book a 30-min architecture review</a>
+      <a class="btn-link" href="/#engagements">Or see engagement options →</a>
+    </div>
+  </aside>
+
+  <a class="back-link" href="/writing/" style="margin-top: 2rem;">All writing</a>
+
+</div>
+
+<footer>
+  <span>Althor Consulting LLC</span>
+  <span>© 2026</span>
+</footer>
+</body>
+</html>
