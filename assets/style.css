@@ -716,6 +716,12 @@ footer {
   flex-direction: column;
   gap: 0.4rem;
 }
+/* Inside .prose (a flex column with its own 1.5rem gap), zero the
+   callout margin so we don't double the rhythm into a 4.5rem gulf. */
+.prose > .callout { margin: 0; }
+.prose > .tldr { margin: 0; }
+.prose > .step-sequence { margin: 0; }
+.prose > .section-marker { margin: 0.75rem 0; }
 .callout--warn { border-left: 3px solid var(--accent-warn); }
 .callout--note { border-left: 3px solid var(--accent-dim); }
 .callout__label {
