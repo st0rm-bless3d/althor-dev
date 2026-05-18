@@ -42,5 +42,4 @@ Remote-first.
 ## Contact
 
 - Email: contact@althor.dev
-- LinkedIn: https://www.linkedin.com/in/samuel-s-a95912248
 - Canonical URL: https://althor.dev/
