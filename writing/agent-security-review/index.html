@@ -115,6 +115,15 @@
   </article>
 
   <div class="prose">
+    <div class="tldr">
+      <span class="tldr__label">TL;DR</span>
+      <ul>
+        <li>Five layers map directly to the InfoSec controls every enterprise review will ask about — skip any and the review fails.</li>
+        <li>Identity, credential broker, scoped tools, policy gating, audit. In that order, with audit as the layer that turns a legal conversation into a technical one.</li>
+        <li>None of the primitives are new. The novelty is applying decades-old controls to a new kind of actor.</li>
+      </ul>
+    </div>
+
     <p>
       Most agent projects hit the same wall. The demo looks great. The pilot works. Then it meets security review, and every layer of the system turns out to be wrong: one service account with god-mode, secrets in environment variables, no audit trail, no way to tell if the agent did something it shouldn't have. The project either ships with a risk exception that auto-expires, or dies quietly on a compliance spreadsheet.
     </p>
@@ -128,33 +137,60 @@
       The five layers — identity, credential broker, scoped tool access, policy and approval gating, and structured audit — are the minimum architecture an enterprise InfoSec team will accept for a production AI agent. Each layer maps directly to a compliance control reviewers already know how to evaluate. Skip any one and the review fails on the missing control; ship all five and the conversation moves from "is this allowed?" to "let's tune the thresholds."
     </p>
 
-    <h3>01 · Identity</h3>
-    <p>
-      Every agent action is attributed to a specific actor — a machine account for autonomous runs, an on-behalf-of delegation for user-triggered actions. "The agent did it" is not an answer. Entra ID, Okta, Google Workspace all support workload identities; use them. The audit log has to answer <em>who</em>.
-    </p>
-    <p>
-      Deep dive on this layer for Microsoft tenants: <a href="/writing/entra-workload-identities/">Entra ID workload identities for agent systems</a> — the four-way decision matrix between app-only, on-behalf-of, federated credentials, and managed identity, plus the gotchas the wizard doesn't surface.
-    </p>
+    <div class="step-sequence">
+      <div class="step">
+        <div class="step__num">01</div>
+        <div class="step__body">
+          <h3 class="step__title">Identity</h3>
+          <p>
+            Every agent action is attributed to a specific actor — a machine account for autonomous runs, an on-behalf-of delegation for user-triggered actions. "The agent did it" is not an answer. Entra ID, Okta, Google Workspace all support workload identities; use them. The audit log has to answer <em>who</em>.
+          </p>
+          <p>
+            Deep dive on this layer for Microsoft tenants: <a href="/writing/entra-workload-identities/">Entra ID workload identities for agent systems</a> — the four-way decision matrix between app-only, on-behalf-of, federated credentials, and managed identity, plus the gotchas the wizard doesn't surface.
+          </p>
+        </div>
+      </div>
 
-    <h3>02 · Credential broker</h3>
-    <p>
-      Agents never hold long-lived secrets. They request short-lived, scoped tokens from a broker (Vault, Key Vault, cloud-native secret manager) on each call. The broker knows which tools the agent is authorized to call, mints a narrow token, and logs the request. Compromising the agent's runtime doesn't compromise the kingdom.
-    </p>
+      <div class="step">
+        <div class="step__num">02</div>
+        <div class="step__body">
+          <h3 class="step__title">Credential broker</h3>
+          <p>
+            Agents never hold long-lived secrets. They request short-lived, scoped tokens from a broker (Vault, Key Vault, cloud-native secret manager) on each call. The broker knows which tools the agent is authorized to call, mints a narrow token, and logs the request. Compromising the agent's runtime doesn't compromise the kingdom.
+          </p>
+        </div>
+      </div>
 
-    <h3>03 · Scoped tool access</h3>
-    <p>
-      Tools expose the smallest surface the agent needs. Read-only views of production databases. Action-specific API wrappers instead of admin SDKs. Model Context Protocol servers with per-server auth boundaries. When the agent goes off-rails — and sometimes it will — the blast radius is bounded by design, not by hope.
-    </p>
+      <div class="step">
+        <div class="step__num">03</div>
+        <div class="step__body">
+          <h3 class="step__title">Scoped tool access</h3>
+          <p>
+            Tools expose the smallest surface the agent needs. Read-only views of production databases. Action-specific API wrappers instead of admin SDKs. Model Context Protocol servers with per-server auth boundaries. When the agent goes off-rails — and sometimes it will — the blast radius is bounded by design, not by hope.
+          </p>
+        </div>
+      </div>
 
-    <h3>04 · Policy + approval gating</h3>
-    <p>
-      Every action goes through a policy check before execution. Safe, reversible operations (read a record, propose an update) auto-execute. Irreversible or high-risk operations (issue a refund, modify production config, delete data) queue for human approval. Confidence thresholds decide the line. Humans own the risky calls; the pattern is explicit about which calls those are.
-    </p>
+      <div class="step">
+        <div class="step__num">04</div>
+        <div class="step__body">
+          <h3 class="step__title">Policy + approval gating</h3>
+          <p>
+            Every action goes through a policy check before execution. Safe, reversible operations (read a record, propose an update) auto-execute. Irreversible or high-risk operations (issue a refund, modify production config, delete data) queue for human approval. Confidence thresholds decide the line. Humans own the risky calls; the pattern is explicit about which calls those are.
+          </p>
+        </div>
+      </div>
 
-    <h3>05 · Audit layer</h3>
-    <p>
-      Every suggestion, every approval, every override, every failure produces a structured event. Logs are not enough — logs are for debugging. An audit layer is structured, queryable, retained, and reviewable. Compliance, incident response, and post-mortem all run against the same surface. This is the layer that turns a legal conversation into a technical one.
-    </p>
+      <div class="step">
+        <div class="step__num">05</div>
+        <div class="step__body">
+          <h3 class="step__title">Audit layer</h3>
+          <p>
+            Every suggestion, every approval, every override, every failure produces a structured event. Logs are not enough — logs are for debugging. An audit layer is structured, queryable, retained, and reviewable. Compliance, incident response, and post-mortem all run against the same surface. This is the layer that turns a legal conversation into a technical one.
+          </p>
+        </div>
+      </div>
+    </div>
 
     <h2>Why the pattern works</h2>
 
