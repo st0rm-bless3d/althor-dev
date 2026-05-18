@@ -240,12 +240,34 @@
     <p>
       The MCP integration in Copilot Studio is structurally a new attack surface. Here's the brief threat model worth running before going live:
     </p>
-    <ul>
-      <li><strong>Prompt injection through tool results.</strong> The orchestrator's plan can be hijacked by malicious content returned from a tool. If your MCP server reads from any source where users (your own or external) can plant text — comments, ticket descriptions, document contents — assume that content is hostile to your orchestrator. Bound the output. Strip or escape suspect markers. Don't pass tool results back into a system prompt.</li>
-      <li><strong>Token theft via credential broker compromise.</strong> Your MCP server is a credential broker. If an attacker gets onto the host running the server, they get whatever scopes the server can mint. Scope tokens narrowly per call; rotate regularly; alert on unusual call patterns.</li>
-      <li><strong>Tool surface drift over time.</strong> MCP servers update tools dynamically; Copilot Studio reflects those changes automatically. A maintainer who adds <code>delete_user</code> to a previously read-only server has just added it to every agent that mounted that server. Your governance process needs to catch tool surface changes, not just connector additions.</li>
-      <li><strong>DLP blind spots on streaming responses.</strong> Streamable HTTP responses can be very large. DLP scanning of the response stream is best-effort. Don't return raw PII as a tool result and assume DLP will catch it; design your tools to return references (IDs, redacted views) and let downstream UI resolve to the full record under the user's own permissions.</li>
-    </ul>
+
+    <aside class="callout callout--warn">
+      <span class="callout__label">Threat 1 · Prompt injection</span>
+      <div class="callout__body">
+        <p><strong>Prompt injection through tool results.</strong> The orchestrator's plan can be hijacked by malicious content returned from a tool. If your MCP server reads from any source where users (your own or external) can plant text — comments, ticket descriptions, document contents — assume that content is hostile to your orchestrator. Bound the output. Strip or escape suspect markers. Don't pass tool results back into a system prompt.</p>
+      </div>
+    </aside>
+
+    <aside class="callout callout--warn">
+      <span class="callout__label">Threat 2 · Token theft</span>
+      <div class="callout__body">
+        <p><strong>Token theft via credential broker compromise.</strong> Your MCP server is a credential broker. If an attacker gets onto the host running the server, they get whatever scopes the server can mint. Scope tokens narrowly per call; rotate regularly; alert on unusual call patterns.</p>
+      </div>
+    </aside>
+
+    <aside class="callout callout--warn">
+      <span class="callout__label">Threat 3 · Tool surface drift</span>
+      <div class="callout__body">
+        <p><strong>Tool surface drift over time.</strong> MCP servers update tools dynamically; Copilot Studio reflects those changes automatically. A maintainer who adds <code>delete_user</code> to a previously read-only server has just added it to every agent that mounted that server. Your governance process needs to catch tool surface changes, not just connector additions.</p>
+      </div>
+    </aside>
+
+    <aside class="callout callout--warn">
+      <span class="callout__label">Threat 4 · DLP blind spots</span>
+      <div class="callout__body">
+        <p><strong>DLP blind spots on streaming responses.</strong> Streamable HTTP responses can be very large. DLP scanning of the response stream is best-effort. Don't return raw PII as a tool result and assume DLP will catch it; design your tools to return references (IDs, redacted views) and let downstream UI resolve to the full record under the user's own permissions.</p>
+      </div>
+    </aside>
     <p>
       None of these are exotic. They're the same threat model that applies to any agent system that reaches into real infrastructure (see <a href="/writing/agent-security-review/">Making agent deployments pass security review</a>). The Copilot Studio integration adds two new attack surfaces — the connector framework and the orchestrator's planner — and removes none.
     </p>
