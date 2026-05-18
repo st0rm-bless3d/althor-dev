@@ -9,6 +9,8 @@
 <title>Making agent deployments pass security review · althor</title>
 <meta name="description" content="Five-layer architecture for making agent deployments pass enterprise security review. Identity, broker, tools, policy, audit." />
 <link rel="canonical" href="https://althor.dev/writing/agent-security-review/" />
+<link rel="alternate" hreflang="en" href="https://althor.dev/writing/agent-security-review/" />
+<link rel="alternate" hreflang="x-default" href="https://althor.dev/writing/agent-security-review/" />
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -20,14 +22,26 @@
 <meta property="og:description" content="A five-layer architecture distilled from shipping three agent systems in regulated environments." />
 <meta property="og:url" content="https://althor.dev/writing/agent-security-review/" />
 <meta property="og:type" content="article" />
-<meta property="og:image" content="https://althor.dev/og-essay.png" />
+<meta property="og:image" content="https://althor.dev/og-agent-security-review.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Making agent deployments pass security review — essay from althor" />
+
+<meta property="article:published_time" content="2026-04-21" />
+<meta property="article:modified_time" content="2026-05-17" />
+<meta property="article:author" content="Samuel S" />
+<meta property="article:section" content="Pattern" />
+<meta property="article:tag" content="Agent security review" />
+<meta property="article:tag" content="Five-layer architecture" />
+<meta property="article:tag" content="Credential broker" />
+<meta property="article:tag" content="Policy gating" />
+<meta property="article:tag" content="Audit layer" />
+<meta property="article:tag" content="Regulated environments" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Making agent deployments pass security review" />
 <meta name="twitter:description" content="Five layers that map to the compliance controls an enterprise InfoSec team will ask about." />
-<meta name="twitter:image" content="https://althor.dev/og-essay.png" />
+<meta name="twitter:image" content="https://althor.dev/og-agent-security-review.png" />
 
 <script type="application/ld+json">
 {
@@ -37,11 +51,32 @@
   "description": "A five-layer architecture distilled from shipping three agent systems in regulated environments.",
   "datePublished": "2026-04-21",
   "dateModified": "2026-05-17",
-  "author": { "@type": "Person", "name": "Samuel", "url": "https://althor.dev/" },
+  "author": { "@type": "Person", "name": "Samuel S", "url": "https://althor.dev/" },
   "publisher": { "@type": "Organization", "name": "Althor Consulting", "url": "https://althor.dev/" },
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://althor.dev/writing/agent-security-review/" },
-  "image": "https://althor.dev/og-essay.png",
-  "inLanguage": "en"
+  "image": "https://althor.dev/og-agent-security-review.png",
+  "inLanguage": "en",
+  "about": [
+    "Agent security review",
+    "Five-layer architecture",
+    "Identity",
+    "Credential broker",
+    "Scoped tool access",
+    "Policy gating",
+    "Audit layer"
+  ],
+  "keywords": "agent security, security review, identity, credential broker, scoped tools, policy gating, audit, regulated environments"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://althor.dev/" },
+    { "@type": "ListItem", "position": 2, "name": "Writing", "item": "https://althor.dev/writing/" },
+    { "@type": "ListItem", "position": 3, "name": "Making agent deployments pass security review", "item": "https://althor.dev/writing/agent-security-review/" }
+  ]
 }
 </script>
 
@@ -89,6 +124,9 @@
     </p>
 
     <h2>The five layers</h2>
+    <p>
+      The five layers — identity, credential broker, scoped tool access, policy and approval gating, and structured audit — are the minimum architecture an enterprise InfoSec team will accept for a production AI agent. Each layer maps directly to a compliance control reviewers already know how to evaluate. Skip any one and the review fails on the missing control; ship all five and the conversation moves from "is this allowed?" to "let's tune the thresholds."
+    </p>
 
     <h3>01 · Identity</h3>
     <p>

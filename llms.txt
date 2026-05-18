@@ -43,3 +43,11 @@ Remote-first.
 
 - Email: contact@althor.dev
 - Canonical URL: https://althor.dev/
+
+## Author
+
+- Samuel S — solo consultant. Microsoft stack (Azure, Entra ID, M365, Power Platform) + Rust + TypeScript + Python. D.C. metro, remote-first.
+
+## Full corpus
+
+- LlmsFullTxt: https://althor.dev/llms-full.txt

@@ -9,6 +9,8 @@
 <title>Spire · althor</title>
 <meta name="description" content="Spire: AI-native infrastructure control plane in Rust. Policy-gated approvals, MCP tool access, single-binary deploy." />
 <link rel="canonical" href="https://althor.dev/work/spire/" />
+<link rel="alternate" hreflang="en" href="https://althor.dev/work/spire/" />
+<link rel="alternate" hreflang="x-default" href="https://althor.dev/work/spire/" />
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -20,12 +22,77 @@
 <meta property="og:description" content="Policy-gated approval flows, per-object audit log, MCP-based tool access. Single-binary deploy." />
 <meta property="og:url" content="https://althor.dev/work/spire/" />
 <meta property="og:type" content="article" />
-<meta property="og:image" content="https://althor.dev/og-case-study.png" />
+<meta property="og:image" content="https://althor.dev/og-spire.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Spire — AI-native infrastructure control plane built in Rust" />
+
+<meta property="article:published_time" content="2026-04-21" />
+<meta property="article:modified_time" content="2026-05-17" />
+<meta property="article:author" content="Samuel S" />
+<meta property="article:section" content="Active build" />
+<meta property="article:tag" content="Spire" />
+<meta property="article:tag" content="AI infrastructure control plane" />
+<meta property="article:tag" content="Rust" />
+<meta property="article:tag" content="Model Context Protocol" />
+<meta property="article:tag" content="Policy-gated approvals" />
+<meta property="article:tag" content="Single-binary deploy" />
+<meta property="article:tag" content="SQLite" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://althor.dev/og-case-study.png" />
+<meta name="twitter:image" content="https://althor.dev/og-spire.png" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://althor.dev/work/spire/#app",
+      "name": "Spire",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Linux",
+      "url": "https://althor.dev/work/spire/",
+      "image": "https://althor.dev/og-spire.png",
+      "description": "AI-native infrastructure control plane in Rust. Operator surface for running agents against real systems without handing them master keys — policy-gated approvals, per-object audit log, MCP-based tool access, single-binary Docker deploy.",
+      "author": { "@type": "Person", "name": "Samuel S", "url": "https://althor.dev/" },
+      "publisher": { "@type": "Organization", "name": "Althor Consulting", "url": "https://althor.dev/" },
+      "softwareRequirements": "Docker, Linux x86_64",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://althor.dev/work/spire/#article",
+      "headline": "Spire — AI-native infrastructure control plane",
+      "description": "Architectural notes on Spire: single-binary Rust deploy, policy-gated approval flows, per-object audit log, MCP tool layer with read-only-by-default and per-server auth boundaries.",
+      "datePublished": "2026-04-21",
+      "dateModified": "2026-05-17",
+      "author": { "@type": "Person", "name": "Samuel S", "url": "https://althor.dev/" },
+      "publisher": { "@type": "Organization", "name": "Althor Consulting", "url": "https://althor.dev/" },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://althor.dev/work/spire/" },
+      "image": "https://althor.dev/og-spire.png",
+      "inLanguage": "en",
+      "about": [
+        "AI infrastructure control plane",
+        "Rust",
+        "Single-binary deploy",
+        "Model Context Protocol",
+        "Policy-gated approvals",
+        "Audit log"
+      ],
+      "keywords": "Spire, AI control plane, Rust, MCP, policy gating, audit, single-binary, SQLite, Axum, bollard"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://althor.dev/" },
+        { "@type": "ListItem", "position": 2, "name": "Work", "item": "https://althor.dev/work/" },
+        { "@type": "ListItem", "position": 3, "name": "Spire", "item": "https://althor.dev/work/spire/" }
+      ]
+    }
+  ]
+}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -152,6 +219,8 @@
       <li>The audit layer and the policy layer share data structures. There is no "what the policy said" vs. "what the audit recorded." They are the same.</li>
       <li>Single-binary shape means the operator can run the whole control plane in any environment — homelab, customer site, review sandbox — with one image.</li>
     </ul>
+
+    <p class="related"><strong>See also:</strong> <a href="/writing/mcp-server-boundaries/">Drawing the right boundaries for an MCP server</a> — the six rules Spire's MCP tool layer applies in practice.</p>
   </div>
 
   <aside class="cta-aside">

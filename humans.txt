@@ -1,0 +1,27 @@
+/* TEAM */
+
+Solo consultant: Samuel S
+  Role:     Architect, builder, principal
+  Contact:  contact [at] althor.dev
+  From:     Washington, D.C. metro, US
+
+/* THANKS */
+
+Built on the shoulders of: the Model Context Protocol working group, the
+Entra ID identity platform team, the Rust + Axum + sqlx maintainers, and
+every InfoSec architect who pushed back hard enough to make the patterns
+on this site sharper.
+
+/* SITE */
+
+Last update:   2026-05-18
+Standards:     HTML5, CSS3, JSON-LD (schema.org)
+Components:    Static HTML, GitHub Pages
+Fonts:         Geist + Geist Mono (Google Fonts)
+Analytics:     Umami (self-hosted, no third-party tracking)
+Build:         Hand-written. No framework. No build step.
+
+Source:        https://github.com/st0rm-bless3d/althor-dev
+Sitemap:       https://althor.dev/sitemap.xml
+LLM index:     https://althor.dev/llms.txt
+Full corpus:   https://althor.dev/llms-full.txt

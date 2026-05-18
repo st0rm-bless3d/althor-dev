@@ -1,0 +1,55 @@
+name: IndexNow submission
+
+# Ping IndexNow (https://www.indexnow.org/) on every push to main that
+# changes HTML pages or the sitemap. Bing / Yandex / Seznam read this
+# feed; Google does not, but it remains the lightweight way to keep the
+# non-Google search surfaces fresh.
+#
+# Key file lives at the repo root as <key>.txt; Pages serves it under
+# that exact path so IndexNow's host-ownership check passes.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "**/*.html"
+      - "sitemap.xml"
+  workflow_dispatch: {}
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Submit URL list to IndexNow
+        env:
+          INDEXNOW_KEY: e9f6227b1ec4183705c24b9142b50e16
+          HOST: althor.dev
+        run: |
+          set -euo pipefail
+          payload=$(cat <<EOF
+          {
+            "host": "${HOST}",
+            "key": "${INDEXNOW_KEY}",
+            "keyLocation": "https://${HOST}/${INDEXNOW_KEY}.txt",
+            "urlList": [
+              "https://${HOST}/",
+              "https://${HOST}/work/",
+              "https://${HOST}/work/extraction-pipeline/",
+              "https://${HOST}/work/governance-platform/",
+              "https://${HOST}/work/spire/",
+              "https://${HOST}/writing/",
+              "https://${HOST}/writing/agent-security-review/",
+              "https://${HOST}/writing/entra-workload-identities/",
+              "https://${HOST}/writing/mcp-copilot-studio/",
+              "https://${HOST}/writing/mcp-server-boundaries/",
+              "https://${HOST}/checklist/"
+            ]
+          }
+          EOF
+          )
+          echo "Submitting to IndexNow…"
+          curl --fail-with-body --silent --show-error \
+            -X POST "https://api.indexnow.org/IndexNow" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d "${payload}"
+          echo "IndexNow submission complete."

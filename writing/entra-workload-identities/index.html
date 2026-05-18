@@ -9,6 +9,8 @@
 <title>Entra ID workload identities for agent systems · althor</title>
 <meta name="description" content="A decision matrix for picking the right Entra ID workload identity for an AI agent — service principal, OBO, federated credentials, managed identity." />
 <link rel="canonical" href="https://althor.dev/writing/entra-workload-identities/" />
+<link rel="alternate" hreflang="en" href="https://althor.dev/writing/entra-workload-identities/" />
+<link rel="alternate" hreflang="x-default" href="https://althor.dev/writing/entra-workload-identities/" />
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -20,14 +22,26 @@
 <meta property="og:description" content="A decision matrix for picking the right Entra ID workload identity for an AI agent — service principal, OBO, federated credentials, managed identity." />
 <meta property="og:url" content="https://althor.dev/writing/entra-workload-identities/" />
 <meta property="og:type" content="article" />
-<meta property="og:image" content="https://althor.dev/og-essay.png" />
+<meta property="og:image" content="https://althor.dev/og-entra-workload-identities.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Entra ID workload identities for agent systems — essay from althor" />
+
+<meta property="article:published_time" content="2026-05-17" />
+<meta property="article:modified_time" content="2026-05-17" />
+<meta property="article:author" content="Samuel S" />
+<meta property="article:section" content="Pattern" />
+<meta property="article:tag" content="Entra ID" />
+<meta property="article:tag" content="Workload identities" />
+<meta property="article:tag" content="On-behalf-of OAuth" />
+<meta property="article:tag" content="Federated credentials" />
+<meta property="article:tag" content="Managed identity" />
+<meta property="article:tag" content="Service principal" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Entra ID workload identities for agent systems" />
 <meta name="twitter:description" content="The four-way decision behind every agent that needs to attribute its actions in an Entra tenant." />
-<meta name="twitter:image" content="https://althor.dev/og-essay.png" />
+<meta name="twitter:image" content="https://althor.dev/og-entra-workload-identities.png" />
 
 <script type="application/ld+json">
 {
@@ -37,11 +51,32 @@
   "description": "A decision matrix for picking the right Entra ID workload identity for an AI agent — service principal, on-behalf-of, federated credentials, managed identity.",
   "datePublished": "2026-05-17",
   "dateModified": "2026-05-17",
-  "author": { "@type": "Person", "name": "Samuel", "url": "https://althor.dev/" },
+  "author": { "@type": "Person", "name": "Samuel S", "url": "https://althor.dev/" },
   "publisher": { "@type": "Organization", "name": "Althor Consulting", "url": "https://althor.dev/" },
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://althor.dev/writing/entra-workload-identities/" },
-  "image": "https://althor.dev/og-essay.png",
-  "inLanguage": "en"
+  "image": "https://althor.dev/og-entra-workload-identities.png",
+  "inLanguage": "en",
+  "about": [
+    "Entra ID",
+    "Workload identities",
+    "App-only service principal",
+    "On-behalf-of OAuth",
+    "Federated identity credentials",
+    "Managed identity",
+    "Microsoft Graph audit attribution"
+  ],
+  "keywords": "Entra ID, workload identity, service principal, OBO, federated credentials, managed identity, agent identity, audit attribution"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://althor.dev/" },
+    { "@type": "ListItem", "position": 2, "name": "Writing", "item": "https://althor.dev/writing/" },
+    { "@type": "ListItem", "position": 3, "name": "Entra ID workload identities for agent systems", "item": "https://althor.dev/writing/entra-workload-identities/" }
+  ]
 }
 </script>
 

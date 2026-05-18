@@ -10,6 +10,9 @@
 <title>althor · AI infrastructure consulting</title>
 <meta name="description" content="AI infrastructure consulting. Credential brokers, scoped tool access, policy gating, and audit for enterprise agent deployments." />
 <link rel="canonical" href="https://althor.dev/" />
+<link rel="alternate" hreflang="en" href="https://althor.dev/" />
+<link rel="alternate" hreflang="x-default" href="https://althor.dev/" />
+<link rel="me" href="https://github.com/st0rm-bless3d" />
 
 <!-- Favicons -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -42,12 +45,13 @@
     {
       "@type": "Person",
       "@id": "https://althor.dev/#samuel",
-      "name": "Samuel",
+      "name": "Samuel S",
       "url": "https://althor.dev",
       "jobTitle": "AI Infrastructure Consultant",
       "description": "Solo consultant specializing in agent infrastructure for regulated environments. Builds the credential brokers, scoped tool layers, policy gating, and audit surface that make AI agents deployable in enterprise systems.",
       "sameAs": [
-        "https://github.com/st0rm-bless3d"
+        "https://github.com/st0rm-bless3d",
+        "https://cal.com/althorconsulting"
       ],
       "knowsAbout": [
         "AI agent infrastructure",
@@ -88,11 +92,123 @@
       }
     },
     {
+      "@type": "ProfessionalService",
+      "@id": "https://althor.dev/#service",
+      "name": "Althor Consulting — AI agent infrastructure",
+      "url": "https://althor.dev/#engagements",
+      "provider": { "@id": "https://althor.dev/#althor" },
+      "areaServed": "United States",
+      "serviceType": "AI infrastructure consulting",
+      "description": "Architecture review, fixed-scope builds, and advisory retainer for production AI agent infrastructure in regulated environments — credential brokers, scoped tool surfaces, policy-gated approvals, and audit layers wired into existing identity and observability stacks.",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Engagement options",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "name": "Discovery — Architecture & security review",
+            "description": "Fixed-fee 1–2 week review of an existing or planned agent deployment. Output is a written report covering identity, credential surface, tool scope, approval flow, audit, and the specific compliance gaps to close — plus a prioritized remediation list and a one-page InfoSec summary.",
+            "category": "Architecture review",
+            "url": "https://althor.dev/#engagements",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Discovery engagement",
+              "serviceType": "AI architecture and security review"
+            }
+          },
+          {
+            "@type": "Offer",
+            "name": "Build — Production agent infrastructure",
+            "description": "Fixed-fee 8–12 week end-to-end build of an agent system on the client's stack: identity, credential broker, scoped tools, policy gating, audit layer — wired into existing auth and observability, shipping behind a real approval flow and handed off with IaC, runbooks, and architecture docs.",
+            "category": "Build engagement",
+            "url": "https://althor.dev/#engagements",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Production agent infrastructure build",
+              "serviceType": "AI agent infrastructure development"
+            }
+          },
+          {
+            "@type": "Offer",
+            "name": "Advisory — Ongoing retainer",
+            "description": "Monthly retainer with flexible hours for teams that already have engineers but need an experienced hand on agent deployments. Weekly review of active work, async review of PRs and designs, on-demand escalation for production incidents.",
+            "category": "Advisory retainer",
+            "url": "https://althor.dev/#engagements",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Advisory retainer",
+              "serviceType": "AI infrastructure advisory"
+            }
+          }
+        ]
+      }
+    },
+    {
       "@type": "WebSite",
       "@id": "https://althor.dev/#site",
       "url": "https://althor.dev",
       "name": "Althor Consulting",
       "publisher": { "@id": "https://althor.dev/#althor" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://althor.dev/#home",
+      "url": "https://althor.dev/",
+      "name": "althor · AI infrastructure consulting",
+      "isPartOf": { "@id": "https://althor.dev/#site" },
+      "about": { "@id": "https://althor.dev/#service" },
+      "primaryImageOfPage": "https://althor.dev/og-default.png",
+      "inLanguage": "en",
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".hero__line", ".hero__sub"]
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://althor.dev/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Model Context Protocol (MCP)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Model Context Protocol is an open transport for connecting AI agents to external tools, data sources, and services. An MCP server exposes a set of tools (typed function calls) and resources (read-only context) to a client — the agent — over stdio or HTTP. The protocol itself is small and well-specified; the interesting decisions are upstream of it: what each server's trust boundary is, which tools it exposes, how outputs are bounded, and how auth is resolved. In production, treat each MCP server as a security boundary, not a convenience layer — one server, one credential scope, read-only by default, writes tagged and policy-gated."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I add an MCP server to Microsoft Copilot Studio in a regulated tenant?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Five decisions sit upstream of the onboarding wizard. First, pick OAuth on-behalf-of for any tool that touches user-scoped data — API key auth attributes everything to the MCP server's own identity, which fails compliance review. Second, classify the connector into the right Power Platform DLP zone before publishing. Third, enable generative orchestration on the agent — classic orchestration ignores MCP. Fourth, use Streamable HTTP transport; SSE was deprecated in August 2025. Fifth, scope the connector to your tenant unless cross-tenant publishing is the explicit business goal."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the right Entra ID identity for an AI agent?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Four shapes cover the realistic option space. App-only (service principal) suits agents acting on shared, non-user-scoped data — the audit trail reads 'the agent did it.' On-behalf-of (OBO) is the only correct answer when the agent reads or writes user-scoped data — the trail reads 'the user's agent did it.' Federated identity credentials (FIC) replace stored client secrets for agent runtimes outside Azure (GitHub Actions, Kubernetes, Vercel). Managed identity is the platform-managed machine identity when the agent runs on Azure compute. The choice is downstream-attribution-driven, not preference-driven."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does AI agent infrastructure consulting actually deliver?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The work is the layer between a working prompt and a production deployment that passes security review. Concretely: a credential broker so agents never hold long-lived secrets, scoped tool surfaces so the blast radius of any single tool call is bounded, policy-gated approvals so irreversible actions queue for human review, and a structured audit layer so compliance, incident response, and post-mortem all read from the same source. Deliverables include architecture docs, IaC, runbooks, and the operator dashboards governance teams actually use — handed off to the client's engineers, not locked behind the consultant."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long is a Discovery engagement?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "One to two weeks, fixed-fee. The output is a written report covering the five layers — identity, credential broker, scoped tool access, policy gating, audit — mapped to the specific compliance controls the client's InfoSec team will ask about. The report includes a threat model, a prioritized remediation list, and a one-page summary suitable for handing to security leadership. Discovery is the right engagement when an agent project either hasn't passed security review yet or hasn't been put in front of one, and the team needs a clear remediation path before committing to a build."
+          }
+        }
+      ]
     }
   ]
 }
@@ -304,11 +420,52 @@
 
     <div class="about">
       <p>
-        I'm <strong>Samuel</strong>. Production AI systems on the Microsoft stack — Azure, Entra ID, M365, Power Platform — with a Rust, TypeScript, and Python sideline for the parts Microsoft doesn't reach. The work above is mine: governance, identity, multi-stage data pipelines, agent infrastructure. Althor is the consulting practice that takes that experience to teams shipping their own production systems — specialized agent-infrastructure work that complements in-house engineering rather than replacing it.
+        I'm <strong>Samuel S</strong>. Production AI systems on the Microsoft stack — Azure, Entra ID, M365, Power Platform — with a Rust, TypeScript, and Python sideline for the parts Microsoft doesn't reach. The work above is mine: governance, identity, multi-stage data pipelines, agent infrastructure. Althor is the consulting practice that takes that experience to teams shipping their own production systems — specialized agent-infrastructure work that complements in-house engineering rather than replacing it.
       </p>
       <p>
         D.C. metro · remote-first · regulated environments preferred.
       </p>
+    </div>
+  </section>
+
+  <!-- ─── FAQ ─── -->
+  <section id="faq">
+    <div class="section__head">
+      <span class="section__label">FAQ</span>
+      <span class="section__rule"></span>
+    </div>
+
+    <div class="method">
+      <div class="method__item">
+        <div class="method__title">What is the Model Context Protocol (MCP)?</div>
+        <p class="method__body">
+          The Model Context Protocol is an open transport for connecting AI agents to external tools, data sources, and services. An MCP server exposes a set of tools (typed function calls) and resources (read-only context) to a client — the agent — over stdio or HTTP. The protocol itself is small and well-specified; the interesting decisions are upstream of it: what each server's trust boundary is, which tools it exposes, how outputs are bounded, and how auth is resolved. In production, treat each MCP server as a security boundary, not a convenience layer — one server, one credential scope, read-only by default, writes tagged and policy-gated.
+        </p>
+      </div>
+      <div class="method__item">
+        <div class="method__title">How do I add an MCP server to Microsoft Copilot Studio in a regulated tenant?</div>
+        <p class="method__body">
+          Five decisions sit upstream of the onboarding wizard. First, pick OAuth on-behalf-of for any tool that touches user-scoped data — API key auth attributes everything to the MCP server's own identity, which fails compliance review. Second, classify the connector into the right Power Platform DLP zone before publishing. Third, enable generative orchestration on the agent — classic orchestration ignores MCP. Fourth, use Streamable HTTP transport; SSE was deprecated in August 2025. Fifth, scope the connector to your tenant unless cross-tenant publishing is the explicit business goal.
+        </p>
+      </div>
+      <div class="method__item">
+        <div class="method__title">What is the right Entra ID identity for an AI agent?</div>
+        <p class="method__body">
+          Four shapes cover the realistic option space. App-only (service principal) suits agents acting on shared, non-user-scoped data — the audit trail reads "the agent did it." On-behalf-of (OBO) is the only correct answer when the agent reads or writes user-scoped data — the trail reads "the user's agent did it." Federated identity credentials (FIC) replace stored client secrets for agent runtimes outside Azure (GitHub Actions, Kubernetes, Vercel). Managed identity is the platform-managed machine identity when the agent runs on Azure compute. The choice is downstream-attribution-driven, not preference-driven.
+        </p>
+      </div>
+      <div class="method__item">
+        <div class="method__title">What does AI agent infrastructure consulting actually deliver?</div>
+        <p class="method__body">
+          The work is the layer between a working prompt and a production deployment that passes security review. Concretely: a credential broker so agents never hold long-lived secrets, scoped tool surfaces so the blast radius of any single tool call is bounded, policy-gated approvals so irreversible actions queue for human review, and a structured audit layer so compliance, incident response, and post-mortem all read from the same source. Deliverables include architecture docs, IaC, runbooks, and the operator dashboards governance teams actually use — handed off to the client's engineers, not locked behind the consultant.
+        </p>
+      </div>
+      <div class="method__item">
+        <div class="method__title">How long is a Discovery engagement?</div>
+        <p class="method__body">
+          One to two weeks, fixed-fee. The output is a written report covering the five layers — identity, credential broker, scoped tool access, policy gating, audit — mapped to the specific compliance controls the client's InfoSec team will ask about. The report includes a threat model, a prioritized remediation list, and a one-page summary suitable for handing to security leadership. Discovery is the right engagement when an agent project either hasn't passed security review yet or hasn't been put in front of one, and the team needs a clear remediation path before committing to a build.
+        </p>
+      </div>
     </div>
   </section>
 
