@@ -115,6 +115,15 @@
   </article>
 
   <div class="prose">
+    <div class="tldr">
+      <span class="tldr__label">TL;DR</span>
+      <ul>
+        <li>Four identity shapes — app-only, on-behalf-of, federated credentials, managed identity — and one decision: which fits the call's downstream-attribution requirement.</li>
+        <li>OBO is the only correct answer for user-scoped data; FIC kills the long-lived <code>client_secret</code>; managed identity is the cheapest path when the agent runs on Azure compute.</li>
+        <li>Five gotchas the wizard doesn't surface, four OBO traps, and a pre-flight list before going live.</li>
+      </ul>
+    </div>
+
     <p>
       This is the deep dive on layer 01 of <a href="/writing/agent-security-review/">Making agent deployments pass security review</a> — identity. Most agent projects in M365 / Azure tenants hit the same wall at the same moment: the security architect asks who the agent is acting as, and the answer is "a service account I made last Tuesday with Global Administrator and a 90-day-rotation policy." That answer is the audit-review killer. Workload identities are how you make a different one available.
     </p>
@@ -152,6 +161,8 @@
       The matrix above flattens nuance for legibility. Microsoft's own taxonomy folds applications, service principals, and managed identities into one umbrella — <a href="https://learn.microsoft.com/en-us/entra/workload-id/workload-identities-overview">"workload identities"</a> — with FIC as a credential type rather than an identity type. Mentally hold it both ways: four credential-and-attribution shapes, three Entra object types.
     </p>
 
+    <div class="section-marker" aria-hidden="true"><span>§</span></div>
+
     <h2>Federated credentials for agent runtimes</h2>
     <p>
       Federated identity credentials (FIC) are the path that doesn't get enough airtime in the agent-identity discussion. The premise is straightforward: an agent runtime outside Azure — a Vercel function, a GitHub Actions job, an on-prem Kubernetes pod, an AWS Lambda — can authenticate to an Entra app registration <em>without storing a client secret</em>. The runtime's native identity provider (GitHub's OIDC issuer, Kubernetes' service-account token, AWS's STS) issues a token; Entra trusts that token via a pre-configured trust relationship and exchanges it for an Entra access token. <a href="https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation">Workload identity federation</a> is the canonical doc.
@@ -181,12 +192,34 @@
     <p>
       Practical OBO gotchas worth surfacing before you build:
     </p>
-    <ul>
-      <li><strong>OBO only works for user principals.</strong> If a service principal sends an app-only token to your agent API, you can't OBO-exchange it. The right pattern for service-to-service is the client credentials flow against your downstream API directly.</li>
-      <li><strong>The <code>aud</code> claim of the incoming token must be the agent's API.</strong> An agent that accepts Graph tokens directly and tries to OBO them won't work — clients can't redeem a token meant for another app.</li>
-      <li><strong>Custom signing keys disqualify the middle tier.</strong> If your agent's app registration uses a custom signing key (common for enterprise SSO setups), OBO breaks because the downstream API can't validate the token.</li>
-      <li><strong>Conditional Access propagates.</strong> If the downstream API has a CA policy (MFA, location, claim challenge), OBO can return an <code>interaction_required</code> error that your agent must surface back to the front-end so the user can step up.</li>
-    </ul>
+
+    <aside class="callout callout--warn">
+      <span class="callout__label">OBO gotcha 1</span>
+      <div class="callout__body">
+        <p><strong>OBO only works for user principals.</strong> If a service principal sends an app-only token to your agent API, you can't OBO-exchange it. The right pattern for service-to-service is the client credentials flow against your downstream API directly.</p>
+      </div>
+    </aside>
+
+    <aside class="callout callout--warn">
+      <span class="callout__label">OBO gotcha 2</span>
+      <div class="callout__body">
+        <p><strong>The <code>aud</code> claim of the incoming token must be the agent's API.</strong> An agent that accepts Graph tokens directly and tries to OBO them won't work — clients can't redeem a token meant for another app.</p>
+      </div>
+    </aside>
+
+    <aside class="callout callout--warn">
+      <span class="callout__label">OBO gotcha 3</span>
+      <div class="callout__body">
+        <p><strong>Custom signing keys disqualify the middle tier.</strong> If your agent's app registration uses a custom signing key (common for enterprise SSO setups), OBO breaks because the downstream API can't validate the token.</p>
+      </div>
+    </aside>
+
+    <aside class="callout callout--warn">
+      <span class="callout__label">OBO gotcha 4</span>
+      <div class="callout__body">
+        <p><strong>Conditional Access propagates.</strong> If the downstream API has a CA policy (MFA, location, claim challenge), OBO can return an <code>interaction_required</code> error that your agent must surface back to the front-end so the user can step up.</p>
+      </div>
+    </aside>
 
     <h2>What this looks like in code</h2>
     <p>
@@ -246,13 +279,40 @@ resp = httpx.get(
 
     <h2>Five gotchas the wizard doesn't surface</h2>
 
-    <ul>
-      <li><strong>Conditional Access for workload identities is a separate license tier.</strong> Applying CA policies to service principals (location restriction, ID-Protection risk gating) requires <a href="https://learn.microsoft.com/en-us/entra/identity/conditional-access/workload-identity">Workload Identities Premium</a> on top of base Entra. Existing policies keep working without it; new or modified policies require the SKU. Managed identities aren't covered by CA at all — they live in access-review territory instead. If your security team's deployment design assumes CA covers the agent's SP, confirm the license before promising.</li>
-      <li><strong>Token caching versus short-lived rotation.</strong> Entra access tokens are valid ~60–90 minutes. MSAL's default cache is in-process — fine for long-running services, wrong for short-lived FaaS workers that re-acquire on every cold start (hammering the token endpoint and burning your throttling budget). Persist the MSAL cache to a fast store (Redis, encrypted file) for FaaS; let MSAL keep it in memory for long-running pods. Don't roll your own caching layer — MSAL handles refresh and rotation correctly.</li>
-      <li><strong>Log the requesting identity downstream or your audit is blind.</strong> When the agent calls your own internal API on behalf of the user, your API needs to log the user's UPN, not just "request from <code>agent-svc</code>." Trace ID, user UPN, agent app ID, tool name — those four make the audit trail reconstructable. Skipping the UPN is the most common audit-trail bug I find on first review.</li>
-      <li><strong>Group-based RBAC versus app-role RBAC for agent-callable APIs.</strong> If your downstream API checks <code>groups</code> claim, OBO works — the user's group membership flows through. If you use <code>roles</code> claim with app-role assignments, those are <em>assigned to the user</em> for the downstream API, not to the agent. Map the access model deliberately. App-only calls (FIC, managed identity) only see app-role assignments on the SPN itself, never group memberships.</li>
-      <li><strong>The GitHub-Actions FIC subject-claim glob trap.</strong> There is no wildcard support. A subject like <code>repo:contoso/agent-runtime:*</code> does not exist. Every distinct workflow target (per branch, per environment, per pull-request type) is a separate FIC entry, up to the 20-per-app cap. Teams that try to be clever with one "catch-all" FIC end up with an identity that quietly fails when the workflow trigger shape changes. Use environments (<code>repo:contoso/agent-runtime:environment:production</code>) to keep the count bounded.</li>
-    </ul>
+    <aside class="callout callout--warn">
+      <span class="callout__label">Gotcha 1 · CA licensing</span>
+      <div class="callout__body">
+        <p><strong>Conditional Access for workload identities is a separate license tier.</strong> Applying CA policies to service principals (location restriction, ID-Protection risk gating) requires <a href="https://learn.microsoft.com/en-us/entra/identity/conditional-access/workload-identity">Workload Identities Premium</a> on top of base Entra. Existing policies keep working without it; new or modified policies require the SKU. Managed identities aren't covered by CA at all — they live in access-review territory instead. If your security team's deployment design assumes CA covers the agent's SP, confirm the license before promising.</p>
+      </div>
+    </aside>
+
+    <aside class="callout callout--warn">
+      <span class="callout__label">Gotcha 2 · Token cache</span>
+      <div class="callout__body">
+        <p><strong>Token caching versus short-lived rotation.</strong> Entra access tokens are valid ~60–90 minutes. MSAL's default cache is in-process — fine for long-running services, wrong for short-lived FaaS workers that re-acquire on every cold start (hammering the token endpoint and burning your throttling budget). Persist the MSAL cache to a fast store (Redis, encrypted file) for FaaS; let MSAL keep it in memory for long-running pods. Don't roll your own caching layer — MSAL handles refresh and rotation correctly.</p>
+      </div>
+    </aside>
+
+    <aside class="callout callout--warn">
+      <span class="callout__label">Gotcha 3 · UPN logging</span>
+      <div class="callout__body">
+        <p><strong>Log the requesting identity downstream or your audit is blind.</strong> When the agent calls your own internal API on behalf of the user, your API needs to log the user's UPN, not just "request from <code>agent-svc</code>." Trace ID, user UPN, agent app ID, tool name — those four make the audit trail reconstructable. Skipping the UPN is the most common audit-trail bug I find on first review.</p>
+      </div>
+    </aside>
+
+    <aside class="callout callout--warn">
+      <span class="callout__label">Gotcha 4 · RBAC shape</span>
+      <div class="callout__body">
+        <p><strong>Group-based RBAC versus app-role RBAC for agent-callable APIs.</strong> If your downstream API checks <code>groups</code> claim, OBO works — the user's group membership flows through. If you use <code>roles</code> claim with app-role assignments, those are <em>assigned to the user</em> for the downstream API, not to the agent. Map the access model deliberately. App-only calls (FIC, managed identity) only see app-role assignments on the SPN itself, never group memberships.</p>
+      </div>
+    </aside>
+
+    <aside class="callout callout--warn">
+      <span class="callout__label">Gotcha 5 · FIC wildcard trap</span>
+      <div class="callout__body">
+        <p><strong>The GitHub-Actions FIC subject-claim glob trap.</strong> There is no wildcard support. A subject like <code>repo:contoso/agent-runtime:*</code> does not exist. Every distinct workflow target (per branch, per environment, per pull-request type) is a separate FIC entry, up to the 20-per-app cap. Teams that try to be clever with one "catch-all" FIC end up with an identity that quietly fails when the workflow trigger shape changes. Use environments (<code>repo:contoso/agent-runtime:environment:production</code>) to keep the count bounded.</p>
+      </div>
+    </aside>
 
     <h2>What I'd ship before going live</h2>
     <p>
