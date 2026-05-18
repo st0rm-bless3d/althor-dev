@@ -10,6 +10,7 @@
   --border-dim: #24272e;
   --accent: oklch(74% 0.15 150);
   --accent-dim: oklch(45% 0.09 150);
+  --accent-warn: oklch(72% 0.16 55);  /* warm amber — ~#c9873a, ~3.7:1 against --bg */
   --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.02) inset;
 
   --mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
@@ -332,6 +333,36 @@ section { display: flex; flex-direction: column; gap: 2.25rem; padding-top: 2.5r
   left: 0;
   top: 0;
 }
+/* V2 primitives: opt out of generic .prose ul styling — they style their own lists.
+   Specificity bumped to (0,3,3+) to beat .prose ul:not()() li::before at (0,3,2). */
+.prose .tldr.tldr ul li,
+.prose .callout.callout ul li {
+  position: static;
+  padding-left: 1.25em;
+  text-indent: -1.25em;
+  line-height: 1.6;
+}
+.prose .tldr.tldr ul li::before {
+  content: "→ ";
+  color: var(--accent);
+  position: static;
+  font-family: inherit;
+  font-size: inherit;
+}
+.prose .callout.callout--warn ul li::before {
+  content: "→ ";
+  color: var(--accent-warn);
+  position: static;
+  font-family: inherit;
+  font-size: inherit;
+}
+.prose .callout.callout--note ul li::before {
+  content: "→ ";
+  color: var(--accent);
+  position: static;
+  font-family: inherit;
+  font-size: inherit;
+}
 .prose blockquote {
   font-family: var(--sans);
   font-style: italic;
@@ -635,6 +666,137 @@ footer {
 }
 .about p strong { color: var(--text); font-weight: 600; }
 
+/* ─── V2 primitives: TL;DR ───────────────────────────────── */
+.tldr {
+  background: var(--bg-subtle);
+  border-left: 3px solid var(--accent);
+  padding: 1.1rem 1.5rem;
+  margin: 1.5rem 0 2rem;
+  border-radius: 0 6px 6px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.tldr__label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0;
+}
+.tldr ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  color: var(--text-2);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.tldr ul li {
+  padding-left: 1.25em;
+  text-indent: -1.25em;
+}
+.tldr ul li::before {
+  content: "→ ";
+  color: var(--accent);
+}
+
+/* ─── V2 primitives: Callouts (warn / note) ──────────────── */
+.callout {
+  padding: 0.9rem 1.2rem;
+  margin: 1.5rem 0;
+  background: var(--bg-chip);
+  border-radius: 0 4px 4px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.callout--warn { border-left: 3px solid var(--accent-warn); }
+.callout--note { border-left: 3px solid var(--accent-dim); }
+.callout__label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 0;
+}
+.callout--warn .callout__label { color: var(--accent-warn); }
+.callout--note .callout__label { color: var(--accent); }
+.callout__body {
+  font-family: var(--sans);
+  font-size: 0.9375rem;
+  color: var(--text-2);
+  line-height: 1.65;
+  margin: 0;
+}
+.callout__body p { margin: 0; max-width: none; }
+.callout__body p + p { margin-top: 0.5em; }
+
+/* ─── V2 primitives: Step sequence ───────────────────────── */
+.step-sequence {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  margin: 2rem 0;
+}
+.step {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 0 1rem;
+}
+.step__num {
+  font-family: var(--mono);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1.1;
+  padding-top: 0.1em;
+}
+.step__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.step__title {
+  font-family: var(--sans);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.step__body p { margin: 0; max-width: none; }
+.step__body p + p { margin-top: 0.5em; }
+
+/* ─── V2 primitives: Section marker ──────────────────────── */
+.section-marker {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  margin: 2.5rem 0;
+}
+.section-marker::before,
+.section-marker::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border-dim);
+}
+.section-marker span {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
 /* ─── Mobile tightening ──────────────────────────────────── */
 @media (max-width: 720px) {
   html, body { font-size: 16px; }
@@ -729,6 +891,23 @@ footer {
 
   /* Footer */
   footer { padding: 1.5rem clamp(1.25rem, 4vw, 1.75rem) 2rem; font-size: 0.7rem; gap: 0.5rem; }
+
+  /* V2 primitives: tighter on narrow screens */
+  .tldr { padding: 0.9rem 1.1rem; margin: 1rem 0 1.5rem; gap: 0.5rem; }
+  .tldr__label { font-size: 0.68rem; letter-spacing: 0.18em; }
+  .tldr ul { font-size: 0.82rem; gap: 0.35rem; }
+
+  .callout { padding: 0.75rem 1rem; margin: 1.1rem 0; }
+  .callout__label { font-size: 0.66rem; letter-spacing: 0.16em; }
+  .callout__body { font-size: 0.88rem; line-height: 1.6; }
+
+  .step-sequence { gap: 1.75rem; margin: 1.5rem 0; }
+  .step { grid-template-columns: 2rem 1fr; gap: 0 0.75rem; }
+  .step__num { font-size: 1.25rem; }
+  .step__title { font-size: 1.05rem; }
+
+  .section-marker { gap: 0.75rem; margin: 1.75rem 0; }
+  .section-marker span { font-size: 0.62rem; letter-spacing: 0.16em; }
 }
 
 @media (prefers-reduced-motion: reduce) {
