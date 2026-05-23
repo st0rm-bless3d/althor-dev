@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#1a1d22" />
+
+<title>Tell me about it · althor</title>
+<meta name="description" content="A short intake form. Four steps, two minutes. By the end you'll know what kind of engagement fits — and so will Samuel." />
+<link rel="canonical" href="https://althor.dev/intake/" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+<meta property="og:site_name" content="Althor Consulting" />
+<meta property="og:title" content="Tell me about it · althor" />
+<meta property="og:description" content="A short intake form. Four steps, two minutes." />
+<meta property="og:url" content="https://althor.dev/intake/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://althor.dev/og-default.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Tell me about it · althor" />
+<meta name="twitter:description" content="A short intake form. Four steps, two minutes." />
+<meta name="twitter:image" content="https://althor.dev/og-default.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/style.css" />
+<script defer src="https://analytics.althor.dev/script.js" data-website-id="27dfcf34-3bbc-43d4-8f8d-810b9d9b9f47"></script>
+
+<style>
+/* Page-local form styling — kept inline so it doesn't bloat the global
+   stylesheet for a single-use surface. All tokens still come from
+   /assets/style.css. */
+
+.intake-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
+}
+.intake-progress__dots { display: flex; gap: 0.4rem; }
+.intake-progress__dot {
+  width: 0.5rem; height: 0.5rem;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 200ms ease;
+}
+.intake-progress__dot--current { background: var(--accent); }
+.intake-progress__dot--done    { background: var(--accent-dim); }
+
+.intake-step { display: none; }
+.intake-step--active { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.intake-field { display: flex; flex-direction: column; gap: 0.5rem; }
+.intake-field__label {
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+.intake-field__label .req { color: var(--accent); margin-left: 0.25rem; }
+.intake-field__hint {
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+.intake-field input[type="text"],
+.intake-field input[type="email"],
+.intake-field textarea,
+.intake-field select {
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.75rem 0.85rem;
+  min-height: 44px; /* tap target — mobile-first */
+  width: 100%;
+}
+.intake-field textarea {
+  resize: vertical;
+  min-height: 8rem;
+  font-family: var(--sans);
+  line-height: 1.6;
+}
+.intake-field input:focus, .intake-field textarea:focus, .intake-field select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+.intake-field input::placeholder, .intake-field textarea::placeholder {
+  color: var(--text-dim);
+}
+
+.intake-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.intake-chip {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--bg-chip);
+  color: var(--text-2);
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.intake-chip:hover { color: var(--text); border-color: var(--text-dim); }
+.intake-chip--on {
+  background: color-mix(in srgb, var(--accent) 18%, var(--bg-chip));
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.intake-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border-dim);
+}
+.intake-actions .btn-link { font-family: var(--mono); font-size: 0.85rem; }
+
+.intake-error {
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  color: var(--accent-warn);
+  padding: 0.5rem 0.75rem;
+  border-left: 2px solid var(--accent-warn);
+  background: color-mix(in srgb, var(--accent-warn) 8%, transparent);
+  border-radius: 3px;
+  display: none;
+}
+.intake-error--show { display: block; }
+
+.intake-result {
+  display: none;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.intake-result--show { display: flex; }
+.intake-result__rec {
+  font-family: var(--mono);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+}
+.intake-result__rec strong { color: var(--accent); font-weight: 600; }
+
+@media (max-width: 640px) {
+  .intake-actions { gap: 0.75rem; }
+  .intake-actions .btn { width: 100%; min-height: 48px; }
+}
+</style>
+</head>
+<body>
+<div class="container container--narrow">
+
+  <header class="brand">
+    <span class="brand__cursor" aria-hidden="true">▋</span>
+    <span class="brand__word"><a href="/">althor</a></span>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/for/">For</a>
+      <a href="/work/">Work</a>
+      <a href="/writing/">Writing</a>
+      <a href="/#about">About</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div class="hero__eyebrow">Intake</div>
+    <h1 class="hero__line">
+      Tell me about it. <em>Four steps.</em>
+    </h1>
+    <p class="hero__sub">
+      A short intake. By the end you'll see the engagement shape that fits — and I'll see enough to follow up well. No commitment, no sales pitch on the way back.
+    </p>
+  </div>
+
+  <section>
+    <div class="section__head">
+      <span class="section__label">Intake</span>
+      <span class="section__rule"></span>
+    </div>
+
+    <div class="intake-progress" aria-hidden="true">
+      <span class="intake-progress__label" id="progress-label">Step 1 of 4</span>
+      <div class="intake-progress__dots">
+        <span class="intake-progress__dot intake-progress__dot--current" data-step="1"></span>
+        <span class="intake-progress__dot" data-step="2"></span>
+        <span class="intake-progress__dot" data-step="3"></span>
+        <span class="intake-progress__dot" data-step="4"></span>
+      </div>
+    </div>
+
+    <form id="intake-form" novalidate>
+
+      <!-- ─── Step 1 — Identify ───────────────────────────────── -->
+      <div class="intake-step intake-step--active" data-step="1">
+        <div class="intake-field">
+          <label class="intake-field__label" for="contact_name">Your name<span class="req">*</span></label>
+          <input type="text" id="contact_name" name="contact_name" required autocomplete="name" maxlength="200" />
+        </div>
+        <div class="intake-field">
+          <label class="intake-field__label" for="contact_email">Email<span class="req">*</span></label>
+          <input type="email" id="contact_email" name="contact_email" required autocomplete="email" inputmode="email" />
+        </div>
+        <div class="intake-field">
+          <label class="intake-field__label" for="company">Company</label>
+          <input type="text" id="company" name="company" autocomplete="organization" maxlength="200" />
+          <span class="intake-field__hint">Optional. Leave blank if solo.</span>
+        </div>
+        <div class="intake-field">
+          <label class="intake-field__label" for="company_size_band">How many people</label>
+          <select id="company_size_band" name="company_size_band">
+            <option value="unknown">Prefer not to say</option>
+            <option value="solo">Just me</option>
+            <option value="2-14">2–14</option>
+            <option value="15-49">15–49</option>
+            <option value="50-149">50–149</option>
+            <option value="150+">150+</option>
+          </select>
+        </div>
+        <div class="intake-field">
+          <label class="intake-field__label" for="role">Your role</label>
+          <input type="text" id="role" name="role" placeholder="e.g. Founder, IT Director, CISO" maxlength="200" />
+        </div>
+        <div class="intake-error" id="step1-error">Please fill in name and a valid email.</div>
+        <div class="intake-actions">
+          <button type="button" class="btn btn-primary" data-action="next">Next →</button>
+          <a class="btn-link" href="/for/">Or browse use cases first</a>
+        </div>
+      </div>
+
+      <!-- ─── Step 2 — The Pain ─────────────────────────────── -->
+      <div class="intake-step" data-step="2">
+        <div class="intake-field">
+          <label class="intake-field__label" for="pain_summary">What's slowing you down<span class="req">*</span></label>
+          <textarea id="pain_summary" name="pain_summary" required minlength="10" maxlength="4000" placeholder="Plain language is fine. The more specific, the better the recommendation."></textarea>
+          <span class="intake-field__hint">If you're missing calls, drowning in confirmations, can't get Copilot to land, can't get auditors off your back — just say it.</span>
+        </div>
+        <div class="intake-field">
+          <label class="intake-field__label">Tag the shape (optional)</label>
+          <div class="intake-chips" id="pain_tags_chips" role="group" aria-label="Pain tags">
+            <button type="button" class="intake-chip" data-value="missed-calls">missed calls</button>
+            <button type="button" class="intake-chip" data-value="manual-data-entry">manual data entry</button>
+            <button type="button" class="intake-chip" data-value="copilot-deployment">Copilot deployment gap</button>
+            <button type="button" class="intake-chip" data-value="onboarding">onboarding scale</button>
+            <button type="button" class="intake-chip" data-value="document-extraction">document extraction</button>
+            <button type="button" class="intake-chip" data-value="agent-security">agent security / audit</button>
+            <button type="button" class="intake-chip" data-value="entra-identity">Entra / identity</button>
+            <button type="button" class="intake-chip" data-value="power-platform">Power Platform</button>
+            <button type="button" class="intake-chip" data-value="customer-support">customer support load</button>
+            <button type="button" class="intake-chip" data-value="reporting-automation">reporting automation</button>
+            <button type="button" class="intake-chip" data-value="mcp-tooling">MCP / agent tooling</button>
+            <button type="button" class="intake-chip" data-value="other">something else</button>
+          </div>
+        </div>
+        <div class="intake-error" id="step2-error">Please describe what's slowing you down (at least a sentence).</div>
+        <div class="intake-actions">
+          <button type="button" class="btn btn-secondary" data-action="back">← Back</button>
+          <button type="button" class="btn btn-primary" data-action="next">Next →</button>
+        </div>
+      </div>
+
+      <!-- ─── Step 3 — Context ──────────────────────────────── -->
+      <div class="intake-step" data-step="3">
+        <div class="intake-field">
+          <label class="intake-field__label">Tools you already pay for</label>
+          <div class="intake-chips" id="tools_chips" role="group" aria-label="Current tools">
+            <button type="button" class="intake-chip" data-value="Microsoft 365">Microsoft 365</button>
+            <button type="button" class="intake-chip" data-value="Copilot Studio">Copilot Studio</button>
+            <button type="button" class="intake-chip" data-value="Power Automate">Power Automate</button>
+            <button type="button" class="intake-chip" data-value="SharePoint">SharePoint</button>
+            <button type="button" class="intake-chip" data-value="Entra ID">Entra ID</button>
+            <button type="button" class="intake-chip" data-value="Azure">Azure</button>
+            <button type="button" class="intake-chip" data-value="Google Workspace">Google Workspace</button>
+            <button type="button" class="intake-chip" data-value="Zapier">Zapier</button>
+            <button type="button" class="intake-chip" data-value="Make">Make</button>
+            <button type="button" class="intake-chip" data-value="n8n">n8n</button>
+            <button type="button" class="intake-chip" data-value="HubSpot">HubSpot</button>
+            <button type="button" class="intake-chip" data-value="Salesforce">Salesforce</button>
+            <button type="button" class="intake-chip" data-value="QuickBooks">QuickBooks</button>
+            <button type="button" class="intake-chip" data-value="Shopify">Shopify</button>
+            <button type="button" class="intake-chip" data-value="OpenAI / Anthropic API">OpenAI / Anthropic API</button>
+          </div>
+          <span class="intake-field__hint">Skip if none apply. Helps me see what we'd be building on.</span>
+        </div>
+        <div class="intake-field">
+          <label class="intake-field__label" for="timeline_band">Timeline</label>
+          <select id="timeline_band" name="timeline_band">
+            <option value="unknown">Prefer not to say</option>
+            <option value="urgent">Urgent — there's a deadline</option>
+            <option value="this-quarter">This quarter</option>
+            <option value="this-year">This year</option>
+            <option value="exploring">Exploring, no rush</option>
+          </select>
+        </div>
+        <div class="intake-field">
+          <label class="intake-field__label" for="budget_band">Budget</label>
+          <select id="budget_band" name="budget_band">
+            <option value="unknown">Prefer not to say</option>
+            <option value="under-5k">Under $5,000</option>
+            <option value="5-25k">$5,000–$25,000</option>
+            <option value="25-75k">$25,000–$75,000</option>
+            <option value="75-200k">$75,000–$200,000</option>
+            <option value="200k+">$200,000+</option>
+            <option value="unsure">Not sure yet</option>
+          </select>
+          <span class="intake-field__hint">No wrong answer. Helps shape the recommendation.</span>
+        </div>
+        <div class="intake-field">
+          <label class="intake-field__label" for="autonomy_preference">How hands-on do you want me</label>
+          <select id="autonomy_preference" name="autonomy_preference">
+            <option value="unknown">Prefer not to say</option>
+            <option value="manual">Senior-only — I want Samuel doing the work</option>
+            <option value="assisted">Mixed — Samuel reviews everything, agents draft</option>
+            <option value="agentic">Mostly agents — Samuel approves outcomes</option>
+            <option value="auto_review">Templated — Samuel spot-checks</option>
+            <option value="unsure">Not sure — recommend based on the rest</option>
+          </select>
+        </div>
+        <div class="intake-actions">
+          <button type="button" class="btn btn-secondary" data-action="back">← Back</button>
+          <button type="button" class="btn btn-primary" data-action="next">Review →</button>
+        </div>
+      </div>
+
+      <!-- ─── Step 4 — Review + Submit ──────────────────────── -->
+      <div class="intake-step" data-step="4">
+        <div class="intake-field">
+          <label class="intake-field__label">Ready to send</label>
+          <span class="intake-field__hint">Submitting goes to Samuel directly. He reviews every intake personally and responds within one business day.</span>
+        </div>
+        <div class="intake-error" id="submit-error">Something went wrong. Please try again, or email contact@althor.dev directly.</div>
+        <div class="intake-actions">
+          <button type="button" class="btn btn-secondary" data-action="back">← Back</button>
+          <button type="submit" class="btn btn-primary" id="submit-btn">Send →</button>
+        </div>
+      </div>
+
+    </form>
+
+    <!-- ─── Success state ─────────────────────────────────── -->
+    <div class="intake-result" id="intake-result">
+      <div class="hero__eyebrow">Got it</div>
+      <h2 class="hero__line" style="font-size: clamp(1.6rem, 3.5vw, 2.2rem);">Thanks. Samuel will be in touch.</h2>
+      <div class="intake-result__rec" id="intake-result-rec"></div>
+      <p class="hero__sub" style="font-size: 1rem;">
+        He reviews every intake personally and responds within one business day. If something is urgent, email <a href="mailto:contact@althor.dev">contact@althor.dev</a>.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-secondary" href="/for/">Browse use cases</a>
+        <a class="btn btn-secondary" href="/writing/">Read the essays</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <span>Althor Consulting LLC</span>
+  <span>© 2026</span>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  const API_ENDPOINT = 'https://api.althor.dev/api/v1/intake';
+
+  const form = document.getElementById('intake-form');
+  const steps = Array.from(document.querySelectorAll('.intake-step'));
+  const dots = Array.from(document.querySelectorAll('.intake-progress__dot'));
+  const progressLabel = document.getElementById('progress-label');
+  const resultEl = document.getElementById('intake-result');
+  const resultRec = document.getElementById('intake-result-rec');
+  const submitBtn = document.getElementById('submit-btn');
+  const submitError = document.getElementById('submit-error');
+
+  let current = 1;
+  const totalSteps = steps.length;
+
+  // Multi-select chip groups
+  const chipGroups = {
+    pain_tags: document.getElementById('pain_tags_chips'),
+    current_tools: document.getElementById('tools_chips'),
+  };
+  Object.values(chipGroups).forEach((group) => {
+    if (!group) return;
+    group.addEventListener('click', (e) => {
+      const chip = e.target.closest('.intake-chip');
+      if (chip) chip.classList.toggle('intake-chip--on');
+    });
+  });
+
+  function getChips(group) {
+    if (!group) return [];
+    return Array.from(group.querySelectorAll('.intake-chip--on')).map((c) => c.dataset.value);
+  }
+
+  function setStep(n) {
+    current = Math.max(1, Math.min(totalSteps, n));
+    steps.forEach((s) => {
+      s.classList.toggle('intake-step--active', Number(s.dataset.step) === current);
+    });
+    dots.forEach((d) => {
+      const idx = Number(d.dataset.step);
+      d.classList.remove('intake-progress__dot--current', 'intake-progress__dot--done');
+      if (idx < current) d.classList.add('intake-progress__dot--done');
+      else if (idx === current) d.classList.add('intake-progress__dot--current');
+    });
+    progressLabel.textContent = `Step ${current} of ${totalSteps}`;
+    // Bring the new step into view on mobile after a click
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showError(id, msg) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (msg) el.textContent = msg;
+    el.classList.add('intake-error--show');
+  }
+  function hideError(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('intake-error--show');
+  }
+
+  function validateStep(n) {
+    if (n === 1) {
+      hideError('step1-error');
+      const name = document.getElementById('contact_name').value.trim();
+      const email = document.getElementById('contact_email').value.trim();
+      if (!name || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError('step1-error');
+        return false;
+      }
+      return true;
+    }
+    if (n === 2) {
+      hideError('step2-error');
+      const pain = document.getElementById('pain_summary').value.trim();
+      if (pain.length < 10) {
+        showError('step2-error');
+        return false;
+      }
+      return true;
+    }
+    return true;
+  }
+
+  // Wire next / back buttons
+  form.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    const action = btn.dataset.action;
+    if (action === 'next') {
+      if (validateStep(current)) setStep(current + 1);
+    } else if (action === 'back') {
+      setStep(current - 1);
+    }
+  });
+
+  // Submit
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideError('submit-error');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    const payload = {
+      contact_name: document.getElementById('contact_name').value.trim(),
+      contact_email: document.getElementById('contact_email').value.trim(),
+      company: document.getElementById('company').value.trim() || null,
+      company_size_band: document.getElementById('company_size_band').value,
+      role: document.getElementById('role').value.trim() || null,
+      pain_summary: document.getElementById('pain_summary').value.trim(),
+      pain_tags: getChips(chipGroups.pain_tags),
+      current_tools: getChips(chipGroups.current_tools),
+      timeline_band: document.getElementById('timeline_band').value,
+      budget_band: document.getElementById('budget_band').value,
+      autonomy_preference: document.getElementById('autonomy_preference').value,
+      source_path: window.location.pathname,
+    };
+
+    try {
+      const resp = await fetch(API_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+      showResult(data);
+    } catch (err) {
+      showError('submit-error');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send →';
+    }
+  });
+
+  const TIER_LABELS = {
+    smb_fixed:              'Small-business fixed-scope build',
+    discovery:              'Discovery — architecture + security review',
+    build:                  'Build — production agent infrastructure',
+    advisory:               'Advisory retainer — senior eyes',
+    agent_security_review:  'Agent Security Review',
+  };
+  const AUTONOMY_LABELS = {
+    manual:       'Samuel-led',
+    assisted:     'Samuel + agent assist',
+    agentic:      'Agent-led, Samuel approves',
+    auto_review:  'Templated, Samuel spot-checks',
+  };
+
+  function showResult(data) {
+    form.style.display = 'none';
+    document.querySelector('.intake-progress').style.display = 'none';
+    resultEl.classList.add('intake-result--show');
+
+    if (data && data.status === 'received' && data.recommended_tier) {
+      const tier = TIER_LABELS[data.recommended_tier] || data.recommended_tier;
+      const aut  = AUTONOMY_LABELS[data.recommended_autonomy] || data.recommended_autonomy;
+      resultRec.innerHTML =
+        'Based on what you shared, the engagement that fits is <strong>' + tier + '</strong>' +
+        (aut ? ', delivered as <strong>' + aut + '</strong>.' : '.');
+    } else if (data && data.status === 'duplicate') {
+      resultRec.innerHTML = data.message || 'Already received a recent submission from you.';
+    } else {
+      resultRec.innerHTML = (data && data.message) || 'Samuel has it. He\'ll reach out within one business day.';
+    }
+  }
+})();
+</script>
+</body>
+</html>
