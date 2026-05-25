@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#1a1d22" />
+
+<title>RAG Pipeline Health Check · althor</title>
+<meta name="description" content="One-hour, fixed-fee live review of your retrieval-augmented generation pipeline. Embedding model, chunking, retrieval, eval. $300." />
+<link rel="canonical" href="https://althor.dev/packages/rag-health-check/" />
+<link rel="alternate" hreflang="en" href="https://althor.dev/packages/rag-health-check/" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+<meta property="og:site_name" content="Althor Consulting" />
+<meta property="og:title" content="RAG Pipeline Health Check" />
+<meta property="og:description" content="One-hour review of an RAG pipeline — embedding, chunking, retrieval, eval." />
+<meta property="og:url" content="https://althor.dev/packages/rag-health-check/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://althor.dev/og-default.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://althor.dev/og-default.png" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "RAG Pipeline Health Check",
+  "url": "https://althor.dev/packages/rag-health-check/",
+  "provider": { "@type": "Organization", "name": "Althor Consulting LLC", "url": "https://althor.dev" },
+  "areaServed": "United States",
+  "serviceType": "Retrieval-augmented generation pipeline review",
+  "description": "Fixed-fee one-hour live review of a RAG pipeline — embedding model selection, chunking strategy, retrieval method, eval harness. Output is a written punch list ordered by retrieval-quality impact.",
+  "offers": {
+    "@type": "Offer",
+    "price": "300",
+    "priceCurrency": "USD",
+    "url": "https://althor.dev/packages/rag-health-check/"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://althor.dev/" },
+    { "@type": "ListItem", "position": 2, "name": "Packages", "item": "https://althor.dev/packages/" },
+    { "@type": "ListItem", "position": 3, "name": "RAG Pipeline Health Check", "item": "https://althor.dev/packages/rag-health-check/" }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/style.css" />
+<script defer src="https://analytics.althor.dev/script.js" data-website-id="27dfcf34-3bbc-43d4-8f8d-810b9d9b9f47"></script>
+</head>
+<body>
+<div class="container container--narrow">
+
+  <header class="brand">
+    <span class="brand__cursor" aria-hidden="true">▋</span>
+    <span class="brand__word"><a href="/">althor</a></span>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/for/">For</a>
+      <a href="/intake/">Intake</a>
+      <a href="/work/">Work</a>
+      <a href="/writing/">Writing</a>
+      <a href="/packages/" aria-current="page">Packages</a>
+      <a href="/#about">About</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="article article--wide">
+    <div class="article__eyebrow">Package · $300 · 1 hour</div>
+    <h1 class="article__title">RAG Pipeline Health Check</h1>
+    <p class="article__dek">
+      You shipped a RAG pipeline. Answers are hit-or-miss. You want someone who's done this before to walk through your setup and call the shots — embedding model, chunk size, retrieval strategy, eval harness — and tell you what to fix first.
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="mailto:contact@althor.dev?subject=RAG%20Pipeline%20Health%20Check">Book the hour</a>
+    </div>
+  </div>
+
+  <section>
+    <div class="section__head">
+      <span class="section__label">What gets covered</span>
+      <span class="section__rule"></span>
+    </div>
+
+    <div class="method">
+      <div class="method__item">
+        <div class="method__title">Embedding model</div>
+        <p class="method__body">Token cap vs your real chunk distribution (Nomic capping at 2048 silently, OpenAI ada-002 vs text-embedding-3-large vs the open-source alternatives), domain fit, dimension/storage trade-offs.</p>
+      </div>
+      <div class="method__item">
+        <div class="method__title">Chunking strategy</div>
+        <p class="method__body">Token-vs-character, semantic vs fixed-size, overlap, table/code handling. The chunker is the biggest unforced error in most RAG pipelines.</p>
+      </div>
+      <div class="method__item">
+        <div class="method__title">Retrieval method</div>
+        <p class="method__body">Vector-only vs hybrid (BM25 + vector + rerank), top-k tuning, metadata filtering. Whether you actually need a reranker or whether your top-1 is fine.</p>
+      </div>
+      <div class="method__item">
+        <div class="method__title">Vector store</div>
+        <p class="method__body">pgvector vs Pinecone vs Qdrant vs Azure AI Search. HNSW parameters. Index type for your scale. When you should switch and when you should stop fiddling.</p>
+      </div>
+      <div class="method__item">
+        <div class="method__title">Eval harness</div>
+        <p class="method__body">Whether you have one. If not, the lightest-weight one that catches regressions: a question set, ground-truth chunks, recall@k. If yes, whether it's measuring what you actually care about.</p>
+      </div>
+      <div class="method__item">
+        <div class="method__title">Generation glue</div>
+        <p class="method__body">Prompt template, citation enforcement, refusal handling when retrieval is weak, hallucination guardrails.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section__head">
+      <span class="section__label">Deliverable</span>
+      <span class="section__rule"></span>
+    </div>
+
+    <div class="tiers">
+      <div class="tier">
+        <div class="tier__name">Punch list</div>
+        <div class="tier__shape">Written, ordered by impact</div>
+        <p class="tier__body">Each item names the symptom, the cause, the fix, and the rough effort. Sent within 24 hours of the call.</p>
+      </div>
+      <div class="tier">
+        <div class="tier__name">Eval-set recommendation</div>
+        <div class="tier__shape">If you don't have one</div>
+        <p class="tier__body">A minimum eval set sized to your domain — question count, ground-truth shape, what to measure first.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section__head">
+      <span class="section__label">Start</span>
+      <span class="section__rule"></span>
+    </div>
+
+    <dl class="contact-grid">
+      <dt>Engage</dt>
+      <dd><a href="mailto:contact@althor.dev?subject=RAG%20Pipeline%20Health%20Check">contact@althor.dev</a></dd>
+      <dt>Price</dt>
+      <dd>$300 fixed · invoiced on booking</dd>
+      <dt>Timeline</dt>
+      <dd>Booked within 5 business days · punch list delivered within 24 hours of call</dd>
+    </dl>
+  </section>
+
+</div>
+
+<footer>
+  <span>Althor Consulting LLC</span>
+  <span>© 2026</span>
+</footer>
+</body>
+</html>

@@ -33,6 +33,12 @@ PAGES=(
   "writing/mcp-copilot-studio/index.html|/writing/mcp-copilot-studio/"
   "writing/mcp-server-boundaries/index.html|/writing/mcp-server-boundaries/"
   "checklist/index.html|/checklist/"
+  "packages/index.html|/packages/"
+  "packages/ai-governance-audit/index.html|/packages/ai-governance-audit/"
+  "packages/mcp-security-review/index.html|/packages/mcp-security-review/"
+  "packages/copilot-studio-quickstart/index.html|/packages/copilot-studio-quickstart/"
+  "packages/azure-openai-architecture-review/index.html|/packages/azure-openai-architecture-review/"
+  "packages/rag-health-check/index.html|/packages/rag-health-check/"
 )
 
 # Build a temporary file then mv into place so partial writes can't

@@ -24,6 +24,16 @@ Althor Consulting LLC is a solo consulting practice (Maryland, US) specializing 
 
 Remote-first.
 
+## Packages (fixed-scope, fixed-price)
+
+- AI Governance Foundation Audit ($2,500, 1 week) — NIST AI RMF gap analysis + Microsoft Foundry control-plane recommendations — https://althor.dev/packages/ai-governance-audit/
+- MCP Server Security Review ($1,500, 3 days) — written security review of an MCP server against the OWASP Agentic AI Top 10 — https://althor.dev/packages/mcp-security-review/
+- Copilot Studio Agent Quickstart ($5,000, 2 weeks) — working agent + Functions middleware + connector wiring to one enterprise data source — https://althor.dev/packages/copilot-studio-quickstart/
+- Azure OpenAI Architecture Review ($300, 1 hour) — live walkthrough + diagram + 5–10 specific recommendations — https://althor.dev/packages/azure-openai-architecture-review/
+- RAG Pipeline Health Check ($300, 1 hour) — live review of embedding, chunking, retrieval, eval — https://althor.dev/packages/rag-health-check/
+
+All packages: https://althor.dev/packages/
+
 ## Work (client engagements)
 
 - Multi-model extraction pipeline — https://althor.dev/work/extraction-pipeline/

@@ -24,6 +24,12 @@ PAGES=(
   "writing/mcp-server-boundaries/index.html|/writing/mcp-server-boundaries/|0.8|monthly"
   "writing/mcp-copilot-studio/index.html|/writing/mcp-copilot-studio/|0.8|monthly"
   "checklist/index.html|/checklist/|0.9|monthly"
+  "packages/index.html|/packages/|0.9|monthly"
+  "packages/ai-governance-audit/index.html|/packages/ai-governance-audit/|0.8|monthly"
+  "packages/mcp-security-review/index.html|/packages/mcp-security-review/|0.8|monthly"
+  "packages/copilot-studio-quickstart/index.html|/packages/copilot-studio-quickstart/|0.8|monthly"
+  "packages/azure-openai-architecture-review/index.html|/packages/azure-openai-architecture-review/|0.8|monthly"
+  "packages/rag-health-check/index.html|/packages/rag-health-check/|0.8|monthly"
   "assets/agent-security-review-checklist.pdf|/assets/agent-security-review-checklist.pdf|0.7|monthly"
 )
 

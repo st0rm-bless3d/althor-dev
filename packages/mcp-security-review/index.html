@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#1a1d22" />
+
+<title>MCP Server Security Review · althor</title>
+<meta name="description" content="Three-day, fixed-fee written security review of an MCP server implementation against the OWASP Agentic AI Top 10. $1,500." />
+<link rel="canonical" href="https://althor.dev/packages/mcp-security-review/" />
+<link rel="alternate" hreflang="en" href="https://althor.dev/packages/mcp-security-review/" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+<meta property="og:site_name" content="Althor Consulting" />
+<meta property="og:title" content="MCP Server Security Review" />
+<meta property="og:description" content="Three-day written review of an MCP server against the OWASP Agentic AI Top 10." />
+<meta property="og:url" content="https://althor.dev/packages/mcp-security-review/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://althor.dev/og-default.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://althor.dev/og-default.png" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "MCP Server Security Review",
+  "url": "https://althor.dev/packages/mcp-security-review/",
+  "provider": { "@type": "Organization", "name": "Althor Consulting LLC", "url": "https://althor.dev" },
+  "areaServed": "United States",
+  "serviceType": "MCP server security review",
+  "description": "Fixed-fee three-day written security review of a Model Context Protocol server implementation, evaluated against the OWASP Agentic AI Top 10. Tool-by-tool analysis, auth boundary check, output-bound review, audit-surface review, and a remediation list ordered by exploitability.",
+  "offers": {
+    "@type": "Offer",
+    "price": "1500",
+    "priceCurrency": "USD",
+    "url": "https://althor.dev/packages/mcp-security-review/"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://althor.dev/" },
+    { "@type": "ListItem", "position": 2, "name": "Packages", "item": "https://althor.dev/packages/" },
+    { "@type": "ListItem", "position": 3, "name": "MCP Server Security Review", "item": "https://althor.dev/packages/mcp-security-review/" }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/style.css" />
+<script defer src="https://analytics.althor.dev/script.js" data-website-id="27dfcf34-3bbc-43d4-8f8d-810b9d9b9f47"></script>
+</head>
+<body>
+<div class="container container--narrow">
+
+  <header class="brand">
+    <span class="brand__cursor" aria-hidden="true">▋</span>
+    <span class="brand__word"><a href="/">althor</a></span>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/for/">For</a>
+      <a href="/intake/">Intake</a>
+      <a href="/work/">Work</a>
+      <a href="/writing/">Writing</a>
+      <a href="/packages/" aria-current="page">Packages</a>
+      <a href="/#about">About</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="article article--wide">
+    <div class="article__eyebrow">Package · $1,500 · 3 days</div>
+    <h1 class="article__title">MCP Server Security Review</h1>
+    <p class="article__dek">
+      Tool-by-tool, auth boundary, output bounds, audit surface. Three days, written report, remediation list ordered by exploitability. The review you do <em>before</em> the MCP server crosses your prod boundary, not after.
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="mailto:contact@althor.dev?subject=MCP%20Server%20Security%20Review">Engage</a>
+      <a class="btn btn-secondary" href="https://cal.com/althorconsulting/architecture-review">Discuss scope (30 min)</a>
+    </div>
+  </div>
+
+  <section>
+    <div class="section__head">
+      <span class="section__label">When this is the right package</span>
+      <span class="section__rule"></span>
+    </div>
+
+    <div class="method">
+      <div class="method__item">
+        <div class="method__title">You wrote an MCP server</div>
+        <p class="method__body">Internal-team-built MCP server, or one you're considering open-sourcing. You want a second pair of eyes before someone else's agent starts calling it.</p>
+      </div>
+      <div class="method__item">
+        <div class="method__title">You're consuming a third-party MCP server</div>
+        <p class="method__body">Vendor or open-source server you're about to wire into a Copilot Studio agent, a Claude Desktop config, or a production agent runtime. You want a posture read before the credential gets minted.</p>
+      </div>
+      <div class="method__item">
+        <div class="method__title">A security team is asking questions</div>
+        <p class="method__body">Your AppSec team flagged MCP as a new attack surface and wants a written assessment of one specific server before sign-off.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section__head">
+      <span class="section__label">What gets reviewed</span>
+      <span class="section__rule"></span>
+    </div>
+
+    <div class="method">
+      <div class="method__item">
+        <div class="method__title">Trust boundary</div>
+        <p class="method__body">What identity is the server acting as? What does the client trust the server to do? Is there a credential boundary or is it just shared-secret-in-config?</p>
+      </div>
+      <div class="method__item">
+        <div class="method__title">Tool surface</div>
+        <p class="method__body">Each exposed tool, one by one. Input validation, scope, side-effect class, idempotency, output-bound. Which tools should be tagged write, which should require approval, which should not exist.</p>
+      </div>
+      <div class="method__item">
+        <div class="method__title">Auth resolution</div>
+        <p class="method__body">How credentials get into the server — env vars, OAuth, OBO, federated. Where they live at rest. Whether they leak through tool outputs or error paths.</p>
+      </div>
+      <div class="method__item">
+        <div class="method__title">Output bounds</div>
+        <p class="method__body">Can the server hand back something the client wasn't supposed to see? Path traversal in resource reads, error messages that leak schema, oversize responses that DoS the client.</p>
+      </div>
+      <div class="method__item">
+        <div class="method__title">Audit surface</div>
+        <p class="method__body">Is every tool call logged? Do logs include enough to reconstruct an incident? Do they exclude what they should exclude (full PII payloads, credentials)?</p>
+      </div>
+      <div class="method__item">
+        <div class="method__title">OWASP Agentic AI Top 10 mapping</div>
+        <p class="method__body">Each finding maps to the OWASP category it sits under. The report's appendix doubles as your team's checklist for the next server.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section__head">
+      <span class="section__label">Deliverable</span>
+      <span class="section__rule"></span>
+    </div>
+
+    <div class="tiers">
+      <div class="tier">
+        <div class="tier__name">Written review</div>
+        <div class="tier__shape">PDF, 10–15 pages</div>
+        <p class="tier__body">Per-tool findings · per-category OWASP mapping · severity-ordered remediation list · examples of correct patterns from the public <a href="/writing/mcp-server-boundaries/">MCP server boundaries</a> essay.</p>
+      </div>
+      <div class="tier">
+        <div class="tier__name">30-minute walkthrough</div>
+        <div class="tier__shape">Optional</div>
+        <p class="tier__body">If you want a live walkthrough of the findings with the implementing engineer. Included at no extra cost — book within 30 days of delivery.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section__head">
+      <span class="section__label">Out of scope</span>
+      <span class="section__rule"></span>
+    </div>
+
+    <p>Not a pen test. I read the code, the manifest, and the auth flow — I don't fuzz or attempt exploitation. If you need offensive security testing, this isn't that engagement. If you need an architectural review before pen test, this is exactly that.</p>
+  </section>
+
+  <section id="contact">
+    <div class="section__head">
+      <span class="section__label">Start</span>
+      <span class="section__rule"></span>
+    </div>
+
+    <dl class="contact-grid">
+      <dt>Engage</dt>
+      <dd><a href="mailto:contact@althor.dev?subject=MCP%20Server%20Security%20Review">contact@althor.dev</a></dd>
+      <dt>Scope first</dt>
+      <dd><a href="https://cal.com/althorconsulting/architecture-review">30-minute scoping call</a></dd>
+      <dt>Price</dt>
+      <dd>$1,500 fixed · invoiced on engagement</dd>
+      <dt>Timeline</dt>
+      <dd>3 days from code access</dd>
+    </dl>
+  </section>
+
+</div>
+
+<footer>
+  <span>Althor Consulting LLC</span>
+  <span>© 2026</span>
+</footer>
+</body>
+</html>
