@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Submit URL list to IndexNow
         env:
-          INDEXNOW_KEY: e9f6227b1ec4183705c24b9142b50e16
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
           HOST: althor.dev
         run: |
           set -euo pipefail
