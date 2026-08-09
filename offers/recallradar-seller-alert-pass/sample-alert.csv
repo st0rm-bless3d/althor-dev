@@ -1,0 +1,8 @@
+# Synthetic sample only. Not real recall data and not a safety determination.
+matched_at,sku,product,agency,recall_id,link
+2026-05-03T08:20Z,SAMPLE-1001,Sample space heater,CPSC,SAMPLE-CPSC-0001,https://recalls.example/cpsc/0001
+2026-05-06T11:45Z,SAMPLE-2002,Sample packaged food,FDA,SAMPLE-FDA-0002,https://recalls.example/fda/0002
+2026-05-11T15:02Z,SAMPLE-1003,Sample power bank,CPSC,SAMPLE-CPSC-0003,https://recalls.example/cpsc/0003
+2026-05-18T09:31Z,SAMPLE-2004,Sample dietary supplement,FDA,SAMPLE-FDA-0004,https://recalls.example/fda/0004
+2026-05-24T13:57Z,SAMPLE-1005,Sample child car seat,NHTSA,SAMPLE-NHTSA-0005,https://recalls.example/nhtsa/0005
+2026-05-29T18:14Z,SAMPLE-1006,Sample toy set,CPSC,SAMPLE-CPSC-0006,https://recalls.example/cpsc/0006

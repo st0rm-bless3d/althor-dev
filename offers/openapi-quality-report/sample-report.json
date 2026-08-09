@@ -1,0 +1,29 @@
+{
+  "_note": "Synthetic sample only. Not real customer data.",
+  "spec": "sample.yaml",
+  "summary": {
+    "errors": 2,
+    "warnings": 5,
+    "sdk_readiness": "partial"
+  },
+  "findings": [
+    {
+      "rule": "operation-operationId",
+      "path": "GET /orders",
+      "severity": "error",
+      "fix": "add a unique operationId"
+    },
+    {
+      "rule": "reference-resolution",
+      "path": "GET /orders/{id} 200 response schema",
+      "severity": "error",
+      "fix": "define components/schemas/Order or repoint the $ref"
+    },
+    {
+      "rule": "error-model-consistency",
+      "path": "GET /orders vs POST /orders",
+      "severity": "warning",
+      "fix": "use one error model (application/problem+json) across responses"
+    }
+  ]
+}

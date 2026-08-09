@@ -1,0 +1,10 @@
+# Synthetic sample only. Not real weather data or a certified record.
+timestamp,station,distance_mi,temp_f,precip_in,wind_mph,source
+2026-03-14T06:00,SAMPLE01,4.2,38,0.00,5,public-station-sample
+2026-03-14T07:00,SAMPLE01,4.2,40,0.00,6,public-station-sample
+2026-03-14T08:00,SAMPLE01,4.2,42,0.01,7,public-station-sample
+2026-03-14T09:00,SAMPLE01,4.2,45,0.02,8,public-station-sample
+2026-03-14T10:00,SAMPLE01,4.2,48,0.05,9,public-station-sample
+2026-03-14T11:00,SAMPLE01,4.2,50,0.08,11,public-station-sample
+2026-03-14T12:00,SAMPLE01,4.2,52,0.10,12,public-station-sample
+2026-03-14T15:00,SAMPLE01,4.2,55,0.00,10,public-station-sample

@@ -1,0 +1,23 @@
+{
+  "_note": "Synthetic sample only. Not real customer data.",
+  "pages_crawled": 25,
+  "findings": [
+    {
+      "type": "broken_link",
+      "url": "/about",
+      "status": 404,
+      "fix": "repair or redirect the URL to its current destination"
+    },
+    {
+      "type": "performance",
+      "url": "/",
+      "signal": "render_blocking_script",
+      "fix": "add defer to /vendor/analytics.js or move it before </body>"
+    },
+    {
+      "type": "missing_canonical",
+      "url": "/blog/post-a",
+      "fix": "add a self-referential rel=canonical link"
+    }
+  ]
+}

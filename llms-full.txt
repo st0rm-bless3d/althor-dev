@@ -1593,6 +1593,26 @@ A sample Grants.gov opportunity feed and fit-screen format.
 
 A free credential-free workflow before the full automation pack.
 
+## OpenAPI quality report
+
+Prioritized spec-quality and SDK-readiness fixes for one public spec.
+
+## Construction jobsite weather record
+
+A dated, source-cited historical weather record from public station data.
+
+## Public website health report
+
+Reproducible link, performance, and crawlability findings for a public site.
+
+## Domain certificate watch
+
+A 30-day certificate-transparency watch with a timestamped alert ledger.
+
+## RecallRadar seller alert pass
+
+A 30-day multi-agency recall watch matched to a non-sensitive SKU list.
+
 
 ===== /offers/licensegate/ =====
 https://althor.dev/offers/licensegate/
@@ -1725,9 +1745,9 @@ Automation/template product · free diagnostic
 
 A three-node, credential-free workflow for inspecting ticket input completeness and basic routing signals before connecting an LLM, Slack, email, or a ticket system.
 
-Free workflow available. The planned $99 production triage pack is not available for purchase.
+Free workflow available. The planned $49 production triage pack is not available for purchase.
 
-Download workflow JSONView sample ticketRecord interest in the $99 pack
+Download workflow JSONView sample ticketRecord interest in the $49 pack
 
 No contact details, checkout, subscription, or payment. Page measurement retains a random per-tab ID, IP address, browser user agent, referrer, page, and classification so internal and automated traffic can be excluded. The downloaded workflow sends no telemetry.
 

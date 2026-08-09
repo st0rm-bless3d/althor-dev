@@ -36,6 +36,11 @@ PAGES=(
   "offers/accessibility-baseline-report/index.html|/offers/accessibility-baseline-report/|0.8|weekly"
   "offers/federal-fit-alerts/index.html|/offers/federal-fit-alerts/|0.8|weekly"
   "offers/n8n-ticket-triage/index.html|/offers/n8n-ticket-triage/|0.8|weekly"
+  "offers/openapi-quality-report/index.html|/offers/openapi-quality-report/|0.8|weekly"
+  "offers/construction-weather-record/index.html|/offers/construction-weather-record/|0.8|weekly"
+  "offers/public-site-health-report/index.html|/offers/public-site-health-report/|0.8|weekly"
+  "offers/domain-certificate-watch/index.html|/offers/domain-certificate-watch/|0.8|weekly"
+  "offers/recallradar-seller-alert-pass/index.html|/offers/recallradar-seller-alert-pass/|0.8|weekly"
   "assets/agent-security-review-checklist.pdf|/assets/agent-security-review-checklist.pdf|0.7|monthly"
 )
 

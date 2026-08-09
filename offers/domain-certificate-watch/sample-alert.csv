@@ -1,0 +1,8 @@
+# Synthetic sample only. Not real certificate-transparency data.
+observed_at,domain,issuer,serial,ct_log,link
+2026-04-02T10:14Z,example.com,Sample CA A,0A1B2C,sample-ct-log-1,https://ct.example/log/0A1B2C
+2026-04-05T22:41Z,*.example.com,Sample CA B,3D4E5F,sample-ct-log-2,https://ct.example/log/3D4E5F
+2026-04-09T04:03Z,mail.example.com,Sample CA A,7G8H9J,sample-ct-log-1,https://ct.example/log/7G8H9J
+2026-04-14T16:27Z,example.com,Sample CA C,1K2L3M,sample-ct-log-3,https://ct.example/log/1K2L3M
+2026-04-20T09:55Z,api.example.com,Sample CA A,4N5P6Q,sample-ct-log-1,https://ct.example/log/4N5P6Q
+2026-04-27T13:38Z,*.example.com,Sample CA B,8R9S0T,sample-ct-log-2,https://ct.example/log/8R9S0T

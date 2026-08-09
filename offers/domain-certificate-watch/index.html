@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Domain Certificate Watch sample · althor</title><meta name="description" content="Representative certificate-transparency watch for root domains, delivered as a timestamped alert ledger and a final CSV. Fixed 30-day pass, no auto-renewal.">
+<link rel="canonical" href="https://althor.dev/offers/domain-certificate-watch/"><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/assets/style.css"></head>
+<body><div class="container container--narrow"><header class="brand"><span class="brand__cursor" aria-hidden="true">▋</span><span class="brand__word"><a href="/">althor</a></span><nav class="site-nav" aria-label="Primary"><a href="/offers/">Offers</a><a href="/packages/">Packages</a></nav></header>
+<main class="article article--wide"><div class="article__eyebrow">Monitoring pass · public sample</div><h1 class="article__title">Domain Certificate Watch</h1><p class="article__dek">A 30-day certificate-transparency watch for up to five root domains, delivered as a timestamped alert ledger and a final CSV. Fixed pass, no auto-renewal.</p></main>
+<section><div class="offer-status"><strong>Sample only.</strong> The planned $29 30-day pass is not available for purchase yet. It watches public certificate-transparency logs and reports newly observed certificates; it is not a security guarantee.</div><div class="offer-actions"><a class="offer-button" href="/offers/domain-certificate-watch/sample-alert.csv" download>Download sample-alert.csv</a><button class="offer-button" type="button" data-purchase-intent>Record interest in a $29 30-day pass</button></div><p class="offer-note">No contact details, checkout, or payment. Measurement retains a random per-tab ID, IP address, browser user agent, referrer, page, and classification so internal and automated traffic can be excluded.</p></section>
+<section><div class="section__head"><span class="section__label">Representative sample excerpt</span><span class="section__rule"></span></div><div class="sample-report">
+<article class="sample-finding"><h2>New leaf certificate from an unexpected issuer</h2><p>A new leaf certificate for <code>example.com</code> was observed in a public CT log, issued by an authority not previously seen for this domain. Every alert links directly to the CT-log entry for review.</p></article>
+<article class="sample-finding"><h2>Wildcard certificate issuance</h2><p>A wildcard certificate for <code>*.example.com</code> was observed. Selected ledger rows:</p>
+<pre>observed_at,domain,issuer,serial
+2026-04-02T10:14Z,example.com,Sample CA A,0A1B2C
+2026-04-05T22:41Z,*.example.com,Sample CA B,3D4E5F</pre></article>
+</div><p class="offer-note">Representative synthetic excerpt. A delivered pass records every observed event with direct CT-log links and states coverage limits.</p></section>
+</div><footer><span>Althor Consulting LLC</span><span>© 2026</span></footer><script src="/assets/revenue-beacon.js" data-experiment="domain-certificate-watch"></script></body></html>
