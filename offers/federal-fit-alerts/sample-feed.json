@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-09T19:15:00Z",
+  "source": {
+    "name": "Grants.gov search2 API",
+    "url": "https://api.grants.gov/v1/api/search2",
+    "query": "software",
+    "statuses": ["posted", "forecasted"]
+  },
+  "limitations": "This sample contains federal assistance opportunities from Grants.gov, not SAM.gov procurement contracts. Fit labels are illustrative and must be verified against the full notice.",
+  "items": [
+    {"id":"361239","title":"Building Sustainable Software Tools for Open Science (R03 Clinical Trial Not Allowed)","agency":"National Institutes of Health","status":"forecasted","open_date":"2026-02-05","close_date":null,"fit_signal":"software tools; open science","source_url":"https://www.grants.gov/search-results-detail/361239"},
+    {"id":"355439","title":"NIH Research Software Engineer (RSE) Award (R50 Clinical Trials Not Allowed)","agency":"National Institutes of Health","status":"posted","open_date":"2024-07-17","close_date":"2026-12-04","fit_signal":"research software engineering","source_url":"https://www.grants.gov/search-results-detail/355439"},
+    {"id":"363293","title":"American Innovation Hub: AI & Digital Skills for the Creative & Tech Economy","agency":"U.S. Mission to Indonesia","status":"posted","open_date":"2026-07-23","close_date":"2026-08-30","fit_signal":"AI; digital skills; technology economy","source_url":"https://www.grants.gov/search-results-detail/363293"},
+    {"id":"357194","title":"Investigator Initiated Innovation in Computational Genomics and Data Science (R01 Clinical Trial Not Allowed)","agency":"National Institutes of Health","status":"posted","open_date":"2024-11-18","close_date":"2027-09-07","fit_signal":"data science; computational methods","source_url":"https://www.grants.gov/search-results-detail/357194"},
+    {"id":"357195","title":"Investigator Initiated Innovation in Computational Genomics and Data Science (R21 Clinical Trial Not Allowed)","agency":"National Institutes of Health","status":"posted","open_date":"2024-11-18","close_date":"2027-09-07","fit_signal":"data science; exploratory research","source_url":"https://www.grants.gov/search-results-detail/357195"}
+  ]
+}

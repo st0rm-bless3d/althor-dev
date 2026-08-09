@@ -42,7 +42,13 @@ jobs:
               "https://${HOST}/writing/entra-workload-identities/",
               "https://${HOST}/writing/mcp-copilot-studio/",
               "https://${HOST}/writing/mcp-server-boundaries/",
-              "https://${HOST}/checklist/"
+              "https://${HOST}/checklist/",
+              "https://${HOST}/offers/",
+              "https://${HOST}/offers/licensegate/",
+              "https://${HOST}/offers/nonprofit-comp-benchmark/",
+              "https://${HOST}/offers/accessibility-baseline-report/",
+              "https://${HOST}/offers/federal-fit-alerts/",
+              "https://${HOST}/offers/n8n-ticket-triage/"
             ]
           }
           EOF

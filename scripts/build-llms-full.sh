@@ -39,6 +39,12 @@ PAGES=(
   "packages/copilot-studio-quickstart/index.html|/packages/copilot-studio-quickstart/"
   "packages/azure-openai-architecture-review/index.html|/packages/azure-openai-architecture-review/"
   "packages/rag-health-check/index.html|/packages/rag-health-check/"
+  "offers/index.html|/offers/"
+  "offers/licensegate/index.html|/offers/licensegate/"
+  "offers/nonprofit-comp-benchmark/index.html|/offers/nonprofit-comp-benchmark/"
+  "offers/accessibility-baseline-report/index.html|/offers/accessibility-baseline-report/"
+  "offers/federal-fit-alerts/index.html|/offers/federal-fit-alerts/"
+  "offers/n8n-ticket-triage/index.html|/offers/n8n-ticket-triage/"
 )
 
 # Build a temporary file then mv into place so partial writes can't
