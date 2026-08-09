@@ -1613,6 +1613,18 @@ A 30-day certificate-transparency watch with a timestamped alert ledger.
 
 A 30-day multi-agency recall watch matched to a non-sensitive SKU list.
 
+## GitHub Actions workflow security audit
+
+Free Action for unpinned refs and broad token scopes; paid org-wide remediation report.
+
+## npm supply-chain audit
+
+Free CLI for typosquats and install scripts; paid triage report with a lockfile diff.
+
+## Terraform cost-waste report
+
+Free static HCL waste linter; paid full-estate priced right-sizing plan.
+
 
 ===== /offers/licensegate/ =====
 https://althor.dev/offers/licensegate/

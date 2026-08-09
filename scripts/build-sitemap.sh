@@ -41,6 +41,9 @@ PAGES=(
   "offers/public-site-health-report/index.html|/offers/public-site-health-report/|0.8|weekly"
   "offers/domain-certificate-watch/index.html|/offers/domain-certificate-watch/|0.8|weekly"
   "offers/recallradar-seller-alert-pass/index.html|/offers/recallradar-seller-alert-pass/|0.8|weekly"
+  "offers/gha-workflow-audit/index.html|/offers/gha-workflow-audit/|0.8|weekly"
+  "offers/npm-supply-chain-audit/index.html|/offers/npm-supply-chain-audit/|0.8|weekly"
+  "offers/terraform-cost-waste/index.html|/offers/terraform-cost-waste/|0.8|weekly"
   "assets/agent-security-review-checklist.pdf|/assets/agent-security-review-checklist.pdf|0.7|monthly"
 )
 
