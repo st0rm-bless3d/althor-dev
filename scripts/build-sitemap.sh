@@ -30,6 +30,12 @@ PAGES=(
   "packages/copilot-studio-quickstart/index.html|/packages/copilot-studio-quickstart/|0.8|monthly"
   "packages/azure-openai-architecture-review/index.html|/packages/azure-openai-architecture-review/|0.8|monthly"
   "packages/rag-health-check/index.html|/packages/rag-health-check/|0.8|monthly"
+  "offers/index.html|/offers/|0.9|weekly"
+  "offers/licensegate/index.html|/offers/licensegate/|0.8|weekly"
+  "offers/nonprofit-comp-benchmark/index.html|/offers/nonprofit-comp-benchmark/|0.8|weekly"
+  "offers/accessibility-baseline-report/index.html|/offers/accessibility-baseline-report/|0.8|weekly"
+  "offers/federal-fit-alerts/index.html|/offers/federal-fit-alerts/|0.8|weekly"
+  "offers/n8n-ticket-triage/index.html|/offers/n8n-ticket-triage/|0.8|weekly"
   "assets/agent-security-review-checklist.pdf|/assets/agent-security-review-checklist.pdf|0.7|monthly"
 )
 

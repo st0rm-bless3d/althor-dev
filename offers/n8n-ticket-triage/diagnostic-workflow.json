@@ -1,0 +1,50 @@
+{
+  "name": "Ticket Triage Diagnostic - Free",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Run Diagnostic",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {"id":"sample-subject","name":"subject","type":"string","value":"Production login fails for every user"},
+            {"id":"sample-body","name":"body","type":"string","value":"All agents receive a 500 error after sign-in. This blocks the support team."},
+            {"id":"sample-requester","name":"requester","type":"string","value":"sample@example.com"}
+          ]
+        },
+        "options": {}
+      },
+      "id": "sample-ticket",
+      "name": "Sample Ticket",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const subject = String($json.subject || '').trim();\nconst body = String($json.body || '').trim();\nconst text = (subject + ' ' + body).toLowerCase();\nconst urgent = /(outage|security|breach|data loss|every user|all users)/.test(text);\nconst blocked = /(blocked|cannot|can't|fails|error|down)/.test(text);\nconst hasOwner = /@/.test(String($json.requester || ''));\nconst issues = [];\nif (!subject) issues.push('missing subject');\nif (!body) issues.push('missing body');\nif (!hasOwner) issues.push('requester is not an email-shaped identifier');\nreturn [{json:{\n  diagnostic_version:'0.1.0',\n  input_complete:issues.length===0,\n  issues,\n  suggested_priority:urgent?'urgent':(blocked?'high':'medium'),\n  matched_signals:{urgent,blocked},\n  next_step:'Replace the sample node with your intake, then compare these deterministic signals with your current routing rules.'\n}}];"
+      },
+      "id": "diagnose-routing",
+      "name": "Diagnose Routing Inputs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [700, 300]
+    }
+  ],
+  "connections": {
+    "Run Diagnostic": {"main":[[{"node":"Sample Ticket","type":"main","index":0}]]},
+    "Sample Ticket": {"main":[[{"node":"Diagnose Routing Inputs","type":"main","index":0}]]}
+  },
+  "pinData": {},
+  "settings": {"executionOrder":"v1"},
+  "active": false,
+  "versionId": "e69a9f3c-0b88-4fc2-86b2-902167a0f516",
+  "meta": {"templateCredsSetupCompleted": true},
+  "tags": []
+}

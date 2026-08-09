@@ -34,6 +34,16 @@ Remote-first.
 
 All packages: https://althor.dev/packages/
 
+## Public offer experiments
+
+- LicenseGate GitHub Action — https://althor.dev/offers/licensegate/
+- Nonprofit compensation benchmark sample — https://althor.dev/offers/nonprofit-comp-benchmark/
+- Accessibility Baseline Report sample — https://althor.dev/offers/accessibility-baseline-report/
+- Federal fit alerts sample feed — https://althor.dev/offers/federal-fit-alerts/
+- n8n ticket-triage diagnostic — https://althor.dev/offers/n8n-ticket-triage/
+
+Commerce is currently disabled for these five experiments. Their free samples are public.
+
 ## Work (client engagements)
 
 - Multi-model extraction pipeline — https://althor.dev/work/extraction-pipeline/

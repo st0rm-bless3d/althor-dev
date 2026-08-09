@@ -1,0 +1,5 @@
+{
+  "subject": "Production login fails for every user",
+  "body": "All agents receive a 500 error after sign-in. This blocks the support team.",
+  "requester": "sample@example.com"
+}

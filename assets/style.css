@@ -193,6 +193,32 @@ section { display: flex; flex-direction: column; gap: 2.25rem; padding-top: 2.5r
   white-space: nowrap;
 }
 
+/* Revenue experiment offer surfaces */
+.offer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; }
+.offer-card { display: flex; flex-direction: column; gap: 0.75rem; padding: 1.25rem; background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 8px; }
+.offer-card h2 { font-size: 1.15rem; line-height: 1.3; }
+.offer-card p, .offer-copy { color: var(--text-2); }
+.offer-card a { align-self: start; }
+.offer-status { padding: 1rem 1.25rem; border: 1px solid var(--accent-warn); border-radius: 8px; color: var(--text-2); }
+.offer-status strong { color: var(--accent-warn); }
+.offer-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem; }
+.offer-button { appearance: none; border: 1px solid var(--accent); border-radius: 5px; background: transparent; color: var(--accent); cursor: pointer; font: 500 0.85rem/1 var(--mono); padding: 0.85rem 1rem; }
+.offer-button:hover, .offer-button:focus-visible { background: var(--accent); color: var(--bg); }
+.offer-button[disabled] { cursor: default; border-color: var(--text-dim); color: var(--text-dim); background: transparent; }
+.offer-table-wrap { overflow-x: auto; }
+.offer-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.offer-table th, .offer-table td { padding: 0.75rem; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+.offer-table th { color: var(--text-dim); font: 500 0.75rem/1.4 var(--mono); text-transform: uppercase; letter-spacing: 0.08em; }
+.offer-input { width: 100%; max-width: 30rem; padding: 0.75rem; border: 1px solid var(--border); border-radius: 5px; background: var(--bg-subtle); color: var(--text); font: inherit; }
+.sample-report { display: grid; gap: 1rem; }
+.sample-finding { padding: 1rem; border-left: 3px solid var(--accent-warn); background: var(--bg-subtle); }
+.sample-finding code { color: var(--accent); }
+.offer-note { color: var(--text-dim); font-size: 0.85rem; }
+
+@media (max-width: 720px) {
+  .offer-table { min-width: 42rem; }
+}
+
 /* Diagram box */
 .diagram {
   font-family: var(--mono);
