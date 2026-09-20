@@ -1,6 +1,6 @@
 # Althor Labs
 
-Public site for Althor Labs, the operating brand of Althor Consulting LLC. Static, multi-page, and served through GitHub Pages at the current canonical domain `althor.dev`.
+Public site for Althor Labs, the operating brand of Althor Consulting LLC. Static, multi-page, and served through GitHub Pages at the current canonical domain `althorlabs.com`.
 
 ## Layout
 
@@ -16,9 +16,10 @@ Public site for Althor Labs, the operating brand of Althor Consulting LLC. Stati
 
 GitHub Pages auto-deploys `main` on push. DNS managed at Porkbun:
 
-- Apex `althor.dev` → 4 A records pointing at GitHub Pages (`185.199.108.153`, `.109.153`, `.110.153`, `.111.153`)
-- `www.althor.dev` → CNAME → `st0rm-bless3d.github.io`
-- `althorlabs.com` and `althorlabs.dev` → path-preserving HTTPS redirects to `althor.dev`
+- Apex `althorlabs.com` → 4 A records pointing at GitHub Pages (`185.199.108.153`, `.109.153`, `.110.153`, `.111.153`)
+- `www.althorlabs.com` → CNAME → `st0rm-bless3d.github.io`
+- `althor.dev` and `althorlabs.dev` → permanent, path-preserving HTTPS redirects to `althorlabs.com`
+- The paid mailbox and independent `a11yscan` and `govalerts` services remain on `althor.dev`
 
 ## Edit
 

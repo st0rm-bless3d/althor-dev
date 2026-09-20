@@ -1,109 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://althor.dev/</loc>
+    <loc>https://althorlabs.com/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://althor.dev/work/</loc>
+    <loc>https://althorlabs.com/work/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://althor.dev/work/extraction-pipeline/</loc>
+    <loc>https://althorlabs.com/work/extraction-pipeline/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://althor.dev/work/governance-platform/</loc>
+    <loc>https://althorlabs.com/work/governance-platform/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://althor.dev/work/spire/</loc>
+    <loc>https://althorlabs.com/work/spire/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://althor.dev/writing/</loc>
+    <loc>https://althorlabs.com/writing/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://althor.dev/writing/entra-workload-identities/</loc>
+    <loc>https://althorlabs.com/writing/entra-workload-identities/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://althor.dev/writing/agent-security-review/</loc>
+    <loc>https://althorlabs.com/writing/agent-security-review/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://althor.dev/writing/mcp-server-boundaries/</loc>
+    <loc>https://althorlabs.com/writing/mcp-server-boundaries/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://althor.dev/writing/mcp-copilot-studio/</loc>
+    <loc>https://althorlabs.com/writing/mcp-copilot-studio/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://althor.dev/checklist/</loc>
+    <loc>https://althorlabs.com/checklist/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://althor.dev/packages/</loc>
+    <loc>https://althorlabs.com/packages/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://althor.dev/packages/ai-governance-audit/</loc>
+    <loc>https://althorlabs.com/packages/ai-governance-audit/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://althor.dev/packages/mcp-security-review/</loc>
+    <loc>https://althorlabs.com/packages/mcp-security-review/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://althor.dev/packages/copilot-studio-quickstart/</loc>
+    <loc>https://althorlabs.com/packages/copilot-studio-quickstart/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://althor.dev/packages/azure-openai-architecture-review/</loc>
+    <loc>https://althorlabs.com/packages/azure-openai-architecture-review/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://althor.dev/packages/rag-health-check/</loc>
+    <loc>https://althorlabs.com/packages/rag-health-check/</loc>
     <lastmod>2026-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://althor.dev/assets/agent-security-review-checklist.pdf</loc>
+    <loc>https://althorlabs.com/assets/agent-security-review-checklist.pdf</loc>
     <lastmod>2026-05-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

@@ -29,7 +29,7 @@ Last six months I delivered:
 
 One question on {{SPECIFIC_DETAIL_FROM_THEIR_POST}} before scoping — {{THE_ACTUAL_QUESTION}}.
 
-Portfolio: althor.dev | Essays on agent infra: althor.dev/writing | Available {{HOURS}}/week starting {{DATE}}.
+Portfolio: althorlabs.com | Essays on agent infra: althorlabs.com/writing | Available {{HOURS}}/week starting {{DATE}}.
 
 — Samuel
 ```
@@ -40,12 +40,12 @@ Portfolio: althor.dev | Essays on agent infra: althor.dev/writing | Available {{
 
 ### If the job mentions RAG, embeddings, or retrieval:
 ```
-▸ Recently shipped a RAG pipeline review framework — embedding model fit (the silent 2048-token cap on Nomic, the dimension/storage tradeoffs across providers), chunking strategy, hybrid retrieval (BM25 + vector + rerank), eval harness for catching regressions. Catalogued as a productized health check at althor.dev/packages/rag-health-check.
+▸ Recently shipped a RAG pipeline review framework — embedding model fit (the silent 2048-token cap on Nomic, the dimension/storage tradeoffs across providers), chunking strategy, hybrid retrieval (BM25 + vector + rerank), eval harness for catching regressions. Catalogued as a productized health check at althorlabs.com/packages/rag-health-check.
 ```
 
 ### If the job mentions MCP, agents, or tool use:
 ```
-▸ Run Spire, my own AI infrastructure control plane built in Rust — policy-gated approvals, per-object audit log, MCP server publisher + client consumer with proper auth boundaries. Long-form essays on MCP server boundary design + MCP in Copilot Studio at althor.dev/writing.
+▸ Run Spire, my own AI infrastructure control plane built in Rust — policy-gated approvals, per-object audit log, MCP server publisher + client consumer with proper auth boundaries. Long-form essays on MCP server boundary design + MCP in Copilot Studio at althorlabs.com/writing.
 ```
 
 ### If the job mentions Anthropic Claude or Agent SDK:

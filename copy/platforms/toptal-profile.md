@@ -1,7 +1,7 @@
 # Toptal profile — Althor (Samuel S)
 
 **Last reviewed**: 2026-05-25
-**Source of truth**: althor.dev case studies + essays
+**Source of truth**: althorlabs.com case studies + essays
 **Status**: Application not yet submitted (Phase 1 of platform pivot)
 
 ---
@@ -41,7 +41,7 @@ Ongoing: Spire, an AI-native infrastructure control plane built in Rust. Policy-
 
 The specialty: Microsoft ecosystem (Azure, Entra ID, M365, Power Platform, Copilot Studio) plus AI-provider depth (Azure OpenAI, Anthropic Claude API + Agent SDK, MCP server publisher + consumer). Background spans architecture, build, and the audit work most teams skip until InfoSec asks.
 
-Published essays on Entra ID workload identities for agents, adding MCP to Copilot Studio in regulated environments, and MCP server boundary design. Practice site at althor.dev.
+Published essays on Entra ID workload identities for agents, adding MCP to Copilot Studio in regulated environments, and MCP server boundary design. Practice site at althorlabs.com.
 
 How I engage:
 
@@ -84,16 +84,16 @@ Toptal's matcher gives heavier weight to specialty-track skills. Order according
 
 ## Portfolio (5–8 deep entries)
 
-Toptal prefers fewer, deeper portfolio items than Upwork. Each one needs an architecture diagram, the decisions you made, what broke. Pull from althor.dev:
+Toptal prefers fewer, deeper portfolio items than Upwork. Each one needs an architecture diagram, the decisions you made, what broke. Pull from althorlabs.com:
 
-1. **Multi-model extraction pipeline** — full architecture diagram, decisions on consensus voting + Raw/Suggested/Final audit layering, 30× throughput metric. (althor.dev/work/extraction-pipeline/)
-2. **Enterprise AI governance platform** — architecture diagram, four-tier RBAC decision, Teams + SharePoint embedding pattern, ~100 submissions/month scale. (althor.dev/work/governance-platform/)
-3. **Spire — AI infrastructure control plane** — homelab-validated, Rust + Axum + MCP, policy-gated approvals, per-object audit. (althor.dev/work/spire/)
-4. **Entra ID workload identities for agent systems** — long-form pattern essay with decision tree. (althor.dev/writing/entra-workload-identities/)
-5. **Adding MCP servers to Copilot Studio** — pattern essay with threat model. (althor.dev/writing/mcp-copilot-studio/)
-6. **MCP server boundaries — when to expose what** — six rules for designing MCP tool surfaces. (althor.dev/writing/mcp-server-boundaries/)
-7. **Agent security review** — pre-flight review checklist for shipping AI agents. (althor.dev/writing/agent-security-review/)
-8. **Agent Security Review Checklist (free PDF lead magnet)** — productized version of the review. (althor.dev/checklist/)
+1. **Multi-model extraction pipeline** — full architecture diagram, decisions on consensus voting + Raw/Suggested/Final audit layering, 30× throughput metric. (althorlabs.com/work/extraction-pipeline/)
+2. **Enterprise AI governance platform** — architecture diagram, four-tier RBAC decision, Teams + SharePoint embedding pattern, ~100 submissions/month scale. (althorlabs.com/work/governance-platform/)
+3. **Spire — AI infrastructure control plane** — homelab-validated, Rust + Axum + MCP, policy-gated approvals, per-object audit. (althorlabs.com/work/spire/)
+4. **Entra ID workload identities for agent systems** — long-form pattern essay with decision tree. (althorlabs.com/writing/entra-workload-identities/)
+5. **Adding MCP servers to Copilot Studio** — pattern essay with threat model. (althorlabs.com/writing/mcp-copilot-studio/)
+6. **MCP server boundaries — when to expose what** — six rules for designing MCP tool surfaces. (althorlabs.com/writing/mcp-server-boundaries/)
+7. **Agent security review** — pre-flight review checklist for shipping AI agents. (althorlabs.com/writing/agent-security-review/)
+8. **Agent Security Review Checklist (free PDF lead magnet)** — productized version of the review. (althorlabs.com/checklist/)
 
 ---
 
@@ -129,14 +129,14 @@ For context: Toptal AI specialists in 2026 commonly hit $150–200+/hr client-si
 ### Stage 3 — Live Technical Interview (1 hr)
 
 - Senior Toptal engineer, live coding + system design conversation.
-- For AI specialty: expect a real-world scenario — "design an MCP server for X" or "architect an agent system that does Y under these constraints." Prep by walking through the althor.dev case studies as if explaining them on a whiteboard.
+- For AI specialty: expect a real-world scenario — "design an MCP server for X" or "architect an agent system that does Y under these constraints." Prep by walking through the althorlabs.com case studies as if explaining them on a whiteboard.
 - Communication > raw skill. They're selling consultants to non-technical client buyers. If you can't explain it plain, you fail regardless of correctness.
 
 ### Stage 4 — Test Project (1–3 weeks)
 
 - For AI specialty: likely an agent-system design + implementation exercise.
 - **Highest-failure mode is over-engineering**. Stick to the spec. Document choices. Ship clean code. Don't gold-plate.
-- The althor.dev case studies are your reference — they show "what good looks like" in terms of scope discipline + documentation discipline.
+- The althorlabs.com case studies are your reference — they show "what good looks like" in terms of scope discipline + documentation discipline.
 
 ### Stage 5 — Onboarding + first match
 

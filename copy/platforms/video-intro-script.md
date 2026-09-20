@@ -33,7 +33,7 @@
 
 > **[75–90 sec — CTA]**
 >
-> Portfolio's at althor.dev — case studies, essays, engagement options. Let's build.
+> Portfolio's at althorlabs.com — case studies, essays, engagement options. Let's build.
 
 ---
 
@@ -65,7 +65,7 @@ The script above is the **Upwork primary**. For Toptal and Codementor, lighter e
 
 ### Toptal cut (~70 sec)
 
-Drop the closing CTA ("althor.dev — let's build") since Toptal's profile already shows the portfolio link prominently. End on "that's the work."
+Drop the closing CTA ("althorlabs.com — let's build") since Toptal's profile already shows the portfolio link prominently. End on "that's the work."
 
 ### Codementor cut (~60 sec)
 

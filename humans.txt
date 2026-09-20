@@ -22,6 +22,6 @@ Analytics:     None
 Build:         Hand-written. No framework. No build step.
 
 Source:        https://github.com/st0rm-bless3d/althor-dev
-Sitemap:       https://althor.dev/sitemap.xml
-LLM index:     https://althor.dev/llms.txt
-Full corpus:   https://althor.dev/llms-full.txt
+Sitemap:       https://althorlabs.com/sitemap.xml
+LLM index:     https://althorlabs.com/llms.txt
+Full corpus:   https://althorlabs.com/llms-full.txt

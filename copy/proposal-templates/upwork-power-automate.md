@@ -21,9 +21,9 @@ For the first 2 weeks on Upwork, accept Power Automate jobs at $60–75/hr to ba
 
 Recent Microsoft-stack work:
 
-▸ Enterprise AI governance platform — Power Platform + Entra ID + Cosmos DB + native Microsoft Teams + SharePoint embedding. Council review workflow with conditional approvals, audit trail. ~100 submissions/month at global enterprise scale. althor.dev/work/governance-platform.
+▸ Enterprise AI governance platform — Power Platform + Entra ID + Cosmos DB + native Microsoft Teams + SharePoint embedding. Council review workflow with conditional approvals, audit trail. ~100 submissions/month at global enterprise scale. althorlabs.com/work/governance-platform.
 
-▸ Multi-stage data pipelines — Azure Functions + Durable Orchestration with audit-grade event sourcing. Powers a 30× throughput lift on a previously-manual process. TypeScript + Bicep IaC. althor.dev/work/extraction-pipeline.
+▸ Multi-stage data pipelines — Azure Functions + Durable Orchestration with audit-grade event sourcing. Powers a 30× throughput lift on a previously-manual process. TypeScript + Bicep IaC. althorlabs.com/work/extraction-pipeline.
 
 ▸ {{IF_THEIR_JOB_MENTIONS_APPROVAL: }} Approval workflows are a particular focus — multi-tier approvers, dynamic routing based on form data, audit log of every decision, escalation timers, Teams adaptive cards for in-channel approve/reject.
    {{IF_THEIR_JOB_MENTIONS_AI: }} Often pair Power Automate with Azure OpenAI or Copilot Studio for "automation with judgment" — flow handles the deterministic steps, LLM handles the classification/extraction/drafting steps, audit log captures both.
@@ -31,7 +31,7 @@ Recent Microsoft-stack work:
 
 One question on {{SPECIFIC_DETAIL_FROM_THEIR_POST}} — {{THE_QUESTION}}.
 
-Portfolio: althor.dev | Available {{HOURS}}/week starting {{DATE}}.
+Portfolio: althorlabs.com | Available {{HOURS}}/week starting {{DATE}}.
 
 — Samuel
 ```

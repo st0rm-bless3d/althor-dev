@@ -1,7 +1,7 @@
 # Codementor profile — Althor (Samuel S)
 
 **Last reviewed**: 2026-05-25
-**Source of truth**: althor.dev case studies + essays
+**Source of truth**: althorlabs.com case studies + essays
 **Status**: Profile setup pending
 
 ---
@@ -25,7 +25,7 @@ Stuck on an MCP server design, a Copilot Studio auth flow, or a RAG pipeline tha
 ## Full profile bio (target 150–250 words)
 
 ```
-I'm Samuel — solo consultant for AI agent infrastructure. Practice at althor.dev.
+I'm Samuel — solo consultant for AI agent infrastructure. Practice at althorlabs.com.
 
 What I'm useful for in a session:
 
@@ -85,7 +85,7 @@ I respond fast within session hours. First 15 minutes free if you want to scope 
 9. **AI architecture deep dive** — 2 hr · $200
    For: redesign conversations, big migrations, kicking off a new project where the architecture isn't settled.
 
-(For multi-week project engagements — not session-based — see althor.dev/#engagements or message me directly. Codementor session pricing isn't the right shape for >5-hour scopes.)
+(For multi-week project engagements — not session-based — see althorlabs.com/#engagements or message me directly. Codementor session pricing isn't the right shape for >5-hour scopes.)
 
 ---
 

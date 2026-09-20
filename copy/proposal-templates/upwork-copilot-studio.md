@@ -21,16 +21,16 @@ You'll win these by demonstrating in the proposal that you know the five decisio
 
 Recent work:
 
-▸ Copilot Studio quickstart pattern — working agent + custom connector + Azure Functions OBO middleware + Bicep IaC + audit logging, security-review-ready by handoff. Productized at althor.dev/packages/copilot-studio-quickstart.
+▸ Copilot Studio quickstart pattern — working agent + custom connector + Azure Functions OBO middleware + Bicep IaC + audit logging, security-review-ready by handoff. Productized at althorlabs.com/packages/copilot-studio-quickstart.
 
 ▸ {{IF_THEIR_DOMAIN_IS_ENTERPRISE_INTEGRATION:}} Enterprise AI governance platform — use-case registry with four-tier Entra ID RBAC, native Microsoft Teams + SharePoint embedding, council review workflow. Global enterprise scale.
    {{IF_THEIR_DOMAIN_IS_AGENT_DESIGN:}} Multi-model extraction pipeline with field-level consensus voting — 30× throughput, every decision auditable end-to-end. TypeScript + Azure Functions + Durable Orchestration.
 
-▸ Long-form essay on adding MCP servers to Copilot Studio in regulated environments — five upstream decisions + the threat model that isn't in the docs. althor.dev/writing/mcp-copilot-studio
+▸ Long-form essay on adding MCP servers to Copilot Studio in regulated environments — five upstream decisions + the threat model that isn't in the docs. althorlabs.com/writing/mcp-copilot-studio
 
 One question on {{SPECIFIC_DETAIL}} before scoping — {{THE_QUESTION}}.
 
-Portfolio: althor.dev | Available {{HOURS}}/week starting {{DATE}}.
+Portfolio: althorlabs.com | Available {{HOURS}}/week starting {{DATE}}.
 
 — Samuel
 ```

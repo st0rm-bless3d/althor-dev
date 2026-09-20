@@ -8,9 +8,9 @@
 
 <title>Agent Security Review Checklist · Althor Labs</title>
 <meta name="description" content="A pre-flight checklist for shipping AI agents into regulated environments. Free PDF — the same five-layer review Samuel S runs during a Discovery engagement, distilled into yes/no items per layer." />
-<link rel="canonical" href="https://althor.dev/checklist/" />
-<link rel="alternate" hreflang="en" href="https://althor.dev/checklist/" />
-<link rel="alternate" hreflang="x-default" href="https://althor.dev/checklist/" />
+<link rel="canonical" href="https://althorlabs.com/checklist/" />
+<link rel="alternate" hreflang="en" href="https://althorlabs.com/checklist/" />
+<link rel="alternate" hreflang="x-default" href="https://althorlabs.com/checklist/" />
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -20,9 +20,9 @@
 <meta property="og:site_name" content="Althor Labs" />
 <meta property="og:title" content="Agent Security Review Checklist" />
 <meta property="og:description" content="A pre-flight checklist for shipping AI agents into regulated environments. Five layers, yes/no items, decision tree. Free PDF." />
-<meta property="og:url" content="https://althor.dev/checklist/" />
+<meta property="og:url" content="https://althorlabs.com/checklist/" />
 <meta property="og:type" content="article" />
-<meta property="og:image" content="https://althor.dev/og-checklist.png" />
+<meta property="og:image" content="https://althorlabs.com/og-checklist.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="Agent Security Review Checklist — free PDF from althor" />
@@ -39,7 +39,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Agent Security Review Checklist" />
 <meta name="twitter:description" content="A pre-flight checklist for shipping AI agents into regulated environments. Free PDF." />
-<meta name="twitter:image" content="https://althor.dev/og-checklist.png" />
+<meta name="twitter:image" content="https://althorlabs.com/og-checklist.png" />
 
 <script type="application/ld+json">
 {
@@ -49,16 +49,16 @@
   "description": "A pre-flight checklist for shipping AI agents into regulated environments. Identity, credential broker, scoped tools, policy gating, audit — yes/no items per layer, plus a decision tree for missing layers.",
   "datePublished": "2026-04-21",
   "dateModified": "2026-05-17",
-  "author": { "@type": "Person", "name": "Samuel S", "url": "https://althor.dev/" },
-  "publisher": { "@type": "Organization", "name": "Althor Labs", "url": "https://althor.dev/" },
-  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://althor.dev/checklist/" },
-  "image": "https://althor.dev/og-checklist.png",
+  "author": { "@type": "Person", "name": "Samuel S", "url": "https://althorlabs.com/" },
+  "publisher": { "@type": "Organization", "name": "Althor Labs", "url": "https://althorlabs.com/" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://althorlabs.com/checklist/" },
+  "image": "https://althorlabs.com/og-checklist.png",
   "inLanguage": "en",
   "associatedMedia": {
     "@type": "DigitalDocument",
     "name": "Agent Security Review Checklist",
     "encodingFormat": "application/pdf",
-    "contentUrl": "https://althor.dev/assets/agent-security-review-checklist.pdf"
+    "contentUrl": "https://althorlabs.com/assets/agent-security-review-checklist.pdf"
   }
 }
 </script>
@@ -67,8 +67,8 @@
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://althor.dev/" },
-    { "@type": "ListItem", "position": 2, "name": "Checklist", "item": "https://althor.dev/checklist/" }
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://althorlabs.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Checklist", "item": "https://althorlabs.com/checklist/" }
   ]
 }
 </script>
@@ -125,143 +125,18 @@
 
     <h2>Get the checklist</h2>
     <p>
-      Enter your email below. The PDF link lands in your inbox immediately. You'll also get a short series of follow-up notes — practical, no pitch — over the next few weeks.
+      Download the PDF directly. No signup, tracking form, or follow-up sequence.
     </p>
 
   </div>
 
-  <!-- Lead-magnet email capture form.
-       POSTs to Listmonk's public subscribe API at lists.althor.dev.
-       Progressive enhancement: works without JS (Listmonk shows its own confirmation page).
-       With JS: async fetch + inline success state, no page reload. -->
-  <aside class="cta-aside" style="margin-top: 0;" id="checklist-form-block">
-    <h3>Send me the checklist</h3>
+  <aside class="cta-aside" style="margin-top: 0;">
+    <h3>Download the checklist</h3>
     <p>8 pages · ~80 KB · prints clean on Letter or A4.</p>
-
-    <!-- JS-enhanced state: shown on success -->
-    <div id="checklist-success" style="display:none;" aria-live="polite">
-      <p style="color: var(--accent); font-weight: 500; margin-bottom: 0.75rem;">Check your inbox — the link is on its way.</p>
-      <p style="font-size: 0.9375rem; color: var(--text-2); margin: 0;">
-        While you wait:
-        <a href="/assets/agent-security-review-checklist.pdf" download style="color: var(--text-2);">download the PDF directly →</a>
-      </p>
-    </div>
-
-    <!-- Subscription form — POSTs to Listmonk public API -->
-    <!-- list_id 3 = althor-readers; double opt-in enabled -->
-    <form
-      id="checklist-form"
-      action="https://lists.althor.dev/api/public/subscription"
-      method="post"
-      style="display: flex; flex-direction: column; gap: 0.75rem; max-width: 26rem;"
-      novalidate
-    >
-      <input type="hidden" name="list_ids" value="[3]" />
-      <input type="hidden" name="referrer_url" value="https://althor.dev/checklist/" />
-
-      <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-        <label for="cf-email" style="font-size: 0.8125rem; font-weight: 500; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em;">Work email</label>
-        <input
-          id="cf-email"
-          type="email"
-          name="email"
-          placeholder="you@company.com"
-          required
-          autocomplete="email"
-          style="background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0.6rem 0.85rem; border-radius: 4px; font-size: 0.9375rem; font-family: inherit; outline: none; transition: border-color 140ms ease;"
-          onfocus="this.style.borderColor='var(--accent)'"
-          onblur="this.style.borderColor='var(--border)'"
-        />
-      </div>
-
-      <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-        <label for="cf-name" style="font-size: 0.8125rem; font-weight: 500; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em;">Name <span style="color: var(--text-dim); font-weight: 400;">(optional)</span></label>
-        <input
-          id="cf-name"
-          type="text"
-          name="name"
-          placeholder="Your name"
-          autocomplete="name"
-          style="background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0.6rem 0.85rem; border-radius: 4px; font-size: 0.9375rem; font-family: inherit; outline: none; transition: border-color 140ms ease;"
-          onfocus="this.style.borderColor='var(--accent)'"
-          onblur="this.style.borderColor='var(--border)'"
-        />
-      </div>
-
-      <div id="checklist-error" role="alert" style="display:none; color: #f87171; font-size: 0.875rem;"></div>
-
-      <button
-        type="submit"
-        id="checklist-submit"
-        class="btn btn-primary"
-        style="align-self: flex-start;"
-      >
-        Send me the checklist →
-      </button>
-
-      <p style="font-size: 0.8125rem; color: var(--text-dim); margin: 0;">
-        You'll get a confirmation email first — click the link in it and the PDF link follows immediately.
-        Unsubscribe any time.
-      </p>
-    </form>
-
-    <!-- Fallback: direct download link always visible below the form -->
-    <p style="font-size: 0.8125rem; color: var(--text-dim); margin-top: 0.5rem;">
-      Prefer no email? <a href="/assets/agent-security-review-checklist.pdf" download style="color: var(--text-dim);">Download the PDF directly →</a>
-    </p>
+    <a class="btn btn-primary" href="/assets/agent-security-review-checklist.pdf" download>
+      Download the PDF →
+    </a>
   </aside>
-
-  <script>
-  (function () {
-    var form = document.getElementById('checklist-form');
-    var success = document.getElementById('checklist-success');
-    var error = document.getElementById('checklist-error');
-    var submit = document.getElementById('checklist-submit');
-    if (!form || !window.fetch) return; // no JS enhancement, native form POST takes over
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var email = form.querySelector('[name="email"]').value.trim();
-      if (!email) {
-        error.textContent = 'Please enter your email address.';
-        error.style.display = '';
-        return;
-      }
-      error.style.display = 'none';
-      submit.disabled = true;
-      submit.textContent = 'Sending…';
-
-      // Listmonk public subscription API: JSON body
-      fetch('https://lists.althor.dev/api/public/subscription', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: email,
-          name: (form.querySelector('[name="name"]').value || '').trim() || undefined,
-          list_uuids: ['607aa489-ea54-4daa-b37d-d5b1390d05ca'],
-          referrer_url: 'https://althor.dev/checklist/'
-        })
-      })
-        .then(function (r) {
-          if (r.ok || r.status === 409) {
-            // 200 = subscribed; 409 = already subscribed (also fine)
-            form.style.display = 'none';
-            success.style.display = '';
-          } else {
-            return r.json().then(function (d) {
-              throw new Error(d.message || 'Something went wrong. Please try again.');
-            });
-          }
-        })
-        .catch(function (err) {
-          submit.disabled = false;
-          submit.textContent = 'Send me the checklist →';
-          error.textContent = err.message || 'Something went wrong. Please try again.';
-          error.style.display = '';
-        });
-    });
-  })();
-  </script>
 
   <div class="prose">
 

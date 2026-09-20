@@ -9,7 +9,7 @@ set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "${REPO_ROOT}"
-SITE_URL="https://althor.dev"
+SITE_URL="https://althorlabs.com"
 
 # (filepath, url-path, priority, changefreq)
 PAGES=(

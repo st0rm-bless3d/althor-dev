@@ -13,7 +13,7 @@ Subject: AI / Copilot subcontract availability — Althor Consulting
 
 Hi {{FIRST_NAME}} —
 
-I'm Samuel at Althor Consulting (althor.dev) — solo independent doing AI agent infrastructure on the Microsoft stack. Recent shipped work includes a multi-model extraction pipeline (TS / Functions / Durable Orchestration), an enterprise AI governance platform (React / Cosmos / Entra), and Copilot Studio agent quickstart packages — case studies + essays on Entra workload identities and MCP boundaries at the site.
+I'm Samuel at Althor Consulting (althorlabs.com) — solo independent doing AI agent infrastructure on the Microsoft stack. Recent shipped work includes a multi-model extraction pipeline (TS / Functions / Durable Orchestration), an enterprise AI governance platform (React / Cosmos / Entra), and Copilot Studio agent quickstart packages — case studies + essays on Entra workload identities and MCP boundaries at the site.
 
 Reaching out because {{PARTNER_NAME}}'s Microsoft Copilot / Azure AI delivery practice is exactly the space I subcontract into when partner bench is committed. Open to a 20-min intro call to see if there's a fit for overflow work in the next 1–2 quarters — happy to share rate sheet, references, and the abstracted client list.
 
@@ -106,7 +106,7 @@ The 20-minute intro call has one goal: get them to flag you on the next AI / Cop
 
 ### Materials to send post-call:
 1. Rate sheet (subcontracted rates: $100/hr blended, $120/hr architecture-only, $140/hr emergency-call)
-2. Abstracted client list (de-identified case studies — same as on althor.dev)
+2. Abstracted client list (de-identified case studies — same as on althorlabs.com)
 3. Sample MSA / SOW template (their preferred shape works fine; flag if you don't carry E&O insurance independently and rely on partner coverage)
 4. One sample deliverable (an architecture review redacted) — proves the work quality without spilling a real client engagement
 

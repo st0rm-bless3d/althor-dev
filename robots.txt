@@ -1,4 +1,4 @@
-# althor.dev — explicit AI-crawler allowlist + default-allow for everything else.
+# althorlabs.com — explicit AI-crawler allowlist + default-allow for everything else.
 # Updated 2026-05-18. See /llms.txt and /llms-full.txt for AI-optimized summaries.
 
 # OpenAI
@@ -63,4 +63,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://althor.dev/sitemap.xml
+Sitemap: https://althorlabs.com/sitemap.xml

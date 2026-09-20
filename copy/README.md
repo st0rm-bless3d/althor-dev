@@ -13,7 +13,7 @@ This is where the source-of-truth copy lives for off-site surfaces — freelance
 
 ## Why these live in the repo
 
-Single source of truth. When a case study on althor.dev updates, every platform profile that references it gets re-synced from one place. Pull requests on these files are the change log.
+Single source of truth. When a case study on althorlabs.com updates, every platform profile that references it gets re-synced from one place. Pull requests on these files are the change log.
 
 ## Why they're not rendered
 

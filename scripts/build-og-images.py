@@ -153,7 +153,7 @@ def render_card(filename: str, title: str, eyebrow: str) -> Path:
         y += line_height
 
     footer_font = load_font(MONO_CANDIDATES, 18)
-    draw.text((80, 570), "ALTHOR.DEV", font=footer_font, fill=COLOR_MUTED)
+    draw.text((80, 570), "ALTHORLABS.COM", font=footer_font, fill=COLOR_MUTED)
     draw.text((972, 570), "BUILD / REVIEW / SHIP", font=footer_font, fill=COLOR_MUTED)
 
     output = REPO_ROOT / filename

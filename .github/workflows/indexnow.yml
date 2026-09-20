@@ -23,7 +23,7 @@ jobs:
       - name: Submit URL list to IndexNow
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
-          HOST: althor.dev
+          HOST: althorlabs.com
         run: |
           set -euo pipefail
           payload=$(cat <<EOF
@@ -43,12 +43,12 @@ jobs:
               "https://${HOST}/writing/mcp-copilot-studio/",
               "https://${HOST}/writing/mcp-server-boundaries/",
               "https://${HOST}/checklist/",
-              "https://${HOST}/offers/",
-              "https://${HOST}/offers/licensegate/",
-              "https://${HOST}/offers/nonprofit-comp-benchmark/",
-              "https://${HOST}/offers/accessibility-baseline-report/",
-              "https://${HOST}/offers/federal-fit-alerts/",
-              "https://${HOST}/offers/n8n-ticket-triage/"
+              "https://${HOST}/packages/",
+              "https://${HOST}/packages/ai-governance-audit/",
+              "https://${HOST}/packages/mcp-security-review/",
+              "https://${HOST}/packages/copilot-studio-quickstart/",
+              "https://${HOST}/packages/azure-openai-architecture-review/",
+              "https://${HOST}/packages/rag-health-check/"
             ]
           }
           EOF

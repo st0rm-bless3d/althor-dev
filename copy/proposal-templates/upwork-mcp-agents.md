@@ -17,20 +17,20 @@ You'll win these by demonstrating that you've published opinion on MCP server bo
 ## Template
 
 ```
-{{CLIENT_NAME_IF_VISIBLE}} — MCP server boundaries are exactly what I've been writing on (althor.dev/writing/mcp-server-boundaries) and shipping in my own infra control plane. {{ECHO_THEIR_SPECIFIC_PROBLEM}} is the right concern to be raising at this stage.
+{{CLIENT_NAME_IF_VISIBLE}} — MCP server boundaries are exactly what I've been writing on (althorlabs.com/writing/mcp-server-boundaries) and shipping in my own infra control plane. {{ECHO_THEIR_SPECIFIC_PROBLEM}} is the right concern to be raising at this stage.
 
 Recent work:
 
-▸ Spire — my own AI infrastructure control plane built in Rust. MCP server publisher + client consumer with proper trust boundaries: one server, one credential scope, read-only by default, writes tagged and policy-gated. Per-object audit log. Source/screenshots at althor.dev/work/spire.
+▸ Spire — my own AI infrastructure control plane built in Rust. MCP server publisher + client consumer with proper trust boundaries: one server, one credential scope, read-only by default, writes tagged and policy-gated. Per-object audit log. Source/screenshots at althorlabs.com/work/spire.
 
 ▸ {{PICK_ONE:}} Multi-model extraction pipeline with field-level consensus voting — agent orchestration across LLMs, 30× throughput, every decision auditable. TypeScript + Durable Orchestration.
-   {{OR:}} MCP Server Security Review package — tool-by-tool review against OWASP Agentic AI Top 10, remediation list ordered by exploitability. althor.dev/packages/mcp-security-review
+   {{OR:}} MCP Server Security Review package — tool-by-tool review against OWASP Agentic AI Top 10, remediation list ordered by exploitability. althorlabs.com/packages/mcp-security-review
 
-▸ Published opinion on MCP server boundary design + adding MCP to Copilot Studio in regulated environments. Six rules essay at althor.dev/writing/mcp-server-boundaries; regulated-tenant integration at althor.dev/writing/mcp-copilot-studio.
+▸ Published opinion on MCP server boundary design + adding MCP to Copilot Studio in regulated environments. Six rules essay at althorlabs.com/writing/mcp-server-boundaries; regulated-tenant integration at althorlabs.com/writing/mcp-copilot-studio.
 
 One question on {{SPECIFIC_DETAIL}} before scoping — {{THE_QUESTION}}.
 
-Portfolio: althor.dev | Available {{HOURS}}/week starting {{DATE}}.
+Portfolio: althorlabs.com | Available {{HOURS}}/week starting {{DATE}}.
 
 — Samuel
 ```
@@ -43,7 +43,7 @@ Portfolio: althor.dev | Available {{HOURS}}/week starting {{DATE}}.
 Lead: "MCP server design comes down to four decisions: trust boundary, tool surface, auth resolution, output bounds. The good news on X is the trust boundary is pretty clear; the work is mostly in {{TOOL_SURFACE / AUTH / OUTPUT_BOUNDS — pick the trickiest}}."
 
 ### "We need someone to security-review our MCP server"
-Lead: "I run this as a productized package — written review against the OWASP Agentic AI Top 10, tool-by-tool, with a remediation list ordered by exploitability. Three days, $1,500 fixed if you want to go that route, or hourly on Upwork if you'd rather. althor.dev/packages/mcp-security-review."
+Lead: "I run this as a productized package — written review against the OWASP Agentic AI Top 10, tool-by-tool, with a remediation list ordered by exploitability. Three days, $1,500 fixed if you want to go that route, or hourly on Upwork if you'd rather. althorlabs.com/packages/mcp-security-review."
 
 ### "Building an agent on Claude API / Agent SDK"
 Lead: "Building on the Claude API + Agent SDK in production myself. Prompt caching, tool use design, multi-model coordination — happy to walk through the trade-offs vs Azure OpenAI for the same workloads."

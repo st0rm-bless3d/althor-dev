@@ -26,33 +26,33 @@ Remote-first.
 
 ## Packages (fixed-scope, fixed-price)
 
-- AI Governance Foundation Audit ($2,500, 1 week) — NIST AI RMF gap analysis + Microsoft Foundry control-plane recommendations — https://althor.dev/packages/ai-governance-audit/
-- MCP Server Security Review ($1,500, 3 days) — written security review of an MCP server against the OWASP Agentic AI Top 10 — https://althor.dev/packages/mcp-security-review/
-- Copilot Studio Agent Quickstart ($5,000, 2 weeks) — working agent + Functions middleware + connector wiring to one enterprise data source — https://althor.dev/packages/copilot-studio-quickstart/
-- Azure OpenAI Architecture Review ($300, 1 hour) — live walkthrough + diagram + 5–10 specific recommendations — https://althor.dev/packages/azure-openai-architecture-review/
-- RAG Pipeline Health Check ($300, 1 hour) — live review of embedding, chunking, retrieval, eval — https://althor.dev/packages/rag-health-check/
+- AI Governance Foundation Audit ($2,500, 1 week) — NIST AI RMF gap analysis + Microsoft Foundry control-plane recommendations — https://althorlabs.com/packages/ai-governance-audit/
+- MCP Server Security Review ($1,500, 3 days) — written security review of an MCP server against the OWASP Agentic AI Top 10 — https://althorlabs.com/packages/mcp-security-review/
+- Copilot Studio Agent Quickstart ($5,000, 2 weeks) — working agent + Functions middleware + connector wiring to one enterprise data source — https://althorlabs.com/packages/copilot-studio-quickstart/
+- Azure OpenAI Architecture Review ($300, 1 hour) — live walkthrough + diagram + 5–10 specific recommendations — https://althorlabs.com/packages/azure-openai-architecture-review/
+- RAG Pipeline Health Check ($300, 1 hour) — live review of embedding, chunking, retrieval, eval — https://althorlabs.com/packages/rag-health-check/
 
-All packages: https://althor.dev/packages/
+All packages: https://althorlabs.com/packages/
 
 ## Work (client engagements)
 
-- Multi-model extraction pipeline — https://althor.dev/work/extraction-pipeline/
-- Enterprise AI governance platform — https://althor.dev/work/governance-platform/
+- Multi-model extraction pipeline — https://althorlabs.com/work/extraction-pipeline/
+- Enterprise AI governance platform — https://althorlabs.com/work/governance-platform/
 
 ## Building (own project)
 
-- Spire (AI infrastructure control plane) — https://althor.dev/work/spire/
+- Spire (AI infrastructure control plane) — https://althorlabs.com/work/spire/
 
 ## Lab notes
 
-- Adding MCP servers to Copilot Studio in regulated environments — https://althor.dev/writing/mcp-copilot-studio/
-- Making agent deployments pass security review — https://althor.dev/writing/agent-security-review/
-- Drawing the right boundaries for an MCP server — https://althor.dev/writing/mcp-server-boundaries/
+- Adding MCP servers to Copilot Studio in regulated environments — https://althorlabs.com/writing/mcp-copilot-studio/
+- Making agent deployments pass security review — https://althorlabs.com/writing/agent-security-review/
+- Drawing the right boundaries for an MCP server — https://althorlabs.com/writing/mcp-server-boundaries/
 
 ## Contact
 
 - Email: contact@althor.dev
-- Canonical URL: https://althor.dev/
+- Canonical URL: https://althorlabs.com/
 
 ## Author
 
@@ -60,4 +60,4 @@ All packages: https://althor.dev/packages/
 
 ## Full corpus
 
-- LlmsFullTxt: https://althor.dev/llms-full.txt
+- LlmsFullTxt: https://althorlabs.com/llms-full.txt
