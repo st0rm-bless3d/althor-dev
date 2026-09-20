@@ -1,9 +1,9 @@
-# Althor Consulting
+# Althor Labs
 
-> Production infrastructure for AI agent systems.
-> The guardrails, orchestration, and audit between a prompt and a production deployment.
+> Applied AI systems and automation for real organizations.
+> Identity, tools, policy, audit, operations, and handoff.
 
-Althor Consulting LLC is a solo consulting practice (Maryland, US) specializing in the infrastructure that makes agent deployments ship — credential brokers, tool access layers, approval gating, audit trails, and MCP integration for enterprise teams.
+Althor Labs is the operating brand of Althor Consulting LLC, an independent engineering practice in the Washington, D.C. region. It designs and builds production AI systems, workflow automation, and governance for organizations where identity, audit, reliability, and handoff matter.
 
 ## Focus areas
 
@@ -34,16 +34,6 @@ Remote-first.
 
 All packages: https://althor.dev/packages/
 
-## Public offer experiments
-
-- LicenseGate GitHub Action — https://althor.dev/offers/licensegate/
-- Nonprofit compensation benchmark sample — https://althor.dev/offers/nonprofit-comp-benchmark/
-- Accessibility Baseline Report sample — https://althor.dev/offers/accessibility-baseline-report/
-- Federal fit alerts sample feed — https://althor.dev/offers/federal-fit-alerts/
-- n8n ticket-triage diagnostic — https://althor.dev/offers/n8n-ticket-triage/
-
-Commerce is currently disabled for these five experiments. Their free samples are public.
-
 ## Work (client engagements)
 
 - Multi-model extraction pipeline — https://althor.dev/work/extraction-pipeline/
@@ -53,7 +43,7 @@ Commerce is currently disabled for these five experiments. Their free samples ar
 
 - Spire (AI infrastructure control plane) — https://althor.dev/work/spire/
 
-## Writing
+## Lab notes
 
 - Adding MCP servers to Copilot Studio in regulated environments — https://althor.dev/writing/mcp-copilot-studio/
 - Making agent deployments pass security review — https://althor.dev/writing/agent-security-review/

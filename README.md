@@ -1,6 +1,6 @@
-# althor.dev
+# Althor Labs
 
-Practice site for Althor Consulting LLC. Static, multi-page; served via GitHub Pages on the apex domain.
+Public site for Althor Labs, the operating brand of Althor Consulting LLC. Static, multi-page, and served through GitHub Pages at the current canonical domain `althor.dev`.
 
 ## Layout
 
@@ -8,6 +8,8 @@ Practice site for Althor Consulting LLC. Static, multi-page; served via GitHub P
 - `work/` — case studies (one subdirectory per project)
 - `writing/` — essays + Atom feed (`writing/feed.xml`)
 - `checklist/` — lead-magnet landing page
+- `packages/` — fixed-scope service packages
+- `intake/` — project routing and contact options
 - `assets/` — shared CSS, OG images, PDF artifacts
 
 ## Deploy
@@ -16,6 +18,7 @@ GitHub Pages auto-deploys `main` on push. DNS managed at Porkbun:
 
 - Apex `althor.dev` → 4 A records pointing at GitHub Pages (`185.199.108.153`, `.109.153`, `.110.153`, `.111.153`)
 - `www.althor.dev` → CNAME → `st0rm-bless3d.github.io`
+- `althorlabs.com` and `althorlabs.dev` → path-preserving HTTPS redirects to `althor.dev`
 
 ## Edit
 
@@ -29,7 +32,7 @@ GitHub Pages serves a fixed `Cache-Control: max-age=600` on all assets. Custom h
 
 - `scripts/build-sitemap.sh` — regenerates `sitemap.xml` from the on-disk page set; uses each file's most recent commit date as `lastmod`.
 - `scripts/build-llms-full.sh` — concatenates every page's plaintext into `llms-full.txt` with per-page boundary markers.
-- `scripts/build-og-images.py` — overlays each page's H1 onto the OG template (`og-essay.png` / `og-case-study.png` / `og-default.png`) and writes `og-<slug>.png`. Pillow required (`pip install --break-system-packages Pillow` on Ubuntu).
+- `scripts/build-og-images.py` — generates the social-card templates, page-specific cards, and raster favicon variants. Pillow required (`pip install --break-system-packages Pillow` on Ubuntu).
 
 Run all three after any meaningful content change before committing.
 

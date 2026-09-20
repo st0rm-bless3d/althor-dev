@@ -30,20 +30,6 @@ PAGES=(
   "packages/copilot-studio-quickstart/index.html|/packages/copilot-studio-quickstart/|0.8|monthly"
   "packages/azure-openai-architecture-review/index.html|/packages/azure-openai-architecture-review/|0.8|monthly"
   "packages/rag-health-check/index.html|/packages/rag-health-check/|0.8|monthly"
-  "offers/index.html|/offers/|0.9|weekly"
-  "offers/licensegate/index.html|/offers/licensegate/|0.8|weekly"
-  "offers/nonprofit-comp-benchmark/index.html|/offers/nonprofit-comp-benchmark/|0.8|weekly"
-  "offers/accessibility-baseline-report/index.html|/offers/accessibility-baseline-report/|0.8|weekly"
-  "offers/federal-fit-alerts/index.html|/offers/federal-fit-alerts/|0.8|weekly"
-  "offers/n8n-ticket-triage/index.html|/offers/n8n-ticket-triage/|0.8|weekly"
-  "offers/openapi-quality-report/index.html|/offers/openapi-quality-report/|0.8|weekly"
-  "offers/construction-weather-record/index.html|/offers/construction-weather-record/|0.8|weekly"
-  "offers/public-site-health-report/index.html|/offers/public-site-health-report/|0.8|weekly"
-  "offers/domain-certificate-watch/index.html|/offers/domain-certificate-watch/|0.8|weekly"
-  "offers/recallradar-seller-alert-pass/index.html|/offers/recallradar-seller-alert-pass/|0.8|weekly"
-  "offers/gha-workflow-audit/index.html|/offers/gha-workflow-audit/|0.8|weekly"
-  "offers/npm-supply-chain-audit/index.html|/offers/npm-supply-chain-audit/|0.8|weekly"
-  "offers/terraform-cost-waste/index.html|/offers/terraform-cost-waste/|0.8|weekly"
   "assets/agent-security-review-checklist.pdf|/assets/agent-security-review-checklist.pdf|0.7|monthly"
 )
 
@@ -60,9 +46,13 @@ for entry in "${PAGES[@]}"; do
     echo "warn: ${file} missing, skipping" >&2
     continue
   fi
-  # Use the most recent commit date that touched the file. Fall back
-  # to today if git can't find one (first time the file is added).
-  lastmod=$(git log -1 --pretty=%cs -- "${file}" 2>/dev/null || true)
+  # Uncommitted content is being prepared for today's release, so its
+  # lastmod must not inherit the previous commit date.
+  if ! git diff --quiet -- "${file}" || ! git diff --cached --quiet -- "${file}"; then
+    lastmod=$(date -u +%Y-%m-%d)
+  else
+    lastmod=$(git log -1 --pretty=%cs -- "${file}" 2>/dev/null || true)
+  fi
   if [[ -z "${lastmod}" ]]; then
     lastmod=$(date -u +%Y-%m-%d)
   fi

@@ -1,6 +1,6 @@
 /* TEAM */
 
-Solo consultant: Samuel S
+Althor Labs: Samuel S
   Role:     Architect, builder, principal
   Contact:  contact [at] althor.dev
   From:     Washington, D.C. metro, US
@@ -14,11 +14,11 @@ on this site sharper.
 
 /* SITE */
 
-Last update:   2026-05-18
+Last update:   2026-09-20
 Standards:     HTML5, CSS3, JSON-LD (schema.org)
 Components:    Static HTML, GitHub Pages
 Fonts:         Geist + Geist Mono (Google Fonts)
-Analytics:     Umami (self-hosted, no third-party tracking)
+Analytics:     None
 Build:         Hand-written. No framework. No build step.
 
 Source:        https://github.com/st0rm-bless3d/althor-dev

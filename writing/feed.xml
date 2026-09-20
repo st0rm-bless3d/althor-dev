@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>althor · Writing</title>
+  <title>Althor Labs · Lab notes</title>
   <subtitle>Working notes from shipping agent systems into regulated environments.</subtitle>
   <link href="https://althor.dev/writing/feed.xml" rel="self"/>
   <link href="https://althor.dev/writing/"/>
@@ -11,7 +11,7 @@
     <email>contact@althor.dev</email>
     <uri>https://althor.dev/</uri>
   </author>
-  <rights>© 2026 Althor Consulting</rights>
+  <rights>© 2026 Althor Labs</rights>
 
   <entry>
     <title>Entra ID workload identities for agent systems</title>
