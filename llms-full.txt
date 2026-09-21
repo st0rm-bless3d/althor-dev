@@ -13,109 +13,71 @@ Skip to content
 
 althorlabs
 
-Independent engineeringSamuel S
+# AI systems & workflow automation.
+
+Independent engineering by Samuel S. I build integrations and tools for teams working with Azure and Microsoft 365.
+
+View workGet in touch ↗
+
+## Services
+
+### Agent systems
+
+Tools, permissions, and approval workflows for agents working with business data.
+
+### Workflow automation
+
+Integrations across models, APIs, and the systems your team already uses.
+
+### Architecture review
+
+Design and code review, with specific findings and a plan for the changes.
+
+## Selected work
+All work ↗
+
+Client work
+
+### Document extraction
+
+Compare model outputs, validate fields, and route disagreements to a reviewer.
+
+Case study ↗
+
+Client work
+
+### AI governance
+
+A use-case registry inside Teams and SharePoint, with access controls and recorded reviews.
+
+Case study ↗
+
+Independent project
+
+### Spire
+
+The interface I build for my own infrastructure. Service evidence, tasks, and reviewed actions.
+
+Architecture ↗
+
+## Writing
+All notes ↗
+
+IdentityEntra ID workload identities for agent systems↗SecurityMaking agent deployments pass security review↗Tool designDrawing the right boundaries for an MCP server↗
+
+## About
+
+I'm Samuel, the engineer behind Althor Labs. My work spans Microsoft's cloud and business tools, TypeScript, and Python. This site collects client projects, technical notes, and the systems I build in my own lab.
+
 Washington, D.C. / Remote
 
-# I build the software around the model.
+## Contact
 
-AI tools and workflow automation, from the first integration to the permissions, review steps, and operating docs your team needs.
+contact@althor.dev
 
-Explore the workTalk through a project ↗
+Services and pricing
 
-Azure · Entra ID · Microsoft 365 · TypeScript · Python
-
-01 / Selected work
-
-## What I’ve been building.
-
-Client workDocument processing
-
-### Turn scanned documents into reviewable records ↗
-
-Compare model outputs field by field, run validation checks, and send disagreements to a reviewer. Keep the original output alongside the final decision.
-Extraction pipeline · Architecture and trade-offs
-
-Client workMicrosoft 365
-
-### Give AI use cases a review process ↗
-
-A registry embedded in Teams and SharePoint, with role-based access, council review, and a record of each decision.
-Governance platform · Case study
-
-Independent projectInfrastructure
-
-### Spire ↗
-
-The system I build to manage my own infrastructure. It brings service evidence, tasks, and reviewed actions into one operator interface.
-Current architecture · September 2026
-
-02 / An architecture example
-
-## What should a tool call be allowed to do?
-
-Take an assistant looking after a document queue. Open each request to follow the decision. This is an illustrative policy design; it runs no tools and uses no live data.
-
-Example service / document queueRequest → policy → result
-01Read the queue statusAllowed
-Requestqueue.status for the assigned queue.PolicyThe caller has read access to this queue. Return counts and job state, excluding document contents.ResultReturn the permitted fields and record who requested them. No service state changes.
-Permission to observe a queue does not grant permission to change it.
-
-02Retry a failed jobApproval required
-Requestqueue.retry for one failed job.PolicyCreate a proposal containing the job ID and current version. A reviewer must approve that exact action.ResultRecheck permissions and job state before execution. If either changed, the approval cannot be reused. Record the observed outcome.
-A timeout leaves the outcome unknown. Check the job before attempting another retry.
-
-03Export another team’s documentsDenied
-Requestdocuments.export outside the caller’s assigned queue.PolicyThe caller does not have access to the target documents. Stop before requesting their contents.ResultReturn an access error and record the denied request. Model confidence does not change the caller’s permissions.
-An approval workflow cannot create access the reviewer is not authorized to grant.
-
-Read the note on MCP tool boundaries ↗
-
-03 / Working together
-
-## Bring me the part that’s stuck.
-
-I work directly with the team responsible for the system. We agree on the scope and deliverables before work starts.
-
-### Review an existing system
-
-Trace an authentication problem, examine a tool boundary, or work through a retrieval pipeline. Get a written set of findings and proposed changes.
-Review packages and prices →
-
-### Build an integration
-
-Connect a model to business data and workflows, including permissions, failure handling, and the documentation needed to maintain it.
-Discuss the scope →
-
-### Work with your engineers
-
-Ongoing design and code review for a team that wants another experienced engineer involved in the decisions.
-Discuss ongoing support →
-
-04 / Lab notes
-
-## The decisions behind the code.
-
-IdentityEntra ID workload identities for agent systems↗Security reviewMaking agent deployments pass security review↗Tool designDrawing the right boundaries for an MCP server↗
-
-All notes →/Download the security review checklist →
-
-05 / About
-
-## Samuel, behind Althor Labs.
-
-I’m a solutions architect and software engineer in the Washington, D.C. area. My client work centers on Azure, Entra ID, Microsoft 365, and Power Platform, alongside TypeScript and Python.
-
-I also build and operate my own systems. Spire is where I work through infrastructure problems that need sustained attention: service visibility, access control, and recovery when an action’s result is uncertain.
-
-Find me on GitHub ↗
-
-Have something in mind?
-
-## What are you trying to build?
-
-Send the current setup, the part that is stuck, and any deadline. A rough description is enough.
-
-Book 30 minutesEmail directly ↗
+Book a call
 
 
 ===== /work/ =====
@@ -401,7 +363,7 @@ The useful lesson is specific to this project: keep the component that owns a de
 
 ReactTypeScriptPostgresRustSQLite approval ledgerMCPDocker
 
-Related:Explore an illustrative tool-call decision or read the note on MCP boundaries.
+Related:The note on MCP boundaries.
 
 ### Working on something similar?
 

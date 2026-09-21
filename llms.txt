@@ -1,6 +1,6 @@
 # Althor Labs
 
-> I build the software around the model.
+> AI systems and workflow automation.
 
 Althor Labs is Samuel S’s independent engineering practice in the Washington, D.C. region. Samuel builds AI applications, Microsoft integrations, and workflow software. Althor Consulting LLC is the legal entity.
 

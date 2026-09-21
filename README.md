@@ -4,7 +4,7 @@ Public site for Althor Labs, the operating brand of Althor Consulting LLC. Stati
 
 ## Layout
 
-- `index.html` — home (project index, inspectable tool-call example, services, notes, about, contact)
+- `index.html` — home (services, projects, writing, about, contact)
 - `work/` — case studies (one subdirectory per project)
 - `writing/` — essays + Atom feed (`writing/feed.xml`)
 - `checklist/` — direct PDF download
@@ -23,7 +23,7 @@ GitHub Pages auto-deploys `main` on push. DNS managed at Porkbun:
 
 ## Edit
 
-The visual system uses warm paper, dark type, and a rust accent. The homepage tool-call examples use native disclosure controls and work without JavaScript. Shared off-site wording and claim sources live in `copy/brand.md`; those drafts have not been posted to external profiles.
+The visual system retains the original dark background, cyan accents, and Geist typography with a simplified homepage. A small inline seven-spoked wheel turns on click or keyboard activation through `assets/wheel.js`; reduced-motion preferences disable its transition. Without JavaScript it remains a static ornament. Shared off-site wording and claim sources live in `copy/brand.md`; those drafts have not been posted to external profiles.
 
 Edit any HTML page, commit, push — Pages rebuilds in ~30s.
 
