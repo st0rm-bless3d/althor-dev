@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="color-scheme" content="dark" />
-<meta name="theme-color" content="#0b1017" />
+<meta name="color-scheme" content="light" />
+<meta name="theme-color" content="#f5f2ea" />
 
 <title>Adding MCP servers to Copilot Studio in regulated environments · Althor Labs</title>
 <meta name="description" content="Five architecture decisions for adding MCP servers to Copilot Studio in regulated enterprise tenants." />
@@ -28,7 +28,7 @@
 <meta property="og:image:alt" content="Adding MCP servers to Copilot Studio in regulated environments — essay from althor" />
 
 <meta property="article:published_time" content="2026-04-28" />
-<meta property="article:modified_time" content="2026-05-17" />
+<meta property="article:modified_time" content="2026-09-21" />
 <meta property="article:author" content="Samuel S" />
 <meta property="article:section" content="Pattern" />
 <meta property="article:tag" content="Microsoft Copilot Studio" />
@@ -50,7 +50,7 @@
   "headline": "Adding MCP servers to Copilot Studio in regulated environments",
   "description": "Five architecture decisions the Copilot Studio MCP onboarding wizard quietly assumes you've made.",
   "datePublished": "2026-04-28",
-  "dateModified": "2026-05-17",
+  "dateModified": "2026-09-21",
   "author": { "@type": "Person", "name": "Samuel S", "url": "https://althorlabs.com/" },
   "publisher": { "@type": "Organization", "name": "Althor Labs", "url": "https://althorlabs.com/" },
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://althorlabs.com/writing/mcp-copilot-studio/" },
@@ -82,7 +82,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/style.css" />
+<link rel="stylesheet" href="/assets/style.css?v=20260921" />
 <link rel="alternate" type="application/atom+xml" title="Althor Labs · Lab notes" href="/writing/feed.xml" />
 </head>
 <body>
@@ -138,7 +138,7 @@
       The decision that matters underneath is <em>whose credentials are being used when the MCP server reaches downstream</em>.
     </p>
 
-    <div class="diagram" aria-label="Identity options for MCP tool calls">
+    <div class="diagram" tabindex="0" role="region" aria-label="Identity options for MCP tool calls">
 <pre><span class="dim">path</span>                          <span class="dim">downstream identity</span>     <span class="dim">use when</span>
 <span class="accent">API key</span>                       MCP server's own       read-only tools against shared catalogs
 <span class="accent">OAuth 2.0 — agent</span>             agent service principal   tools attributable to the agent
@@ -149,7 +149,7 @@
       Most teams pick API key because the wizard makes it the path of least resistance. This is fine for a demo and frequently wrong for production. The audit trail downstream now reads "the MCP server did it" — which is exactly the failure mode your compliance team will flag in review.
     </p>
     <p>
-      If your tool reads or writes user-scoped data — anything in M365, anything in Dynamics, anything where row-level or record-level permissions matter — OAuth with on-behalf-of is the only correct answer. The agent acts as the user. The audit trail downstream reads with the user's UPN. RBAC enforcement happens at the downstream service, not at the MCP layer.
+      When a middle-tier API calls another API using the user’s delegated access, <a href="https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-on-behalf-of-flow">OAuth on-behalf-of</a> is one supported pattern. The correct flow depends on the connector and downstream API. Validate the incoming token and enforce tool permissions as well as the downstream service’s access rules.
     </p>
     <p>
       Practical note: DCR with discovery is genuinely the simplest OAuth setup if your MCP server's identity provider supports it. If it doesn't — and Entra ID app registrations don't, by default — you'll be configuring auth manually with your authorization URL, token URL, scopes, and client ID/secret. Budget more time than the wizard implies.

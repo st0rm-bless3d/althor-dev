@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="color-scheme" content="dark" />
-<meta name="theme-color" content="#0b1017" />
+<meta name="color-scheme" content="light" />
+<meta name="theme-color" content="#f5f2ea" />
 
 <title>Entra ID workload identities for agent systems · Althor Labs</title>
 <meta name="description" content="A decision matrix for picking the right Entra ID workload identity for an AI agent — service principal, OBO, federated credentials, managed identity." />
@@ -28,7 +28,7 @@
 <meta property="og:image:alt" content="Entra ID workload identities for agent systems — essay from althor" />
 
 <meta property="article:published_time" content="2026-05-17" />
-<meta property="article:modified_time" content="2026-05-17" />
+<meta property="article:modified_time" content="2026-09-21" />
 <meta property="article:author" content="Samuel S" />
 <meta property="article:section" content="Pattern" />
 <meta property="article:tag" content="Entra ID" />
@@ -50,7 +50,7 @@
   "headline": "Entra ID workload identities for agent systems",
   "description": "A decision matrix for picking the right Entra ID workload identity for an AI agent — service principal, on-behalf-of, federated credentials, managed identity.",
   "datePublished": "2026-05-17",
-  "dateModified": "2026-05-17",
+  "dateModified": "2026-09-21",
   "author": { "@type": "Person", "name": "Samuel S", "url": "https://althorlabs.com/" },
   "publisher": { "@type": "Organization", "name": "Althor Labs", "url": "https://althorlabs.com/" },
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://althorlabs.com/writing/entra-workload-identities/" },
@@ -83,7 +83,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/style.css" />
+<link rel="stylesheet" href="/assets/style.css?v=20260921" />
 <link rel="alternate" type="application/atom+xml" title="Althor Labs · Lab notes" href="/writing/feed.xml" />
 </head>
 <body>
@@ -113,7 +113,7 @@
       <span class="tldr__label">TL;DR</span>
       <ul>
         <li>Four identity shapes — app-only, on-behalf-of, federated credentials, managed identity — and one decision: which fits the call's downstream-attribution requirement.</li>
-        <li>OBO is the only correct answer for user-scoped data; FIC kills the long-lived <code>client_secret</code>; managed identity is the cheapest path when the agent runs on Azure compute.</li>
+        <li>OBO supports a middle-tier API calling another API on a user’s behalf. Choose credentials and delegation flows for the actual hosting and access requirements.</li>
         <li>Five gotchas the wizard doesn't surface, four OBO traps, and a pre-flight list before going live.</li>
       </ul>
     </div>
@@ -139,7 +139,7 @@
       Four identity shapes cover the realistic option space. The decision is not "which is best" — it's "which fits this call's downstream-attribution requirement." Multiple options can coexist in one agent system; the wrong one is the one that hides whose action it was.
     </p>
 
-    <div class="diagram" aria-label="Entra ID workload identity decision matrix for agent systems">
+    <div class="diagram" tabindex="0" role="region" aria-label="Entra ID workload identity decision matrix for agent systems">
 <pre><span class="dim">option</span>                    <span class="dim">downstream identity</span>   <span class="dim">RBAC inherits</span>     <span class="dim">token lifetime</span>      <span class="dim">audit clarity</span>
 <span class="accent">App-only (SP)</span>             agent app's SPN        app role assignment 60–90 min          "the agent did it"
 <span class="accent">On-behalf-of (OBO)</span>        signed-in user's UPN   user's directory    60–90 min          "user X's agent did it"
@@ -149,7 +149,7 @@
     </div>
 
     <p>
-      Read the matrix this way. <strong>App-only</strong> is the agent acting as itself — fine when the agent operates on shared, non-user-scoped data (an alerting bot reading a tenant-wide telemetry table). <strong>OBO</strong> is the agent acting as a specific user — the only correct answer when the agent reads or writes user-scoped data. <strong>FIC</strong> is the agent runtime authenticating without a stored client secret — same downstream identity as app-only, but the credential bootstrap is a federated token exchange instead of <code>client_secret</code>. <strong>Managed identity</strong> is the platform-managed version of the agent's machine identity — applies when the agent runs on Azure compute.
+      Read the matrix this way. <strong>App-only</strong> is the agent acting as itself — fine when the agent operates on shared, non-user-scoped data (an alerting bot reading a tenant-wide telemetry table). <strong>OBO</strong> is the agent acting as a specific user — an option when a middle-tier API calls a downstream API with delegated user access. <strong>FIC</strong> is the agent runtime authenticating without a stored client secret — same downstream identity as app-only, but the credential bootstrap is a federated token exchange instead of <code>client_secret</code>. <strong>Managed identity</strong> is the platform-managed version of the agent's machine identity — applies when the agent runs on Azure compute.
     </p>
     <p>
       The matrix above flattens nuance for legibility. Microsoft's own taxonomy folds applications, service principals, and managed identities into one umbrella — <a href="https://learn.microsoft.com/en-us/entra/workload-id/workload-identities-overview">"workload identities"</a> — with FIC as a credential type rather than an identity type. Mentally hold it both ways: four credential-and-attribution shapes, three Entra object types.
@@ -175,7 +175,7 @@
 
     <h2>On-behalf-of for user-triggered agent actions</h2>
     <p>
-      The OAuth 2.0 <a href="https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-on-behalf-of-flow">on-behalf-of flow</a> is the only correct answer for an agent that reads or writes user-scoped data. The shape is delegation: a user authenticates to your front-end (Teams app, Copilot Studio agent, custom web UI); the front-end gets an access token for the agent's API (token A); the agent's API exchanges token A — using its own client credentials plus token A as an <code>assertion</code> — for token B, which targets Microsoft Graph (or whatever downstream API the agent needs to call). Token B carries the user's identity.
+      The OAuth 2.0 <a href="https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-on-behalf-of-flow">on-behalf-of flow</a> supports a middle-tier API calling a downstream API on a user’s behalf. The shape is delegation: a user authenticates to your front-end (Teams app, Copilot Studio agent, custom web UI); the front-end gets an access token for the agent's API (token A); the agent's API exchanges token A — using its own client credentials plus token A as an <code>assertion</code> — for token B, which targets Microsoft Graph (or whatever downstream API the agent needs to call). Token B carries the user's identity.
     </p>
     <p>
       The exchange happens at the Entra token endpoint with a specific shape — <code>grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer</code> and <code>requested_token_use=on_behalf_of</code> — and the resulting token B has the user's UPN in its claims. When the agent uses token B to call Graph, the resulting Graph audit-log entry attributes the action to the user, not the agent. The agent is a middle tier; the user is the principal.
@@ -221,7 +221,7 @@
     </p>
 
     <p><strong>Managed identity → Graph (agent on Azure compute, app-only call):</strong></p>
-    <div class="diagram" aria-label="Managed identity to Graph">
+    <div class="diagram" tabindex="0" role="region" aria-label="Managed identity to Graph">
 <pre><span class="dim"># pip install azure-identity httpx</span>
 from azure.identity import DefaultAzureCredential
 import httpx
@@ -239,7 +239,7 @@ resp.raise_for_status()</pre>
     </div>
 
     <p><strong>On-behalf-of exchange (agent API endpoint, acting as the calling user):</strong></p>
-    <div class="diagram" aria-label="On-behalf-of token exchange">
+    <div class="diagram" tabindex="0" role="region" aria-label="On-behalf-of token exchange">
 <pre><span class="dim"># pip install msal httpx</span>
 import msal, httpx
 

@@ -1,9 +1,8 @@
 # Althor Labs
 
-> Applied AI systems and automation for real organizations.
-> Identity, tools, policy, audit, operations, and handoff.
+> I build the software around the model.
 
-Althor Labs is the operating brand of Althor Consulting LLC, an independent engineering practice in the Washington, D.C. region. It designs and builds production AI systems, workflow automation, and governance for organizations where identity, audit, reliability, and handoff matter.
+Althor Labs is Samuel S’s independent engineering practice in the Washington, D.C. region. Samuel builds AI applications, Microsoft integrations, and workflow software. Althor Consulting LLC is the legal entity.
 
 ## Focus areas
 
@@ -12,15 +11,13 @@ Althor Labs is the operating brand of Althor Consulting LLC, an independent engi
 - Credential brokering for agent tool access
 - Policy-gated approval flows for critical actions
 - Audit and observability for agent-driven workflows
-- Salesforce and CRM workflow automation with agent handlers
-- Production ops for internal AI platforms — LiteLLM, Langfuse, vLLM
 - Security and audit posture review for agent-driven workflows
 
 ## Engagements
 
-- Discovery (1–2 weeks, fixed-scope) — architecture and security review of an existing or planned agent deployment.
-- Build (8–12 weeks, fixed-scope) — end-to-end build of an agent system: identity, credential broker, scoped tools, policy gating, audit layer.
-- Advisory (monthly retainer) — ongoing architecture review, design partnership, and escalation on tricky calls.
+- Review an existing system: written findings and proposed changes.
+- Build an integration: scope and deliverables agreed before work starts.
+- Work with an engineering team: ongoing design and code review.
 
 Remote-first.
 
@@ -41,7 +38,7 @@ All packages: https://althorlabs.com/packages/
 
 ## Building (own project)
 
-- Spire (AI infrastructure control plane) — https://althorlabs.com/work/spire/
+- Spire (independent infrastructure project) — https://althorlabs.com/work/spire/
 
 ## Lab notes
 

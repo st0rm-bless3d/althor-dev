@@ -1,82 +1,27 @@
-# Video intro script — Althor (Samuel S)
+# Video introduction draft
 
-**Use**: Upwork (mandatory in 2026), Toptal, optional on Codementor
-**Length**: 60–90 seconds
-**Format**: Landscape, neutral background, natural lighting, phone camera fine
-**Read style**: Conversational, slightly faster than you think; cut the throat-clears in post
+Status: Draft, unrecorded and unposted. Reviewed 2026-09-21.
 
----
+Target length: 60–90 seconds. Read aloud and adjust to a natural pace.
 
-## Script (target ~80 seconds at conversational pace)
+## Script
 
-> **[0–10 sec — hook]**
->
-> Hey, I'm Samuel. I ship enterprise AI platforms end-to-end. Not POCs. Not demos. Production systems that pass security review and serve hundreds of users in regulated environments.
+Hi, I'm Samuel S, the engineer behind Althor Labs. I build the software around the model.
 
-> **[10–35 sec — proof]**
->
-> Three things I've shipped recently:
->
-> One — a multi-model extraction pipeline with field-level consensus voting. Took a manual process from four entries an hour to a hundred and twenty. Retired a contractor spend.
->
-> Two — an enterprise AI governance platform. Use-case registry, four-tier role-based access control, council review workflow, native Teams and SharePoint embedding. Operating at global enterprise scale.
->
-> Three — Spire. My own AI infrastructure control plane built in Rust. Policy-gated approvals. Per-object audit log. MCP tools with proper auth boundaries.
+My work includes a document extraction pipeline that compares field values from multiple models and keeps original outputs alongside reviewed records. I also built an enterprise AI governance application with Entra ID roles and a council review workflow inside Teams and SharePoint.
 
-> **[35–55 sec — edge]**
->
-> The specialty: Microsoft stack — Azure, Entra ID, Copilot Studio, Power Platform — plus Anthropic Claude, MCP server design, and the audit and governance work most teams put off until InfoSec asks. I've written long-form on Entra workload identities for agents, MCP in Copilot Studio, MCP server boundaries.
+Most of my client work sits in the Microsoft ecosystem: Azure, Entra ID, Microsoft 365, and Power Platform. I work in TypeScript and Python, and maintain an independent infrastructure project called Spire.
 
-> **[55–75 sec — who I'm for]**
->
-> If you're an engineering team that needs senior AI architecture without spinning up a full hire, or a company that needs an agent shipped right the first time so security signs off — that's the work.
+I can help with the application itself, the systems it connects to, and the permissions it needs. I start with the problem you're trying to solve and agree on a way to check the result.
 
-> **[75–90 sec — CTA]**
->
-> Portfolio's at althorlabs.com — case studies, essays, engagement options. Let's build.
+You can find the case studies and technical notes at althorlabs.com.
 
----
+## Mentoring variant
+
+Replace the final two paragraphs with:
+
+For a debugging or review session, bring a specific problem and the code, logs, or diagram we can inspect together. We'll work through the evidence and identify the next step.
 
 ## Recording notes
 
-- **Camera**: Phone, landscape, eye-level. Don't shoot up your nose.
-- **Background**: Plain wall, bookshelf, or office. No bed, no kitchen, no busy art.
-- **Lighting**: Face a window during the day. If recording at night, ring light or two warm lamps in front of you, not behind.
-- **Audio**: Lavalier mic or AirPods Pro mic — phone's built-in mic is acceptable if quiet room
-- **Wardrobe**: Solid color shirt, not white (blows out), not pinstripes (moiré).
-- **Look at the lens, not the screen**. Tape something at lens height to remind yourself.
-- **Energy**: Slightly higher than felt. Camera flattens everything 20%.
-- **Takes**: Expect 6–10. The good one is usually take 4 or 5 — you're warmed up but not exhausted yet.
-
----
-
-## Post
-
-- Trim leading/trailing dead air ruthlessly
-- Add a 1-second fade in/out
-- Export 1080p H.264, target file size <80MB (Upwork upload cap is 100MB)
-- **Captions**: Auto-generate then manually correct technical terms (MCP, Entra, Bicep, sqlx, etc.). Captions matter for the algorithm and for autoplay-without-sound previewers.
-
----
-
-## Variants
-
-The script above is the **Upwork primary**. For Toptal and Codementor, lighter edits:
-
-### Toptal cut (~70 sec)
-
-Drop the closing CTA ("althorlabs.com — let's build") since Toptal's profile already shows the portfolio link prominently. End on "that's the work."
-
-### Codementor cut (~60 sec)
-
-Replace the "Who I'm for" paragraph with: "If you're stuck on an MCP server, a Copilot Studio auth flow, or a RAG pipeline that isn't retrieving what it should — I'm the senior who's shipped these into production. Book a session and let's unblock you."
-
----
-
-## What NOT to do
-
-- Don't open with "Hi guys" or "What's up everyone" — single-client medium, not YouTube
-- Don't pitch your hourly rate in the video — that's what the profile sidebar is for
-- Don't read the script word-for-word like a teleprompter — get it into your head first, then talk
-- Don't film against a window — silhouette city
-- Don't use stock B-roll, music, or text overlays — looks like an agency, not a senior consultant
+Use an eye-level camera, a quiet room, and light on your face. Speak to the lens. Trim distracting pauses and check captions for technical names. Confirm current upload requirements before exporting.

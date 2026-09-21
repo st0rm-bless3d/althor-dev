@@ -1,24 +1,15 @@
-# /copy/
+# Off-site copy
 
-Authoring directory. Not rendered as web pages. Not linked from site navigation. Not in `sitemap.xml` or `llms.txt`.
+Status: Drafts, unposted. Reviewed 2026-09-21.
 
-This is where the source-of-truth copy lives for off-site surfaces — freelance platform profiles, proposal templates, outreach copy, internal templates. Each file is plain Markdown intended to be pasted into the target system (Upwork profile editor, Toptal application, Codementor mentor pitch, etc.).
+These files hold proposed profiles, proposals, video scripts, and referral notes for Althor Labs. Editing them does not update an external profile or send a message.
 
-## Layout
+- `brand.md`: shared wording, project descriptions, and claim sources.
+- `platforms/`: platform profiles and a video script.
+- `proposal-templates/`: replies to specific project briefs.
+- `outreach/`: warm referrals and partner introductions.
+- `bookkeeping-template.md`: internal planning template, outside this editorial review.
 
-- `platforms/` — profile copy for Upwork, Toptal, Codementor + the shared 60–90 sec video intro script.
-- `proposal-templates/` — Upwork proposal templates by category. Fill in the brackets before sending.
-- `outreach/` — cold outreach copy (Microsoft Partner subcontracting, etc.).
-- `bookkeeping-template.md` — column schema for tracking platform revenue across Upwork / Toptal / Codementor.
+These files are not rendered as site pages or included in the sitemap. They are readable in the repository; do not add private client or financial data.
 
-## Why these live in the repo
-
-Single source of truth. When a case study on althorlabs.com updates, every platform profile that references it gets re-synced from one place. Pull requests on these files are the change log.
-
-## Why they're not rendered
-
-They're paste targets, not pages. Upwork profiles aren't web pages — they're form fields in Upwork's editor. Rendering them at `/copy/platforms/upwork-profile/` would create a confusing public artifact ("why does this site host its own Upwork profile?") and pollute the sitemap.
-
-## Update discipline
-
-When a case study or essay changes meaningfully, walk every file under `/copy/platforms/` and re-paste the affected sections into the corresponding platform editor. Profile drift is the failure mode — same person, three different stories.
+Use https://althorlabs.com and contact@althor.dev for direct contact. Check platform rules before adding external contact information. Confirm availability and field limits when posting. Update affected drafts when a project changes.

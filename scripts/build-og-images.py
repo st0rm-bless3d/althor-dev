@@ -28,13 +28,13 @@ MONO_CANDIDATES = [
     "/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf",
 ]
 
-COLOR_BG = (11, 16, 23)
-COLOR_PANEL = (17, 25, 35)
-COLOR_GRID = (31, 46, 60)
-COLOR_TEXT = (238, 242, 244)
-COLOR_MUTED = (151, 166, 177)
-COLOR_ACCENT = (112, 221, 215)
-COLOR_ACCENT_2 = (192, 151, 232)
+COLOR_BG = (245, 242, 234)
+COLOR_PANEL = (235, 231, 221)
+COLOR_GRID = (201, 195, 181)
+COLOR_TEXT = (39, 39, 33)
+COLOR_MUTED = (98, 96, 85)
+COLOR_ACCENT = (150, 62, 35)
+COLOR_ACCENT_2 = (83, 99, 77)
 
 PAGES: list[tuple[str, str, str]] = [
     ("agent-security-review", "Making agent deployments pass security review", "PATTERN / LAB NOTES"),
@@ -43,14 +43,14 @@ PAGES: list[tuple[str, str, str]] = [
     ("mcp-server-boundaries", "Drawing the right boundaries for an MCP server", "PATTERN / LAB NOTES"),
     ("extraction-pipeline", "Multi-model extraction pipeline", "CASE STUDY / SELECTED WORK"),
     ("governance-platform", "Enterprise AI governance platform", "CASE STUDY / SELECTED WORK"),
-    ("spire", "Spire: AI infrastructure control plane", "ACTIVE BUILD / ALTHOR LABS"),
+    ("spire", "Spire: an infrastructure project", "ACTIVE BUILD / ALTHOR LABS"),
     ("checklist", "Agent Security Review Checklist", "FIELD GUIDE / FREE PDF"),
 ]
 
 BASE_CARDS: list[tuple[str, str, str]] = [
-    ("og-default.png", "AI systems that work inside real organizations.", "APPLIED AI / AUTOMATION"),
-    ("og-essay.png", "Lab notes from systems under load.", "IDENTITY / TOOLS / POLICY / AUDIT"),
-    ("og-case-study.png", "Production systems, measured.", "SELECTED WORK / ALTHOR LABS"),
+    ("og-default.png", "I build the software around the model.", "APPLIED AI / AUTOMATION"),
+    ("og-essay.png", "Notes on the decisions behind the code.", "IDENTITY / TOOLS / POLICY / AUDIT"),
+    ("og-case-study.png", "Projects and the decisions behind them.", "SELECTED WORK / ALTHOR LABS"),
 ]
 
 
@@ -98,64 +98,41 @@ def draw_mark(draw: ImageDraw.ImageDraw, x: int, y: int, scale: int = 1) -> None
 def make_canvas() -> Image.Image:
     image = Image.new("RGB", (1200, 630), COLOR_BG)
     draw = ImageDraw.Draw(image)
-
-    for x in range(0, 1201, 48):
-        draw.line((x, 0, x, 630), fill=COLOR_GRID, width=1)
-    for y in range(0, 631, 48):
-        draw.line((0, y, 1200, y), fill=COLOR_GRID, width=1)
-
-    draw.rectangle((0, 0, 1200, 12), fill=COLOR_ACCENT)
-    draw.rounded_rectangle((890, 126, 1120, 488), radius=20,
-                           fill=COLOR_PANEL, outline=COLOR_GRID, width=2)
-
-    node_font = load_font(MONO_CANDIDATES, 16)
-    nodes = (("01", "IDENTITY"), ("02", "TOOLS"), ("03", "POLICY"), ("04", "AUDIT"))
-    for index, (number, label) in enumerate(nodes):
-        top = 158 + index * 76
-        fill = COLOR_ACCENT if index in (0, 3) else COLOR_MUTED
-        draw.rounded_rectangle((928, top, 1082, top + 46), radius=8,
-                               fill=COLOR_BG, outline=fill, width=2)
-        draw.text((944, top + 14), number, font=node_font, fill=COLOR_MUTED)
-        draw.text((976, top + 14), label, font=node_font, fill=fill)
-        if index < 3:
-            draw.line((1005, top + 46, 1005, top + 76), fill=COLOR_GRID, width=2)
-
+    draw.line((72, 132, 1128, 132), fill=COLOR_GRID, width=2)
+    draw.line((72, 535, 1128, 535), fill=COLOR_GRID, width=2)
     return image
 
 
 def render_card(filename: str, title: str, eyebrow: str) -> Path:
     image = make_canvas()
     draw = ImageDraw.Draw(image)
+    draw_mark(draw, 72, 54)
+    brand_font = load_font(MONO_CANDIDATES, 27)
+    draw.text((132, 67), "althor labs", font=brand_font, fill=COLOR_TEXT)
+    eyebrow_font = load_font(MONO_CANDIDATES, 18)
+    draw.text((72, 167), eyebrow, font=eyebrow_font, fill=COLOR_ACCENT)
 
-    draw_mark(draw, 80, 60)
-    brand_font = load_font(MONO_CANDIDATES, 24)
-    draw.text((140, 74), "althor", font=brand_font, fill=COLOR_TEXT)
-    althor_width = draw.textbbox((0, 0), "althor", font=brand_font)[2]
-    draw.text((140 + althor_width, 74), "labs", font=brand_font, fill=COLOR_ACCENT)
-
-    eyebrow_font = load_font(MONO_CANDIDATES, 20)
-    draw.text((80, 167), eyebrow, font=eyebrow_font, fill=COLOR_ACCENT)
-    draw.rectangle((80, 205, 146, 209), fill=COLOR_ACCENT)
-
-    max_width = 745
-    title_size = 66
-    while title_size >= 40:
-        title_font = load_font(FONT_CANDIDATES, title_size)
-        lines = wrap_to_width(draw, title, title_font, max_width)
+    title_size = 70
+    serif_candidates = [
+        "/usr/share/fonts/truetype/liberation2/LiberationSerif-Regular.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf",
+    ]
+    while title_size >= 36:
+        title_font = load_font(serif_candidates, title_size)
+        lines = wrap_to_width(draw, title, title_font, 1020)
         if len(lines) <= 3:
             break
         title_size -= 4
-
-    y = 240
-    line_height = int(title_size * 1.12)
+    y = 226
     for line in lines:
-        draw.text((80, y), line, font=title_font, fill=COLOR_TEXT)
-        y += line_height
+        draw.text((72, y), line, font=title_font, fill=COLOR_TEXT)
+        y += int(title_size * 1.13)
 
     footer_font = load_font(MONO_CANDIDATES, 18)
-    draw.text((80, 570), "ALTHORLABS.COM", font=footer_font, fill=COLOR_MUTED)
-    draw.text((972, 570), "BUILD / REVIEW / SHIP", font=footer_font, fill=COLOR_MUTED)
-
+    draw.text((72, 565), "ALTHORLABS.COM", font=footer_font, fill=COLOR_MUTED)
+    label = "SAMUEL S / INDEPENDENT ENGINEERING"
+    label_width = draw.textbbox((0, 0), label, font=footer_font)[2]
+    draw.text((1128 - label_width, 565), label, font=footer_font, fill=COLOR_MUTED)
     output = REPO_ROOT / filename
     image.save(output, "PNG", optimize=True)
     return output

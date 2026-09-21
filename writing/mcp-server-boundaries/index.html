@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="color-scheme" content="dark" />
-<meta name="theme-color" content="#0b1017" />
+<meta name="color-scheme" content="light" />
+<meta name="theme-color" content="#f5f2ea" />
 
 <title>Drawing the right boundaries for an MCP server · Althor Labs</title>
 <meta name="description" content="Six rules for drawing MCP server boundaries. Security boundary design for agent tool surfaces." />
@@ -80,7 +80,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/style.css" />
+<link rel="stylesheet" href="/assets/style.css?v=20260921" />
 <link rel="alternate" type="application/atom+xml" title="Althor Labs · Lab notes" href="/writing/feed.xml" />
 </head>
 <body>
@@ -186,7 +186,7 @@
       A defensible MCP server has one trust boundary, auth resolved at the server level, read tools that are bounded and intent-shaped, and write tools that are tagged and policy-gated downstream. The combination — not any single rule — is what makes the server safe to put in front of an agent. The diagram below shows the shape; the constraints are what the diagram quietly enforces.
     </p>
 
-    <div class="diagram" aria-label="MCP server boundary">
+    <div class="diagram" tabindex="0" role="region" aria-label="MCP server boundary">
 <pre><span class="dim">agent</span>
    │
    │  <span class="dim">stdio / sse</span>

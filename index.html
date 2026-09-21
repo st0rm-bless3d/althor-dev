@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="color-scheme" content="dark" />
-<meta name="theme-color" content="#0b1017" />
+<meta name="color-scheme" content="light" />
+<meta name="theme-color" content="#f5f2ea" />
 
 <meta name="google-site-verification" content="WEzj39QGvZSssofYJTOz-GNgViwDnYYeij1K_VxeOkk" />
 <title>Althor Labs · Applied AI systems and automation</title>
-<meta name="description" content="Althor Labs designs and builds production AI systems, workflow automation, and governance for organizations where identity, audit, reliability, and handoff matter." />
+<meta name="description" content="AI tools, workflow automation, and Microsoft integrations by Samuel S. Project notes, architecture examples, and independent engineering." />
 <link rel="canonical" href="https://althorlabs.com/" />
 <link rel="alternate" hreflang="en" href="https://althorlabs.com/" />
 <link rel="alternate" hreflang="x-default" href="https://althorlabs.com/" />
@@ -21,7 +21,7 @@
 
 <meta property="og:site_name" content="Althor Labs" />
 <meta property="og:title" content="Althor Labs · Applied AI systems and automation" />
-<meta property="og:description" content="AI systems that work inside real organizations: identity, tools, policy, audit, and handoff." />
+<meta property="og:description" content="AI tools and workflow automation by Samuel S. Explore the projects and the decisions behind them." />
 <meta property="og:url" content="https://althorlabs.com/" />
 <meta property="og:type" content="website" />
 <meta property="og:image" content="https://althorlabs.com/og-default.png" />
@@ -31,7 +31,7 @@
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Althor Labs · Applied AI systems and automation" />
-<meta name="twitter:description" content="AI systems that work inside real organizations." />
+<meta name="twitter:description" content="I build the software around the model." />
 <meta name="twitter:image" content="https://althorlabs.com/og-default.png" />
 
 <script type="application/ld+json">
@@ -82,174 +82,113 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/style.css" />
+<link rel="stylesheet" href="/assets/style.css?v=20260921" />
 <link rel="alternate" type="application/atom+xml" title="Althor Labs · Lab notes" href="/writing/feed.xml" />
 </head>
 <body class="home">
-<div class="ambient-grid" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Skip to content</a>
 <div class="container">
-
   <header class="brand">
     <span class="brand__mark" aria-hidden="true"><i></i><i></i><i></i></span>
     <span class="brand__word"><a href="/">althor<span class="brand__labs">labs</span></a></span>
     <nav class="site-nav" aria-label="Primary">
-      <a href="#capabilities">Capabilities</a>
-      <a href="/work/">Work</a>
-      <a href="/writing/">Lab notes</a>
-      <a href="/packages/">Packages</a>
-      <a class="nav-cta" href="/intake/">Start a project</a>
+      <a href="/work/">Work</a><a href="/writing/">Lab notes</a><a href="/packages/">Packages</a><a class="nav-cta" href="/intake/">Start a project</a>
     </nav>
   </header>
 
-  <main>
-    <div class="lab-hero">
-      <div class="lab-hero__copy">
-        <div class="hero__eyebrow"><span>Independent engineering practice</span><span>Washington, D.C. / Remote</span></div>
-        <h1 class="lab-hero__title">AI systems that work inside <em>real organizations.</em></h1>
-        <p class="lab-hero__sub">Althor Labs designs and builds production AI systems, workflow automation, and governance for teams where identity, audit, reliability, and handoff matter.</p>
-        <div class="hero-cta">
-          <a class="btn btn-primary" href="/intake/">Start with an architecture review</a>
-          <a class="btn btn-secondary" href="/work/">See selected work</a>
-        </div>
-        <div class="availability"><span class="availability__dot" aria-hidden="true"></span> Limited new engagements</div>
+  <main id="main">
+    <div class="editorial-hero">
+      <div class="hero-margin"><span>Independent engineering</span><span>Samuel S<br>Washington, D.C. / Remote</span></div>
+      <div>
+        <h1>I build the software <em>around the model.</em></h1>
+        <p class="hero-intro">AI tools and workflow automation, from the first integration to the permissions, review steps, and operating docs your team needs.</p>
+        <div class="hero-cta"><a class="btn btn-primary" href="/work/">Explore the work</a><a class="text-link" href="/intake/">Talk through a project <span aria-hidden="true">↗</span></a></div>
+        <p class="hero-stack">Azure · Entra ID · Microsoft 365 · TypeScript · Python</p>
       </div>
-
-      <aside class="system-map" aria-label="Production AI system layers">
-        <div class="system-map__top"><span>production_boundary.yml</span><span class="system-map__state">active</span></div>
-        <div class="system-map__flow">
-          <div class="system-node system-node--input"><span>01</span><strong>Identity</strong><small>Who is acting?</small></div>
-          <div class="system-line" aria-hidden="true"><i></i></div>
-          <div class="system-node"><span>02</span><strong>Tools</strong><small>What can they touch?</small></div>
-          <div class="system-line" aria-hidden="true"><i></i></div>
-          <div class="system-node"><span>03</span><strong>Policy</strong><small>What needs approval?</small></div>
-          <div class="system-line" aria-hidden="true"><i></i></div>
-          <div class="system-node system-node--output"><span>04</span><strong>Audit</strong><small>Can you prove it?</small></div>
-        </div>
-        <div class="system-map__foot"><span>deployment: controlled</span><span>handoff: documented</span></div>
-      </aside>
     </div>
 
-    <div class="signal-rail" aria-label="Technology focus">
-      <span>Microsoft Azure</span><span>Entra ID</span><span>Copilot Studio</span><span>Model Context Protocol</span><span>TypeScript</span><span>Python</span><span>Rust</span>
-    </div>
+    <section id="work" class="home-section" aria-labelledby="work-heading">
+      <div class="section-intro"><span class="section-kicker">01 / Selected work</span><h2 id="work-heading">What I’ve been building.</h2></div>
+      <div class="project-index">
+        <article class="project-entry">
+          <div class="project-margin"><span>Client work</span><span>Document processing</span></div>
+          <div><h3><a href="/work/extraction-pipeline/">Turn scanned documents into reviewable records <span aria-hidden="true">↗</span></a></h3><p>Compare model outputs field by field, run validation checks, and send disagreements to a reviewer. Keep the original output alongside the final decision.</p><a class="project-detail" href="/work/extraction-pipeline/">Extraction pipeline · Architecture and trade-offs</a></div>
+        </article>
+        <article class="project-entry">
+          <div class="project-margin"><span>Client work</span><span>Microsoft 365</span></div>
+          <div><h3><a href="/work/governance-platform/">Give AI use cases a review process <span aria-hidden="true">↗</span></a></h3><p>A registry embedded in Teams and SharePoint, with role-based access, council review, and a record of each decision.</p><a class="project-detail" href="/work/governance-platform/">Governance platform · Case study</a></div>
+        </article>
+        <article class="project-entry">
+          <div class="project-margin"><span>Independent project</span><span>Infrastructure</span></div>
+          <div><h3><a href="/work/spire/">Spire <span aria-hidden="true">↗</span></a></h3><p>The system I build to manage my own infrastructure. It brings service evidence, tasks, and reviewed actions into one operator interface.</p><a class="project-detail" href="/work/spire/">Current architecture · September 2026</a></div>
+        </article>
+      </div>
+    </section>
 
-    <section id="capabilities" class="home-section">
+    <section id="tool-call" class="home-section trace-section" aria-labelledby="trace-heading">
       <div class="section-intro">
-        <div class="section-kicker">01 / Capabilities</div>
-        <h2>From useful prototype to governed production system.</h2>
-        <p>The work begins where the demo ends: identity, integration, failure handling, operator control, and evidence.</p>
+        <span class="section-kicker">02 / An architecture example</span>
+        <h2 id="trace-heading">What should a tool call be allowed to do?</h2>
+        <p>Take an assistant looking after a document queue. Open each request to follow the decision. This is an illustrative policy design; it runs no tools and uses no live data.</p>
       </div>
-      <div class="capability-grid">
-        <article class="capability-card capability-card--wide">
-          <div class="capability-card__num">A</div>
-          <div><h3>Agent systems</h3><p>Production architecture for agents that call tools, touch enterprise data, and need clear boundaries.</p><ul><li>Identity and credential brokerage</li><li>MCP and narrow tool surfaces</li><li>Approval gates and operator controls</li></ul></div>
-        </article>
-        <article class="capability-card">
-          <div class="capability-card__num">B</div>
-          <div><h3>Workflow automation</h3><p>Durable workflows that join models, business rules, APIs, and human decisions without hiding the failure modes.</p></div>
-        </article>
-        <article class="capability-card">
-          <div class="capability-card__num">C</div>
-          <div><h3>Governance and review</h3><p>Threat models, control mapping, evaluation design, and audit surfaces that make security review concrete.</p></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="home-section">
-      <div class="section-intro section-intro--split">
-        <div><div class="section-kicker">02 / Selected work</div><h2>Systems with measurable outcomes.</h2></div>
-        <a class="text-link" href="/work/">View all work <span>↗</span></a>
-      </div>
-      <div class="proof-grid">
-        <a class="proof-card proof-card--feature" href="/work/extraction-pipeline/">
-          <div class="proof-card__meta"><span>Production</span><span>Data operations</span></div>
-          <h3>Multi-model extraction pipeline</h3>
-          <p>Consensus voting, deterministic validation, and a correction loop replaced fragile single-model extraction.</p>
-          <div class="proof-card__metric"><strong>30×</strong><span>throughput increase<br />4 → 120 entries/hour</span></div>
-          <div class="proof-card__link">Read the case study <span>↗</span></div>
-        </a>
-        <a class="proof-card" href="/work/governance-platform/">
-          <div class="proof-card__meta"><span>Production</span><span>Global enterprise</span></div>
-          <h3>AI governance platform</h3>
-          <p>Use-case registry, four-tier RBAC, council review, and a shared audit trail embedded in Teams and SharePoint.</p>
-          <div class="proof-card__link">Read the case study <span>↗</span></div>
-        </a>
-        <a class="proof-card proof-card--signal" href="/work/spire/">
-          <div class="proof-card__meta"><span>Active build</span><span>Althor Labs</span></div>
-          <h3>Spire</h3>
-          <p>An AI-native infrastructure control plane with policy-gated actions, scoped tools, and per-object audit.</p>
-          <div class="proof-card__link">See the architecture <span>↗</span></div>
-        </a>
+      <div class="trace-notebook">
+        <div class="trace-caption"><span>Example service / document queue</span><span>Request → policy → result</span></div>
+        <details class="trace-case" name="tool-trace" open>
+          <summary><span class="trace-number">01</span><span>Read the queue status</span><span class="trace-outcome">Allowed</span></summary>
+          <div class="trace-body">
+            <dl><dt>Request</dt><dd><code>queue.status</code> for the assigned queue.</dd><dt>Policy</dt><dd>The caller has read access to this queue. Return counts and job state, excluding document contents.</dd><dt>Result</dt><dd>Return the permitted fields and record who requested them. No service state changes.</dd></dl>
+            <p class="trace-note">Permission to observe a queue does not grant permission to change it.</p>
+          </div>
+        </details>
+        <details class="trace-case" name="tool-trace">
+          <summary><span class="trace-number">02</span><span>Retry a failed job</span><span class="trace-outcome">Approval required</span></summary>
+          <div class="trace-body">
+            <dl><dt>Request</dt><dd><code>queue.retry</code> for one failed job.</dd><dt>Policy</dt><dd>Create a proposal containing the job ID and current version. A reviewer must approve that exact action.</dd><dt>Result</dt><dd>Recheck permissions and job state before execution. If either changed, the approval cannot be reused. Record the observed outcome.</dd></dl>
+            <p class="trace-note">A timeout leaves the outcome unknown. Check the job before attempting another retry.</p>
+          </div>
+        </details>
+        <details class="trace-case" name="tool-trace">
+          <summary><span class="trace-number">03</span><span>Export another team’s documents</span><span class="trace-outcome">Denied</span></summary>
+          <div class="trace-body">
+            <dl><dt>Request</dt><dd><code>documents.export</code> outside the caller’s assigned queue.</dd><dt>Policy</dt><dd>The caller does not have access to the target documents. Stop before requesting their contents.</dd><dt>Result</dt><dd>Return an access error and record the denied request. Model confidence does not change the caller’s permissions.</dd></dl>
+            <p class="trace-note">An approval workflow cannot create access the reviewer is not authorized to grant.</p>
+          </div>
+        </details>
+        <a class="trace-source" href="/writing/mcp-server-boundaries/">Read the note on MCP tool boundaries <span aria-hidden="true">↗</span></a>
       </div>
     </section>
 
-    <section class="home-section">
-      <div class="section-intro">
-        <div class="section-kicker">03 / Engagements</div>
-        <h2>Start at the boundary that is unclear.</h2>
-        <p>Fixed outcomes, explicit scope, and documentation your team keeps.</p>
+    <section id="capabilities" class="home-section" aria-labelledby="engagement-heading">
+      <span id="engagements" class="anchor-target"></span>
+      <div class="section-intro"><span class="section-kicker">03 / Working together</span><h2 id="engagement-heading">Bring me the part that’s stuck.</h2><p>I work directly with the team responsible for the system. We agree on the scope and deliverables before work starts.</p></div>
+      <div class="service-rows">
+        <div><h3>Review an existing system</h3><p>Trace an authentication problem, examine a tool boundary, or work through a retrieval pipeline. Get a written set of findings and proposed changes.</p><a href="/packages/">Review packages and prices →</a></div>
+        <div><h3>Build an integration</h3><p>Connect a model to business data and workflows, including permissions, failure handling, and the documentation needed to maintain it.</p><a href="/intake/">Discuss the scope →</a></div>
+        <div><h3>Work with your engineers</h3><p>Ongoing design and code review for a team that wants another experienced engineer involved in the decisions.</p><a href="/intake/">Discuss ongoing support →</a></div>
       </div>
-      <div class="engagement-grid">
-        <article class="engagement-card">
-          <div class="engagement-card__head"><span>Review</span><span>1–2 weeks</span></div>
-          <h3>Architecture and security review</h3>
-          <p>Map identity, credentials, tools, approvals, audit, and failure paths. Leave with a threat model and prioritized remediation plan.</p>
-          <a href="/packages/ai-governance-audit/">See the review shape →</a>
-        </article>
-        <article class="engagement-card engagement-card--primary">
-          <div class="engagement-card__head"><span>Build</span><span>8–12 weeks</span></div>
-          <h3>Production system delivery</h3>
-          <p>Architecture, implementation, IaC, CI/CD, operator controls, evaluation, and handoff on the stack your team already runs.</p>
-          <a href="/intake/">Discuss a build →</a>
-        </article>
-        <article class="engagement-card">
-          <div class="engagement-card__head"><span>Advise</span><span>Monthly</span></div>
-          <h3>Embedded architecture support</h3>
-          <p>Design and PR review, security posture checks, evaluation strategy, and escalation support for an existing engineering team.</p>
-          <a href="/intake/">Discuss advisory →</a>
-        </article>
-      </div>
-      <p class="section-footnote">Need something smaller? <a href="/packages/">Browse fixed-scope packages</a>.</p>
     </section>
 
-    <section class="home-section">
-      <div class="section-intro section-intro--split">
-        <div><div class="section-kicker">04 / Lab notes</div><h2>Patterns from systems already under load.</h2></div>
-        <a class="text-link" href="/writing/">All lab notes <span>↗</span></a>
-      </div>
+    <section class="home-section" aria-labelledby="notes-heading">
+      <div class="section-intro"><span class="section-kicker">04 / Lab notes</span><h2 id="notes-heading">The decisions behind the code.</h2></div>
       <div class="note-list">
-        <a href="/writing/entra-workload-identities/"><span class="note-list__meta">Identity / 8 min</span><strong>Entra ID workload identities for agent systems</strong><span class="note-list__arrow">↗</span></a>
-        <a href="/writing/agent-security-review/"><span class="note-list__meta">Security / 10 min</span><strong>Making agent deployments pass security review</strong><span class="note-list__arrow">↗</span></a>
-        <a href="/writing/mcp-server-boundaries/"><span class="note-list__meta">Architecture / 7 min</span><strong>Drawing the right boundaries for an MCP server</strong><span class="note-list__arrow">↗</span></a>
+        <a href="/writing/entra-workload-identities/"><span class="note-list__meta">Identity</span><strong>Entra ID workload identities for agent systems</strong><span aria-hidden="true">↗</span></a>
+        <a href="/writing/agent-security-review/"><span class="note-list__meta">Security review</span><strong>Making agent deployments pass security review</strong><span aria-hidden="true">↗</span></a>
+        <a href="/writing/mcp-server-boundaries/"><span class="note-list__meta">Tool design</span><strong>Drawing the right boundaries for an MCP server</strong><span aria-hidden="true">↗</span></a>
       </div>
+      <p><a href="/writing/">All notes →</a> <span class="link-divider">/</span> <a href="/checklist/">Download the security review checklist →</a></p>
     </section>
 
-    <section id="about" class="home-section about-lab">
-      <div class="section-kicker">05 / The lab</div>
-      <div class="about-lab__grid">
-        <h2>Independent by design.<br />Built for handoff.</h2>
-        <div class="about-lab__copy">
-          <p><strong>Althor Labs is Samuel S.</strong> I work across Azure, Entra ID, Microsoft 365, Power Platform, TypeScript, Python, and Rust. The common thread is operational: the system must be understandable, observable, and safe for someone besides its author to run.</p>
-          <p>The lab also maintains open tools, publishes implementation notes, and develops internal systems that become case-study material after the sensitive details are removed.</p>
-          <div class="about-lab__facts"><span>Washington, D.C. metro</span><span>Remote-first</span><span>Regulated environments</span></div>
-        </div>
-      </div>
+    <section id="about" class="home-section about-lab" aria-labelledby="about-heading">
+      <div class="section-intro"><span class="section-kicker">05 / About</span><h2 id="about-heading">Samuel, behind Althor Labs.</h2></div>
+      <div class="about-copy"><p>I’m a solutions architect and software engineer in the Washington, D.C. area. My client work centers on Azure, Entra ID, Microsoft 365, and Power Platform, alongside TypeScript and Python.</p><p>I also build and operate my own systems. Spire is where I work through infrastructure problems that need sustained attention: service visibility, access control, and recovery when an action’s result is uncertain.</p><p><a href="https://github.com/st0rm-bless3d">Find me on GitHub ↗</a></p></div>
     </section>
 
-    <section id="contact" class="contact-panel">
-      <div><div class="section-kicker">Start a conversation</div><h2>Bring the system that works in a demo and fails everywhere else.</h2><p>A rough architecture diagram and the constraint that cannot move are enough to begin.</p></div>
-      <div class="contact-panel__actions">
-        <a class="btn btn-primary" href="https://cal.com/althorconsulting/architecture-review">Book 30 minutes</a>
-        <a class="btn btn-secondary" href="mailto:contact@althor.dev?subject=Project%20inquiry%20%E2%80%94%20Althor%20Labs">Email directly</a>
-      </div>
+    <section id="contact" class="contact-panel" aria-labelledby="contact-heading">
+      <div><span class="section-kicker">Have something in mind?</span><h2 id="contact-heading">What are you trying to build?</h2><p>Send the current setup, the part that is stuck, and any deadline. A rough description is enough.</p></div>
+      <div class="contact-panel__actions"><a class="btn btn-primary" href="https://cal.com/althorconsulting/architecture-review">Book 30 minutes</a><a class="text-link" href="mailto:contact@althor.dev?subject=Project%20inquiry%20%E2%80%94%20Althor%20Labs">Email directly ↗</a></div>
     </section>
   </main>
 </div>
-
-<footer class="lab-footer">
-  <div class="lab-footer__brand">althor<span>labs</span></div>
-  <div>Applied AI systems · Washington, D.C. / Remote</div>
-  <div>Althor Consulting LLC · © 2026</div>
-</footer>
+<footer class="lab-footer"><a href="/">Althor Labs</a><span>Samuel S · Washington, D.C. / Remote</span><span>Althor Consulting LLC · © 2026</span></footer>
 </body>
 </html>

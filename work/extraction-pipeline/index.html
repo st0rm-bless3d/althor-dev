@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="color-scheme" content="dark" />
-<meta name="theme-color" content="#0b1017" />
+<meta name="color-scheme" content="light" />
+<meta name="theme-color" content="#f5f2ea" />
 
 <title>Multi-model extraction pipeline · Althor Labs</title>
-<meta name="description" content="Multi-model extraction pipeline with field-level consensus voting. 30× throughput improvement in a regulated environment." />
+<meta name="description" content="Document extraction with field-level model comparison, deterministic validation, and reviewable records." />
 <link rel="canonical" href="https://althorlabs.com/work/extraction-pipeline/" />
 <link rel="alternate" hreflang="en" href="https://althorlabs.com/work/extraction-pipeline/" />
 <link rel="alternate" hreflang="x-default" href="https://althorlabs.com/work/extraction-pipeline/" />
@@ -19,7 +19,7 @@
 
 <meta property="og:site_name" content="Althor Labs" />
 <meta property="og:title" content="Multi-model extraction pipeline" />
-<meta property="og:description" content="Field-level consensus voting, Raw → Suggested → Final audit layering, 30× throughput." />
+<meta property="og:description" content="Compare extraction results, validate fields, and preserve the reviewer’s final decision." />
 <meta property="og:url" content="https://althorlabs.com/work/extraction-pipeline/" />
 <meta property="og:type" content="article" />
 <meta property="og:image" content="https://althorlabs.com/og-extraction-pipeline.png" />
@@ -28,7 +28,7 @@
 <meta property="og:image:alt" content="Multi-model extraction pipeline — case study from althor" />
 
 <meta property="article:published_time" content="2026-04-21" />
-<meta property="article:modified_time" content="2026-05-17" />
+<meta property="article:modified_time" content="2026-09-21" />
 <meta property="article:author" content="Samuel S" />
 <meta property="article:section" content="Case study" />
 <meta property="article:tag" content="Multi-model extraction" />
@@ -46,9 +46,9 @@
   "@context": "https://schema.org",
   "@type": "TechArticle",
   "headline": "Multi-model extraction pipeline",
-  "description": "A configurable multi-stage agent pipeline with field-level consensus voting, deterministic validators, and Raw → Suggested → Final audit layering — 30× throughput improvement in a regulated environment.",
+  "description": "A document extraction pipeline with field-level model comparison, validation, and separate raw, suggested, and final records.",
   "datePublished": "2026-04-21",
-  "dateModified": "2026-05-17",
+  "dateModified": "2026-09-21",
   "author": { "@type": "Person", "name": "Samuel S", "url": "https://althorlabs.com/" },
   "publisher": { "@type": "Organization", "name": "Althor Labs", "url": "https://althorlabs.com/" },
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://althorlabs.com/work/extraction-pipeline/" },
@@ -81,7 +81,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/style.css" />
+<link rel="stylesheet" href="/assets/style.css?v=20260921" />
 <link rel="alternate" type="application/atom+xml" title="Althor Labs · Lab notes" href="/writing/feed.xml" />
 </head>
 <body>
@@ -98,7 +98,7 @@
   <article class="article">
     <div class="article__eyebrow">Work · Production</div>
     <h1 class="article__title">Multi-model extraction pipeline</h1>
-    <p class="article__dek">A configurable multi-stage agent pipeline with field-level consensus voting, deterministic validators, and Raw → Suggested → Final audit layering — built to take a 15-minute manual entry process and make it a two-second one.</p>
+    <p class="article__dek">A document extraction pipeline that compares model outputs field by field, checks the results, and keeps the reviewer’s decision alongside the source material.</p>
     <div class="article__meta">
       <span>Domain <strong>Regulated enterprise</strong></span>
       <span>Role <strong>Architect &amp; builder</strong></span>
@@ -108,20 +108,20 @@
 
   <div class="outcome">
     <span class="outcome__label">Outcome</span>
-    <span><strong style="color:var(--accent)">30× throughput improvement</strong> — from 4 entries/hour to 120/hour, with every decision auditable end-to-end. Retired an ongoing contractor line item; reviewer time redirected to exception-handling and learning-loop curation rather than data entry.</span>
+    <span><strong>Reported workflow throughput: 4 → 120 entries/hour.</strong> These are figures from the project account, not a published benchmark. The measurement period and underlying records are not public; model latency and reviewer throughput should be evaluated separately.</span>
   </div>
 
   <div class="prose">
     <h2>The problem</h2>
     <p>
-      Scanned documents arriving at a steady rate, each one needing a structured record extracted into a downstream system. The existing process was manual: someone opened the scan, typed the fields into a form, and moved on. Fifteen minutes per scan. The throughput ceiling was a person, and the person was a bottleneck.
+      Scanned documents arriving at a steady rate, each one needing a structured record extracted into a downstream system. The existing process was manual: someone opened the scan, typed the fields into a form, and moved on. Fifteen minutes per scan. Reviewers spent much of their time transcribing fields.
     </p>
     <p>
-      LLM extraction was the obvious tool. The hard part was making it trustworthy enough to remove the person from the loop without removing the audit trail.
+      The design moved transcription into the pipeline and gave reviewers a way to inspect uncertain fields and trace a value back to its source.
     </p>
 
     <h2>Architecture</h2>
-    <div class="diagram" aria-label="Extraction pipeline flow">
+    <div class="diagram" tabindex="0" role="region" aria-label="Extraction pipeline flow">
 <pre><span class="dim">upload →</span> render → segment → extract → <span class="accent">consensus</span> → validate → research → persist
 <span class="dim">                                        ↑                     ↑</span>
 <span class="dim">                                   agreement score       address/format rules</span>
@@ -136,10 +136,10 @@
 
     <h3>Why consensus voting</h3>
     <p>
-      One model is one opinion. The interesting failures aren't refusals or hallucinations — they're plausible-but-wrong values that pass eyeballing. Field-level consensus across multiple extraction models gives you an agreement score per field. When models agree, you trust the value and let it through. When they disagree, you know exactly which field to look at.
+      One model is one opinion. The interesting failures aren't refusals or hallucinations — they're plausible-but-wrong values that pass eyeballing. Field-level consensus across multiple extraction models gives you an agreement score per field. Disagreement identifies fields to review. Agreement is one input to the decision; models can make the same mistake, so validation and field-specific review rules still matter.
     </p>
     <p>
-      This isn't about averaging the models. It's about <strong>locating uncertainty</strong>. The tool surfaces the disagreement at the field level so a human reviews thirty seconds of work, not a fifteen-minute form.
+      The comparison identifies which fields differ, so the reviewer can inspect those values against the scan.
     </p>
 
     <h3>Why three data layers</h3>
@@ -152,12 +152,12 @@
 
     <h3>Deterministic validators</h3>
     <p>
-      LLMs are not the right tool for "is this a valid US address." A Smarty / USPS lookup is. The pipeline runs deterministic validators after extraction — address verification, format rules, range checks — and pushes failures back into the review queue. Models propose; validators dispose.
+      LLMs are not the right tool for "is this a valid US address." A Smarty / USPS lookup is. The pipeline runs deterministic validators after extraction — address verification, format rules, range checks — and pushes failures back into the review queue. A failed check sends the field back for review.
     </p>
 
     <h3>Learning loop</h3>
     <p>
-      Every human correction produces a structured event: which field, what the model said, what the human changed it to, and why. Those events feed few-shot examples into subsequent extractions. The accuracy curve trends up over time without anyone retraining a model.
+      Every human correction produces a structured event: which field, what the model said, what the human changed it to, and why. Those events feed few-shot examples into subsequent extractions. Those examples can inform later prompts. Whether they improve accuracy requires evaluation on held-out documents.
     </p>
 
     <h2>Decisions and trade-offs</h2>
@@ -174,7 +174,7 @@
 
     <h3>Audit-first failure mode</h3>
     <p>
-      When something goes wrong — a model returns malformed JSON, a validator times out, a stage crashes — the orchestration captures the failure as a first-class event. The record is preserved in its last good state with the failure attached. There is no failure mode where work is silently lost.
+      When something goes wrong — a model returns malformed JSON, a validator times out, a stage crashes — the orchestration captures the failure as a first-class event. The record is preserved in its last good state with the failure attached. Persisted stage state helps operators inspect the failure and decide where to resume. Recovery still depends on the storage and retry paths working as intended.
     </p>
 
     <h2>Stack</h2>

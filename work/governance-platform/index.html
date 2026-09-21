@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="color-scheme" content="dark" />
-<meta name="theme-color" content="#0b1017" />
+<meta name="color-scheme" content="light" />
+<meta name="theme-color" content="#f5f2ea" />
 
 <title>Enterprise AI governance platform · Althor Labs</title>
 <meta name="description" content="Enterprise AI governance platform. Use-case registry, four-tier RBAC, audit trail. Built for global enterprise scale." />
@@ -83,7 +83,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/style.css" />
+<link rel="stylesheet" href="/assets/style.css?v=20260921" />
 <link rel="alternate" type="application/atom+xml" title="Althor Labs · Lab notes" href="/writing/feed.xml" />
 </head>
 <body>
@@ -118,7 +118,7 @@
     </p>
 
     <h2>Architecture</h2>
-    <div class="diagram" aria-label="Platform architecture">
+    <div class="diagram" tabindex="0" role="region" aria-label="Platform architecture">
 <pre><span class="dim">Users</span> → <span class="accent">Azure Static Web Apps</span> → <span class="accent">Azure Functions</span> → <span class="accent">Cosmos DB</span>
                                     ↓
                            <span class="dim">Azure Communication Services</span> <span class="dim">(notify)</span>
