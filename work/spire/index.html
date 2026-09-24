@@ -97,16 +97,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/assets/style.css?v=20260921-dark" />
-<link rel="stylesheet" href="/assets/pattern.css?v=20260924" />
+<link rel="stylesheet" href="/assets/pattern.css?v=20260924-flow" />
+<link rel="stylesheet" href="/assets/flow.css?v=20260924-flow" />
 <link rel="alternate" type="application/atom+xml" title="Althor Labs · Lab notes" href="/writing/feed.xml" />
 </head>
-<body>
+<body class="case-page" data-project="spire">
 <div class="container container--narrow">
 
   <header class="brand">
     <span class="brand__mark" aria-hidden="true"><i></i><i></i><i></i></span>
     <span class="brand__word"><a href="/">althor<span class="brand__labs">labs</span></a></span>
-    <nav class="site-nav" aria-label="Primary"><a href="/#capabilities">Capabilities</a><a href="/work/">Work</a><a href="/writing/">Lab notes</a><a href="/packages/">Packages</a><a class="nav-cta" href="/intake/">Start a project</a></nav>
+    <nav class="site-nav" aria-label="Primary"><a href="/work/">Work</a><a href="/writing/">Writing</a><a href="/packages/">Services</a><a class="nav-cta" href="/intake/">Contact</a></nav>
   </header>
 
   <a class="back-link" href="/work/">All work</a>
@@ -117,6 +118,8 @@
     <p class="article__dek">The operator interface I build for my own infrastructure: service evidence, tasks, and reviewed actions in one place.</p>
     <div class="article__meta"><span>Role <strong>Architect &amp; maintainer</strong></span><span>Status <strong>In use; actively developed</strong></span></div>
   </article>
+
+  <div class="project-figure case-figure" data-shape="spire" aria-hidden="true"></div>
 
   <div class="prose">
     <h2>Why I built it</h2>
@@ -149,16 +152,20 @@
     <p class="related"><strong>Related:</strong> <a href="/writing/mcp-server-boundaries/">The note on MCP boundaries</a>.</p>
   </div>
 
-  <aside class="cta-aside">
-    <h3>Working on something similar?</h3>
-    <p>I do fixed-scope architecture reviews and end-to-end builds for teams shipping agent infrastructure into regulated environments.</p>
-    <div class="cta-aside__buttons">
-      <a class="btn btn-primary" href="https://cal.com/althorconsulting/architecture-review">Book a 30-min review</a>
-      <a class="btn-link" href="/#engagements">See engagement options →</a>
-    </div>
-  </aside>
+  <div class="contact-inline">
+    <span>Contact</span>
+    <a href="mailto:contact@althor.dev">contact@althor.dev</a>
+    <a href="https://cal.com/althorconsulting/architecture-review">Book a call ↗</a>
+  </div>
 
-  <a class="back-link" href="/work/" style="margin-top: 2rem;">All work</a>
+  <nav class="project-next" aria-label="Next project">
+    <span class="project-type">Next</span>
+    <a class="project-link" href="/work/extraction-pipeline/" data-project="extraction">
+      <div class="project-figure" data-shape="extraction" aria-hidden="true"></div>
+      <div class="project-link__copy"><h2>Multi-model extraction pipeline</h2></div>
+      <span class="project-link__arrow" aria-hidden="true">↗</span>
+    </a>
+  </nav>
 
 </div>
 
@@ -166,6 +173,7 @@
   <span>Althor Labs · Althor Consulting LLC</span>
   <span>© 2026</span>
 </footer>
-<script src="/assets/pattern.js?v=20260924" defer></script>
+<script src="/assets/pattern.js?v=20260924-flow" defer></script>
+<script src="/assets/flow.js?v=20260924-flow" defer></script>
 </body>
 </html>

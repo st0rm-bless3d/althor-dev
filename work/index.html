@@ -45,61 +45,52 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/assets/style.css?v=20260921-dark" />
-<link rel="stylesheet" href="/assets/pattern.css?v=20260924" />
+<link rel="stylesheet" href="/assets/pattern.css?v=20260924-flow" />
+<link rel="stylesheet" href="/assets/flow.css?v=20260924-flow" />
 <link rel="alternate" type="application/atom+xml" title="Althor Labs · Lab notes" href="/writing/feed.xml" />
 </head>
-<body>
+<body class="work-index">
 <div class="container container--narrow">
 
   <header class="brand">
     <span class="brand__mark" aria-hidden="true"><i></i><i></i><i></i></span>
     <span class="brand__word"><a href="/">althor<span class="brand__labs">labs</span></a></span>
-    <nav class="site-nav" aria-label="Primary"><a href="/#capabilities">Capabilities</a><a href="/work/">Work</a><a href="/writing/">Lab notes</a><a href="/packages/">Packages</a><a class="nav-cta" href="/intake/">Start a project</a></nav>
+    <nav class="site-nav" aria-label="Primary"><a href="/work/" aria-current="page">Work</a><a href="/writing/">Writing</a><a href="/packages/">Services</a><a class="nav-cta" href="/intake/">Contact</a></nav>
   </header>
 
   <div class="article article--wide">
-    <div class="article__eyebrow">Selected work</div>
-    <h1 class="article__title">Projects and the decisions behind them.</h1>
-    <p class="article__dek">
-      Case studies from regulated and enterprise environments, plus active Althor Labs builds. Each entry covers the architecture, operating constraints, and observed result.
-    </p>
+    <h1 class="article__title">Work</h1>
   </div>
 
-  <section>
-    <div class="section__head">
-      <span class="section__label">Client work</span>
-      <span class="section__rule"></span>
-    </div>
-
-    <div class="writing-list">
-      <article class="writing-list__item">
-        <span class="writing-list__date">Production · Regulated environment</span>
-        <h2 class="writing-list__title"><a href="/work/extraction-pipeline/">Multi-model extraction pipeline</a></h2>
-        <p class="writing-list__dek">Compare model outputs field by field, validate the results, and send disagreements to a reviewer. Preserve the original output and the final decision.</p>
-      </article>
-
-      <article class="writing-list__item">
-        <span class="writing-list__date">Production · Global enterprise</span>
-        <h2 class="writing-list__title"><a href="/work/governance-platform/">Enterprise AI governance platform</a></h2>
-        <p class="writing-list__dek">Use-case registry with four-tier RBAC, council review workflow, native Teams + SharePoint embedding. Built so adoption tracking and compliance review run against the same surface.</p>
-      </article>
-    </div>
-  </section>
-
-  <section>
-    <div class="section__head">
-      <span class="section__label">Building</span>
-      <span class="section__rule"></span>
-    </div>
-
-    <div class="writing-list">
-      <article class="writing-list__item">
-        <span class="writing-list__date">Independent project · Architecture notes</span>
-        <h2 class="writing-list__title"><a href="/work/spire/">Spire</a></h2>
-        <p class="writing-list__dek">My independent infrastructure project. A React and TypeScript operator interface, a retained Rust execution backend, and explicit records of actions and their outcomes.</p>
-      </article>
-    </div>
-  </section>
+  <div class="project-index">
+    <a class="project-link" href="/work/spire/" data-project="spire">
+      <div class="project-figure" data-shape="spire" aria-hidden="true"></div>
+      <div class="project-link__copy">
+        <span class="project-type">Independent project</span>
+        <h2>Spire</h2>
+        <p>An operator interface for service evidence and reviewed actions.</p>
+      </div>
+      <span class="project-link__arrow" aria-hidden="true">↗</span>
+    </a>
+    <a class="project-link" href="/work/extraction-pipeline/" data-project="extraction">
+      <div class="project-figure" data-shape="extraction" aria-hidden="true"></div>
+      <div class="project-link__copy">
+        <span class="project-type">Production · Regulated enterprise</span>
+        <h2>Multi-model extraction pipeline</h2>
+        <p>Field-level model comparison with validation and human review.</p>
+      </div>
+      <span class="project-link__arrow" aria-hidden="true">↗</span>
+    </a>
+    <a class="project-link" href="/work/governance-platform/" data-project="governance">
+      <div class="project-figure" data-shape="governance" aria-hidden="true"></div>
+      <div class="project-link__copy">
+        <span class="project-type">Production · Global enterprise</span>
+        <h2>Enterprise AI governance platform</h2>
+        <p>Use-case submissions and council review inside Teams and SharePoint.</p>
+      </div>
+      <span class="project-link__arrow" aria-hidden="true">↗</span>
+    </a>
+  </div>
 
 </div>
 
@@ -107,6 +98,7 @@
   <span>Althor Labs · Althor Consulting LLC</span>
   <span>© 2026</span>
 </footer>
-<script src="/assets/pattern.js?v=20260924" defer></script>
+<script src="/assets/pattern.js?v=20260924-flow" defer></script>
+<script src="/assets/flow.js?v=20260924-flow" defer></script>
 </body>
 </html>

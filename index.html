@@ -83,10 +83,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/assets/style.css?v=20260921-dark" />
-<link rel="stylesheet" href="/assets/pattern.css?v=20260924" />
+<link rel="stylesheet" href="/assets/pattern.css?v=20260924-flow" />
+<link rel="stylesheet" href="/assets/flow.css?v=20260924-flow" />
 <link rel="alternate" type="application/atom+xml" title="Althor Labs · Lab notes" href="/writing/feed.xml" />
 </head>
-<body class="home">
+<body class="home home-flow">
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="container">
   <header class="brand">
@@ -103,12 +104,8 @@
   <main id="main">
     <div class="lab-hero">
       <div class="lab-hero__copy">
-        <h1 class="lab-hero__title">AI systems &amp; <em>workflow automation.</em></h1>
-        <p class="lab-hero__sub">Independent engineering by Samuel S. I build integrations and tools for teams working with Azure and Microsoft 365.</p>
-        <div class="hero-cta">
-          <a class="btn btn-primary" href="/work/">View work</a>
-          <a class="text-link" href="/intake/">Get in touch <span aria-hidden="true">↗</span></a>
-        </div>
+        <h1 class="lab-hero__title">Althor Labs</h1>
+        <p class="lab-hero__sub">Independent engineering by Samuel S.</p>
       </div>
       <div class="wheel-art pattern-art">
         <canvas class="pattern-canvas" aria-hidden="true"></canvas>
@@ -137,38 +134,32 @@
           </svg>
         </button>
         <div class="pattern-tools" hidden>
-          <div class="power-picker" role="group" aria-label="Choose a weave"></div>
-          <button class="pattern-open" type="button">Explore <span aria-hidden="true">↗</span></button>
+          <div class="power-picker" role="group" aria-label="Artwork color"></div>
+          <button class="pattern-open" type="button" aria-label="Expand artwork"><span aria-hidden="true">⤢</span></button>
         </div>
+        <nav class="entry-links" aria-label="Projects">
+          <a class="entry-link entry-link--one" href="/work/spire/" data-project="spire"><span class="entry-link__dot" aria-hidden="true"></span>Spire <span aria-hidden="true">↗</span></a>
+          <a class="entry-link entry-link--two" href="/work/extraction-pipeline/" data-project="extraction"><span class="entry-link__dot" aria-hidden="true"></span>Document extraction <span aria-hidden="true">↗</span></a>
+          <a class="entry-link entry-link--three" href="/work/governance-platform/" data-project="governance"><span class="entry-link__dot" aria-hidden="true"></span>AI governance <span aria-hidden="true">↗</span></a>
+        </nav>
       </div>
+      <a class="entry-down" href="#work" aria-label="Browse work"><span aria-hidden="true">↓</span></a>
     </div>
 
-    <section id="capabilities" class="home-section" aria-labelledby="services-heading">
-      <div class="section-intro"><h2 id="services-heading">Services</h2></div>
-      <div class="capability-grid">
-        <article class="capability-card"><div><h3>Agent systems</h3><p>Tools, permissions, and approval workflows for agents working with business data.</p></div></article>
-        <article class="capability-card"><div><h3>Workflow automation</h3><p>Integrations across models, APIs, and the systems your team already uses.</p></div></article>
-        <article class="capability-card"><div><h3>Architecture review</h3><p>Design and code review, with specific findings and a plan for the changes.</p></div></article>
-      </div>
-    </section>
-
-    <section id="work" class="home-section" aria-labelledby="work-heading">
-      <div class="section-intro section-intro--split"><h2 id="work-heading">Selected work</h2><a class="text-link" href="/work/">All work <span aria-hidden="true">↗</span></a></div>
-      <div class="proof-grid">
-        <a class="proof-card proof-card--feature" href="/work/extraction-pipeline/">
-          <div class="proof-card__meta"><span>Client work</span></div>
-          <h3>Document extraction</h3><p>Compare model outputs, validate fields, and route disagreements to a reviewer.</p>
-          <div class="proof-card__link">Case study <span aria-hidden="true">↗</span></div>
+    <section id="work" class="home-section project-gallery" aria-labelledby="work-heading">
+      <div class="section-intro section-intro--split"><h2 id="work-heading">Work</h2><div class="gallery-controls" hidden><span class="gallery-count" aria-live="polite" aria-atomic="true">01 / 03</span><button type="button" data-step="-1" aria-label="Previous project">←</button><button type="button" data-step="1" aria-label="Next project">→</button></div></div>
+      <div class="project-rail" tabindex="0" role="region" aria-label="Projects">
+        <a class="project-slide" href="/work/spire/" data-project="spire">
+          <div class="project-figure" data-shape="spire" aria-hidden="true"></div>
+          <div class="project-slide__copy"><span class="project-type">Independent project</span><h3>Spire</h3><p>The interface I build for my own infrastructure.</p><span class="project-enter" aria-hidden="true">↗</span></div>
         </a>
-        <a class="proof-card" href="/work/governance-platform/">
-          <div class="proof-card__meta"><span>Client work</span></div>
-          <h3>AI governance</h3><p>A use-case registry inside Teams and SharePoint, with access controls and recorded reviews.</p>
-          <div class="proof-card__link">Case study <span aria-hidden="true">↗</span></div>
+        <a class="project-slide" href="/work/extraction-pipeline/" data-project="extraction">
+          <div class="project-figure" data-shape="extraction" aria-hidden="true"></div>
+          <div class="project-slide__copy"><span class="project-type">Client work</span><h3>Document extraction</h3><p>Model comparison, field validation, and human review.</p><span class="project-enter" aria-hidden="true">↗</span></div>
         </a>
-        <a class="proof-card" href="/work/spire/">
-          <div class="proof-card__meta"><span>Independent project</span></div>
-          <h3>Spire</h3><p>The interface I build for my own infrastructure. Service evidence, tasks, and reviewed actions.</p>
-          <div class="proof-card__link">Architecture <span aria-hidden="true">↗</span></div>
+        <a class="project-slide" href="/work/governance-platform/" data-project="governance">
+          <div class="project-figure" data-shape="governance" aria-hidden="true"></div>
+          <div class="project-slide__copy"><span class="project-type">Client work</span><h3>AI governance</h3><p>Access controls and recorded reviews inside Teams and SharePoint.</p><span class="project-enter" aria-hidden="true">↗</span></div>
         </a>
       </div>
     </section>
@@ -182,8 +173,17 @@
       </div>
     </section>
 
+    <section id="capabilities" class="home-section services-compact" aria-labelledby="services-heading">
+      <div class="section-intro"><h2 id="services-heading">Services</h2></div>
+      <div class="service-disclosures">
+        <details><summary>Agent systems <span aria-hidden="true">+</span></summary><div><p>Tools, permissions, and approval workflows for agents working with business data.</p><a href="/packages/mcp-security-review/">Security review ↗</a></div></details>
+        <details><summary>Workflow automation <span aria-hidden="true">+</span></summary><div><p>Integrations across APIs, Azure, and Microsoft 365.</p><a href="/packages/copilot-studio-quickstart/">Copilot Studio ↗</a></div></details>
+        <details><summary>Architecture review <span aria-hidden="true">+</span></summary><div><p>Design and code review, with specific findings and a plan for the changes.</p><a href="/packages/azure-openai-architecture-review/">Architecture review ↗</a></div></details>
+      </div>
+    </section>
+
     <section id="about" class="home-section about-lab" aria-labelledby="about-heading">
-      <div class="about-lab__grid"><h2 id="about-heading">About</h2><div class="about-lab__copy"><p>I'm Samuel, the engineer behind Althor Labs. My work spans Microsoft's cloud and business tools, TypeScript, and Python. This site collects client projects, technical notes, and the systems I build in my own lab.</p><p>Washington, D.C. / Remote</p></div></div>
+      <div class="about-lab__grid"><h2 id="about-heading">About</h2><div class="about-lab__copy"><p>I'm Samuel. I build software with TypeScript, Python, and Microsoft's cloud tools.</p><p>Washington, D.C. / Remote</p></div></div>
     </section>
 
     <section id="contact" class="contact-panel" aria-labelledby="contact-heading">
@@ -195,6 +195,7 @@
 </div>
 <footer class="lab-footer"><div class="lab-footer__brand">althor<span>labs</span></div><div>Althor Consulting LLC · © 2026</div><a href="https://github.com/st0rm-bless3d">GitHub</a></footer>
 <script src="/assets/wheel.js" defer></script>
-<script src="/assets/pattern.js?v=20260924" defer></script>
+<script src="/assets/pattern.js?v=20260924-flow" defer></script>
+<script src="/assets/flow.js?v=20260924-flow" defer></script>
 </body>
 </html>

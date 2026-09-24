@@ -2,11 +2,11 @@
   'use strict';
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const powers = [
-    { name: 'Air', color: '#b8d6e2', bend: .12, waves: 2 },
-    { name: 'Water', color: '#77cfc9', bend: .23, waves: 3 },
-    { name: 'Earth', color: '#c1ac7e', bend: .08, waves: 7 },
-    { name: 'Fire', color: '#db957b', bend: .3, waves: 5 },
-    { name: 'Spirit', color: '#c3b4dc', bend: .18, waves: 7 },
+    { name: 'Pale blue', color: '#b8d6e2', bend: .12, waves: 2 },
+    { name: 'Teal', color: '#77cfc9', bend: .23, waves: 3 },
+    { name: 'Ochre', color: '#c1ac7e', bend: .08, waves: 7 },
+    { name: 'Copper', color: '#db957b', bend: .3, waves: 5 },
+    { name: 'Lilac', color: '#c3b4dc', bend: .18, waves: 7 },
   ];
   let power = 1;
   const renderers = [];
@@ -48,7 +48,7 @@
     const ctx = canvas.getContext('2d');
     if (!ctx) return { refresh() {}, activate() {}, pause() {}, newWeave() {} };
     let width = 0, height = 0, frame = 0, last = 0, until = 0;
-    let x = 0, y = 0, targetX = 0, targetY = 0, phase = .25;
+    let x = 0, y = 0, targetX = 0, targetY = 0, phase = .25, depth = 0, targetDepth = 0;
     let active = !expanded;
     let visible = !expanded;
     let pulse = -10000;
@@ -85,7 +85,7 @@
         ctx.globalAlpha = 1;
         return;
       }
-      const radius = Math.min(width, height) * (expanded ? .31 : .36);
+      const radius = Math.min(width, height) * (expanded ? .31 : .36) * (1 + depth * 1.8);
       const cx = width / 2, cy = height / 2 - (expanded ? 20 : 6);
       const rings = expanded ? 46 : 28;
       const age = (time - pulse) / 1400;
@@ -124,13 +124,14 @@
       last = time;
       x += (targetX - x) * .12;
       y += (targetY - y) * .12;
+      depth += (targetDepth - depth) * .12;
       phase += dt * .00008;
       draw(time);
       if (time < until && !reduced.matches) frame = requestAnimationFrame(tick);
     }
     function refresh() {
       if (!active || !visible || document.hidden || !width) return;
-      if (reduced.matches) { x = targetX; y = targetY; draw(performance.now()); return; }
+      if (reduced.matches) { x = targetX; y = targetY; depth = 0; draw(performance.now()); return; }
       until = performance.now() + 1500;
       if (!frame) { last = 0; frame = requestAnimationFrame(tick); }
     }
@@ -152,7 +153,7 @@
     });
     surface.addEventListener('pointerleave', () => { targetX = targetY = 0; refresh(); });
     surface.addEventListener('click', event => {
-      if (event.target.closest?.('.power-picker, .pattern-open')) return;
+      if (event.target.closest?.('.power-picker, .pattern-open, a')) return;
       newWeave();
     });
     new ResizeObserver(resize).observe(canvas);
@@ -166,6 +167,8 @@
     reduced.addEventListener('change', () => { cancelAnimationFrame(frame); frame = 0; refresh(); });
     const renderer = {
       refresh, newWeave,
+      preview(index) { phase = .25 + index * .8; refresh(); },
+      depth(value) { if (reduced.matches) return; targetDepth = Math.max(0, Math.min(1, value)); refresh(); },
       activate() { active = visible = true; resize(); refresh(); },
       pause() { active = false; cancelAnimationFrame(frame); frame = 0; },
     };
@@ -179,8 +182,8 @@
     const dream = document.createElement('button');
     dream.type = 'button';
     dream.className = 'dream-toggle';
-    dream.setAttribute('aria-label', 'Dream view');
-    dream.title = 'Dream view · Tel’aran’rhiod';
+    dream.setAttribute('aria-label', 'Alternate appearance');
+    dream.title = 'Change appearance';
     dream.append(svg('<path d="M12 2 14 9 21 12 14 14 12 22 10 14 3 12 10 9Z" fill="none" stroke="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/>', 'dream-symbol', '0 0 24 24'));
     let dreaming = false;
     try { dreaming = localStorage.getItem('althor-dream') === 'true'; } catch { /* Optional preference storage. */ }
@@ -282,13 +285,15 @@
   const art = document.querySelector('.pattern-art');
   if (!art) return;
   const small = makeWeave(art.querySelector('canvas'), art);
+  document.addEventListener('althor:preview', event => small.preview(event.detail));
+  document.addEventListener('althor:depth', event => small.depth(event.detail));
   addPicker(art.querySelector('.power-picker'));
   art.querySelector('.pattern-tools').hidden = false;
 
   const dialog = document.createElement('dialog');
   dialog.className = 'pattern-dialog';
-  dialog.setAttribute('aria-labelledby', 'pattern-title');
-  dialog.innerHTML = '<canvas aria-hidden="true"></canvas><div class="pattern-dialog__header"><h2 id="pattern-title">The Pattern</h2><button class="pattern-dialog__close" type="button" autofocus>Close <span aria-hidden="true">×</span></button></div><div class="pattern-dialog__footer"><div class="power-picker" role="group" aria-label="Choose a weave"></div><p class="pattern-dialog__hint">Move to shape the threads. Choose a Power to change the weave.</p><div class="pattern-dialog__actions"><button class="pattern-action pattern-again" type="button">Weave again</button><button class="pattern-action pattern-save" type="button">Save image ↓</button></div></div>';
+  dialog.setAttribute('aria-label', 'Interactive artwork');
+  dialog.innerHTML = '<canvas aria-hidden="true"></canvas><div class="pattern-dialog__header"><button class="pattern-dialog__close" type="button" aria-label="Close artwork" autofocus>×</button></div><div class="pattern-dialog__footer"><div class="power-picker" role="group" aria-label="Artwork color"></div><div class="pattern-dialog__actions"><button class="pattern-action pattern-again" type="button" aria-label="Change shape" title="Change shape">↻</button><button class="pattern-action pattern-save" type="button" aria-label="Save image" title="Save image">↓</button></div></div>';
   document.body.append(dialog);
   addPicker(dialog.querySelector('.power-picker'));
   const large = makeWeave(dialog.querySelector('canvas'), dialog.querySelector('canvas'), true);
@@ -312,7 +317,7 @@
       if (!blob) return;
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
-      link.href = url; link.download = `althor-${powers[power].name.toLowerCase()}-weave.png`;
+      link.href = url; link.download = 'althor-artwork.png';
       link.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
