@@ -1,12 +1,12 @@
 # Video introduction draft
 
-Status: Draft, unrecorded and unposted. Reviewed 2026-09-21.
+Status: Draft, unrecorded and unposted. Reviewed 2026-09-24.
 
 Target length: 60–90 seconds. Read aloud and adjust to a natural pace.
 
 ## Script
 
-Hi, I'm Samuel S, the engineer behind Althor Labs. I build the software around the model.
+Hi, I'm Samuel S, the engineer behind Althor Labs. I build AI applications and workflow software on the Microsoft stack.
 
 My work includes a document extraction pipeline that compares field values from multiple models and keeps original outputs alongside reviewed records. I also built an enterprise AI governance application with Entra ID roles and a council review workflow inside Teams and SharePoint.
 

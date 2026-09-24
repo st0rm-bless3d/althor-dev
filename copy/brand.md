@@ -1,6 +1,6 @@
 # Althor Labs wording and claims
 
-Reviewed: 2026-09-21. Off-site uses remain drafts until posted.
+Reviewed: 2026-09-24. Off-site uses remain drafts until posted.
 
 ## Name and contact
 
@@ -8,10 +8,6 @@ Althor Labs is Samuel S's independent engineering practice. Althor Consulting LL
 
 Website: https://althorlabs.com
 Direct contact: contact@althor.dev
-
-## Tagline
-
-I build the software around the model.
 
 ## Short bio
 

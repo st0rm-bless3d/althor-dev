@@ -1,120 +1,43 @@
-# Bookkeeping template — platform revenue tracking
+# Business record template
 
-**Purpose**: Single source of truth for tracking gross / fees / net across Upwork, Toptal, Codementor, and direct engagements. Feeds quarterly estimated-tax planning.
+Reviewed 2026-09-24. This file documents the fields to track. Keep completed records and client details in a private accounting system. No customer or payment data belongs in this public repository.
 
-**Recommended tool**: Wave Free (waveapps.com) for invoicing + basic ledger. Cross-reference against this template monthly.
+## Separate commitments from cash
 
----
+An accepted proposal is a sales event. An invoice is an amount billed. A payment is cash received. Record each under its own date and identifier. Never count a draft, sent invoice, or platform balance as cash collected.
 
-## Column schema
+Keep the cash ledger and prospect register in a private business workspace. Before recording the first transaction, confirm the bank and invoice records that will be authoritative.
 
-| Column | Type | Notes |
-|---|---|---|
-| Date | YYYY-MM-DD | Invoice date or platform payout date |
-| Platform | enum | Upwork / Toptal / Codementor / Direct / Partner |
-| Client | text | De-identify in public exports — use internal code if sensitive |
-| Project | text | Short name |
-| Hours | decimal | If hourly engagement, blank for fixed-price |
-| Gross Invoice | USD | What client paid the platform OR what Althor billed direct |
-| Platform Fee | USD | Upwork commission, Toptal margin (if visible), Codementor commission, Stripe fee on direct |
-| Net to Althor | USD | Gross minus Platform Fee |
-| Connects Spent | int | Upwork only |
-| Subscription Costs (allocated) | USD | Monthly subscription costs (Freelancer Plus, etc.) divided across month's gigs |
-| Tax Withheld (1099-K threshold check) | USD | None until $20K platform threshold; track regardless |
-| Reimbursable Expenses | USD | Anything client-billable (tools, licenses) — list separately |
-| Notes | text | Anything unusual (refund, conversion fee, scope change, etc.) |
+## Invoice register fields
 
----
+| Field | Record |
+|---|---|
+| Invoice ID | The invoice system's unique ID |
+| Client ID | Private reference; avoid names in exports |
+| Engagement ID | Link to the agreed scope |
+| Invoice date and due date | ISO dates |
+| Gross billed and currency | The contractual amount; track tax separately if applicable |
+| Status | Draft, issued, partly paid, paid, void, or refunded |
+| Source reference | Link to the invoice in the private system |
 
-## Monthly summary template
+## Cash event fields
 
-End of each month, append to a "Monthly Summary" sheet:
+| Field | Record |
+|---|---|
+| Event ID and date | Unique transaction ID and actual settlement date |
+| Invoice ID and client ID | Join to the invoice without copying sensitive client data |
+| Platform | Direct, Toptal, Braintrust, Upwork, Codementor, or other actual channel |
+| Event type | Receipt, refund, processing fee, or business expense |
+| Amount and currency | Record the actual signed amount from the statement |
+| Source reference | Private bank, processor, or platform statement |
+| Reconciled date | Date checked against the authoritative statement |
 
-```
-Month: YYYY-MM
+Calculate collected revenue from settled receipts less refunds. Show platform fees and operating expenses separately. Keep owner contributions and transfers out of revenue. Report unpaid invoices, collected cash, and net cash as different figures. Track billed hours and time spent on preparation and delivery to understand whether fixed-price work pays adequately.
 
-Revenue by platform:
-  Upwork:     $___  (___ gigs, ___ hrs)
-  Toptal:     $___  (___ gigs, ___ hrs)
-  Codementor: $___  (___ sessions, ___ hrs)
-  Direct:     $___  (___ engagements, ___ hrs)
-  Partner:    $___  (___ engagements, ___ hrs)
-  Total gross: $___
+## Platform fees and tax records
 
-Less platform fees: $___
-Less subscription costs: $___
-Net to Althor LLC: $___
+Use the fee displayed on each contract and its final statement. Upwork currently documents a variable 0–15% freelancer service fee per contract: https://support.upwork.com/hc/en-us/articles/211062538-Learn-about-the-Freelancer-Service-Fee . Rates, subscriptions, payout options, and rules for other platforms also require a current account check; this template assumes none of them.
 
-Hours billed: ___
-Effective $/hr (net / hours): $___
+Information return thresholds do not determine whether income is taxable, and a Form 1099-K threshold is not a withholding rule. Preserve forms received and reconcile them against invoices and statements. Use current IRS instructions and a qualified tax adviser for filing status, estimated payments, deductions, and state obligations: https://www.irs.gov/newsroom/form-1099-k-faqs-what-to-do-if-you-receive-a-form-1099-k and https://www.irs.gov/publications/p505 . Do not set aside a fixed percentage based on this template.
 
-Notes:
-  - {{anything material — rate increase, contract loss, big win, fee surprise}}
-```
-
----
-
-## Quarterly estimated tax reminder
-
-Federal estimated tax due dates (revise if IRS schedule changes):
-- **Q1**: April 15 (covers Jan–Mar income)
-- **Q2**: June 15 (covers Apr–May income)
-- **Q3**: September 15 (covers Jun–Aug income)
-- **Q4**: January 15 of following year (covers Sep–Dec income)
-
-Maryland state estimated tax same dates. Form 502D.
-
-Rough rule of thumb for single-member LLC taxed as disregarded entity:
-- Set aside **~30%** of net Althor income for federal + state + self-employment tax combined
-- Adjust after first year based on actual effective rate
-- Pay quarterly via IRS Direct Pay (irs.gov/payments) and Maryland's iFile
-
-**Don't skip estimated payments**. Penalty is small but compounding; cash flow is worse than the penalty.
-
----
-
-## Year-end checklist
-
-- **1099-K**: Upwork / Toptal / Stripe will issue if platform-side payments exceed reporting threshold (varies by year, ~$5K post-2024). Reconcile against your tracking.
-- **1099-NEC**: Direct clients who paid $600+ will issue. Reconcile.
-- **W-9 refresh**: Confirm LLC name, EIN, address are still correct on every platform's payee record.
-- **Schedule C**: Single-member LLC taxed as disregarded entity files via owner's 1040 + Schedule C.
-- **Health insurance premium tax deduction**: Track if applicable.
-- **Home office deduction**: Track if applicable — depends on whether home office is the principal place of business.
-- **Vehicle / mileage**: Track if client meetings happen in person.
-- **Professional dues, software, hardware, training**: All deductible — track in dedicated category.
-
----
-
-## Per-platform fee structure quick reference (verify annually)
-
-### Upwork (as of May 2026)
-- Sliding fee: 20% on first $500 / 10% on $500.01–$10K / 5% above $10K (per client)
-- Connect cost: $0.15 each; 16–40 Connects per proposal
-- Freelancer Plus: $19.99/mo (optional)
-- 1099-K issued at year-end if threshold met
-- Conversion Fee for off-platform within 24 months: 13.5% of one year projected earnings
-
-### Toptal
-- Margin opaque inside the all-in rate (~20% effective)
-- No application fee
-- No connects equivalent
-- Pay-out: PayPal / Payoneer / wire
-
-### Codementor
-- Commission: up to 22% of session value
-- No application fee
-- No subscription requirement
-- Pay-out: Stripe Connect or PayPal
-
----
-
-## Recommended Wave Free setup
-
-1. Create a new account at waveapps.com using contact@althor.dev
-2. Add Althor Consulting LLC + EIN as business profile
-3. Connect LLC business checking (transaction sync)
-4. Set up Income categories: Upwork Revenue / Toptal Revenue / Codementor Revenue / Direct Client Revenue / Partner Subcontract Revenue
-5. Set up Expense categories: Platform Fees / Software Subscriptions / Professional Services / Office / Vehicle / Health / Training / Other
-6. Tag every transaction. Monthly review.
-7. Export to this tracking sheet at end of month for cross-check.
+Review the invoice register, cash events, unpaid work, and source statements monthly. Record unknown figures as unknown until reconciled.

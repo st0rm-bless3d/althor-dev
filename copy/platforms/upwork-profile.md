@@ -1,6 +1,6 @@
 # Upwork profile draft
 
-Status: Draft, unposted. Reviewed 2026-09-21.
+Status: Draft, unposted. Reviewed 2026-09-24.
 
 ## Title
 
@@ -8,7 +8,7 @@ AI Applications Engineer | Azure, Copilot Studio, TypeScript
 
 ## Search preview
 
-I build the software around the model: AI applications, document pipelines, and Microsoft 365 workflows.
+I build AI applications, document pipelines, and Microsoft 365 workflows with Azure and TypeScript.
 
 ## Overview
 
