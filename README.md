@@ -23,7 +23,7 @@ GitHub Pages auto-deploys `main` on push. DNS managed at Porkbun:
 
 ## Edit
 
-The visual system retains the original dark background, cyan accents, and Geist typography with a simplified homepage. A small inline seven-spoked wheel turns on click or keyboard activation through `assets/wheel.js`; reduced-motion preferences disable its transition. Without JavaScript it remains a static ornament. Shared off-site wording and claim sources live in `copy/brand.md`; those drafts have not been posted to external profiles.
+The visual system retains the original dark background, cyan accents, and Geist typography. `assets/pattern.css` and `assets/pattern.js` add original Wheel of Time-inspired linework: five interactive weaves, a full-screen canvas with PNG export, a dream view with a mountain landscape, project-card drawings, section navigation, and reading progress. The star in the header toggles dream view across pages; its preference is stored locally when storage is available. Canvas rendering settles after interaction and pauses offscreen or in background tabs. Reduced-motion preferences disable animated interpolation. No graphics libraries, image downloads, or network calls are added. The original seven-spoked wheel still turns through `assets/wheel.js`. Without JavaScript, the site retains its original content, links, and static wheel. Shared off-site wording and claim sources live in `copy/brand.md`; those drafts have not been posted to external profiles.
 
 Edit any HTML page, commit, push — Pages rebuilds in ~30s.
 
