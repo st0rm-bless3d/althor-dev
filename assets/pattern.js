@@ -54,10 +54,15 @@
     let pitch = -.32, yaw = .22, targetPitch = pitch, targetYaw = yaw;
     let drag = null, suppressClick = false, geometry = [], geometryKey = '';
     const interactive = 'button, a, .power-picker, .pattern-tools';
-    surface.tabIndex = 0;
     surface.setAttribute('role', 'group');
-    surface.setAttribute('aria-label', 'Rotate artwork');
-    surface.setAttribute('aria-description', 'Drag to rotate. Arrow keys rotate; Home resets.');
+    function syncSurface() {
+      const landscape = !expanded && document.body.dataset.dream === 'true';
+      surface.tabIndex = landscape ? -1 : 0;
+      surface.setAttribute('aria-label', landscape ? 'Landscape artwork' : 'Rotate artwork');
+      if (landscape) surface.removeAttribute('aria-description');
+      else surface.setAttribute('aria-description', 'Drag to rotate. Arrow keys rotate; Home resets.');
+    }
+    syncSurface();
     surface.removeAttribute('aria-hidden');
     surface.classList.add('art-surface');
     function buildGeometry() {
@@ -185,6 +190,7 @@
     function newWeave() { targetPhase += .8; refresh(); }
     function reset() { targetPitch = -.32; targetYaw = .22; targetX = targetY = 0; targetPhase = .25; refresh(); }
     surface.addEventListener('pointerdown', event => {
+      if (!expanded && document.body.dataset.dream === 'true') return;
       if (!event.isPrimary || event.button !== 0 || event.target.closest?.(interactive)) return;
       drag = { id: event.pointerId, x: event.clientX, y: event.clientY, pitch: targetPitch, yaw: targetYaw, moved: false };
       suppressClick = false;
@@ -227,6 +233,7 @@
       targetX = targetY = 0; refresh();
     });
     surface.addEventListener('keydown', event => {
+      if (!expanded && document.body.dataset.dream === 'true') return;
       if (event.target !== surface || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home'].includes(event.key)) return;
       event.preventDefault();
       if (event.key === 'Home') { reset(); return; }
@@ -248,7 +255,7 @@
     });
     reduced.addEventListener('change', () => { cancelAnimationFrame(frame); frame = 0; refresh(); });
     const renderer = {
-      refresh, newWeave, reset,
+      refresh, newWeave, reset, syncSurface,
       rotate() { targetYaw += .65; targetPitch += .18; refresh(); },
       preview(index) { targetPhase = .25 + index * .8; refresh(); },
       snapshot() { return { pitch: targetPitch, yaw: targetYaw, phase: targetPhase }; },
@@ -275,7 +282,7 @@
     function setDream() {
       document.body.dataset.dream = String(dreaming);
       dream.setAttribute('aria-pressed', String(dreaming));
-      renderers.forEach(renderer => renderer.refresh());
+      renderers.forEach(renderer => { renderer.syncSurface(); renderer.refresh(); });
     }
     dream.addEventListener('click', () => {
       dreaming = !dreaming;
