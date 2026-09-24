@@ -29,6 +29,16 @@ The visual system retains the dark background, cyan/brass accents, and Geist typ
 
 Edit any HTML page, commit, push — Pages rebuilds in ~30s.
 
+The September 24 tactile pass adds a projected, draggable sculpture with keyboard
+and single-click rotation, shared pose when opening/closing the artwork, and
+finite rendering after input. The project gallery has visual selectors and
+restores its selected project through browser history. `assets/tactile.css`
+defines larger control targets, original SVG symbols, and material surfaces.
+`assets/journey.css` / `assets/journey.js` carry the linework and layout through
+the lower homepage, services, audience pages, contact, and checklist, including
+native section links. Every active page has the same footer navigation.
+The self-hosted material source and CC0 terms are in `assets/materials/README.md`.
+
 ## Caching
 
 GitHub Pages serves a fixed `Cache-Control: max-age=600` on all assets. Custom headers are not supported. If aggressive caching becomes a concern, front the origin with Cloudflare or migrate to Caddy on Orion.

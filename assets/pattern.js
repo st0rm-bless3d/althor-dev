@@ -46,12 +46,43 @@
   // Finite, input-driven rendering. No idle animation loop or network requests.
   function makeWeave(canvas, surface, expanded = false) {
     const ctx = canvas.getContext('2d');
-    if (!ctx) return { refresh() {}, activate() {}, pause() {}, newWeave() {} };
+    if (!ctx) return { refresh() {}, activate() {}, pause() {}, newWeave() {}, preview() {}, depth() {}, reset() {}, rotate() {}, snapshot() {}, restore() {} };
     let width = 0, height = 0, frame = 0, last = 0, until = 0;
-    let x = 0, y = 0, targetX = 0, targetY = 0, phase = .25, depth = 0, targetDepth = 0;
+    let x = 0, y = 0, targetX = 0, targetY = 0, phase = .25, targetPhase = phase, depth = 0, targetDepth = 0;
     let active = !expanded;
     let visible = !expanded;
-    let pulse = -10000;
+    let pitch = -.32, yaw = .22, targetPitch = pitch, targetYaw = yaw;
+    let drag = null, suppressClick = false, geometry = [], geometryKey = '';
+    const interactive = 'button, a, .power-picker, .pattern-tools';
+    surface.tabIndex = 0;
+    surface.setAttribute('role', 'group');
+    surface.setAttribute('aria-label', 'Rotate artwork');
+    surface.setAttribute('aria-description', 'Drag to rotate. Arrow keys rotate; Home resets.');
+    surface.removeAttribute('aria-hidden');
+    surface.classList.add('art-surface');
+    function buildGeometry() {
+      const strands = width < 600 ? 24 : 36;
+      const key = `${power}:${phase}:${strands}`;
+      if (key === geometryKey) return;
+      geometryKey = key;
+      geometry = [];
+      const p = powers[power];
+      for (let i = 0; i < strands; i++) {
+        const strand = [];
+        const v = i / strands * Math.PI * 2;
+        for (let j = 0; j <= 160; j++) {
+          const t = j / 160 * Math.PI * 2;
+          const twist = 3 * t + phase;
+          const r = .77 + Math.cos(twist) * (.19 + p.bend * .2) + Math.cos(v + t) * .075;
+          strand.push([
+            Math.cos(2 * t) * r,
+            Math.sin(2 * t) * r,
+            Math.sin(twist) * .3 + Math.sin(v + t) * .075,
+          ]);
+        }
+        geometry.push(strand);
+      }
+    }
     function draw(time) {
       ctx.clearRect(0, 0, width, height);
       const p = powers[power];
@@ -85,54 +116,61 @@
         ctx.globalAlpha = 1;
         return;
       }
-      const radius = Math.min(width, height) * (expanded ? .31 : .36) * (1 + depth * 1.8);
-      const cx = width / 2, cy = height / 2 - (expanded ? 20 : 6);
-      const rings = expanded ? 46 : 28;
-      const age = (time - pulse) / 1400;
-      for (let i = 0; i < rings; i++) {
-        const layer = i / (rings - 1);
-        ctx.beginPath();
-        const steps = power === 2 ? 28 : 128;
-        for (let j = 0; j <= steps; j++) {
-          const t = j / steps * Math.PI * 2;
-          const warp = Math.sin(t * p.waves + phase + layer * 4) * p.bend;
-          const r = radius * (.66 + layer * .55 + warp * Math.sin(layer * Math.PI));
-          const attraction = Math.cos(t - Math.atan2(y, x)) * Math.hypot(x, y) * 16;
-          let px = Math.cos(t) * (r + attraction);
-          let py = Math.sin(t) * r * (.75 + layer * .25);
-          px += Math.sin(t * 2 + layer * 3 + phase) * radius * .12;
-          py += Math.cos(t * 3 - phase) * radius * .045;
-          if (age > 0 && age < 1 && !reduced.matches) {
-            const wave = Math.sin(layer * 12 - age * 9) * (1 - age) * 8;
-            px += Math.cos(t) * wave;
-            py += Math.sin(t) * wave;
+      buildGeometry();
+      const radius = Math.min(width, height) * (expanded ? (width < 600 ? .41 : .34) : width < 600 ? .39 : .30) * (1 + depth * 1.1);
+      const cx = width / 2, cy = height / 2 + (expanded ? -20 : 12);
+      const ax = pitch + y * .08, ay = yaw + x * .12;
+      const sx = Math.sin(ax), cxr = Math.cos(ax), sy = Math.sin(ay), cyr = Math.cos(ay);
+      const buckets = Array.from({ length: 24 }, () => [[], []]);
+      geometry.forEach((strand, i) => {
+        let previous;
+        strand.forEach(([px, py, pz]) => {
+          const rx = px * cyr + pz * sy;
+          const rz = -px * sy + pz * cyr;
+          const ry = py * cxr - rz * sx;
+          const z = py * sx + rz * cxr;
+          const perspective = 3.5 / (3.5 - z);
+          const point = [cx + rx * radius * perspective, cy + ry * radius * perspective, z];
+          if (previous) {
+            const bucket = Math.max(0, Math.min(23, Math.floor(((z + previous[2]) / 2 + 1.2) * 10)));
+            buckets[bucket][i % 9 === 0 ? 1 : 0].push([previous, point]);
           }
-          if (!j) ctx.moveTo(cx + px, cy + py); else ctx.lineTo(cx + px, cy + py);
-        }
-        ctx.closePath();
-        ctx.strokeStyle = i % 6 === 0 ? '#b4a889' : p.color;
-        ctx.globalAlpha = (expanded ? .2 : .13) + (i % 6 === 0 ? .23 : .07);
-        ctx.lineWidth = i % 6 === 0 ? .8 : .55;
-        ctx.stroke();
+          previous = point;
+        });
+      });
+      ctx.lineCap = 'round';
+      for (let i = 0; i < buckets.length; i++) {
+        buckets[i].forEach((segments, brass) => {
+          if (!segments.length) return;
+          ctx.beginPath();
+          segments.forEach(([a, b]) => { ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); });
+          ctx.globalAlpha = .12 + (i / 23) * .68;
+          ctx.lineWidth = brass ? .9 : .65;
+          ctx.strokeStyle = brass ? '#cabb98' : p.color;
+          ctx.stroke();
+        });
       }
       ctx.globalAlpha = 1;
     }
     function tick(time) {
       frame = 0;
       if (!active || !visible || document.hidden) return;
-      const dt = Math.min(32, time - (last || time));
+      const dt = Math.min(40, time - (last || time));
       last = time;
-      x += (targetX - x) * .12;
-      y += (targetY - y) * .12;
-      depth += (targetDepth - depth) * .12;
-      phase += dt * .00008;
+      const ease = 1 - Math.exp(-Math.max(1, dt) / 90);
+      x += (targetX - x) * ease;
+      y += (targetY - y) * ease;
+      pitch += (targetPitch - pitch) * ease;
+      yaw += (targetYaw - yaw) * ease;
+      phase += (targetPhase - phase) * ease;
+      depth += (targetDepth - depth) * ease;
       draw(time);
       if (time < until && !reduced.matches) frame = requestAnimationFrame(tick);
     }
     function refresh() {
       if (!active || !visible || document.hidden || !width) return;
-      if (reduced.matches) { x = targetX; y = targetY; depth = 0; draw(performance.now()); return; }
-      until = performance.now() + 1500;
+      if (reduced.matches) { x = y = depth = 0; pitch = targetPitch; yaw = targetYaw; phase = targetPhase; draw(performance.now()); return; }
+      until = performance.now() + 900;
       if (!frame) { last = 0; frame = requestAnimationFrame(tick); }
     }
     function resize() {
@@ -144,16 +182,60 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       if (width && active && visible) draw(performance.now());
     }
-    function newWeave() { phase += .8; pulse = performance.now(); refresh(); }
+    function newWeave() { targetPhase += .8; refresh(); }
+    function reset() { targetPitch = -.32; targetYaw = .22; targetX = targetY = 0; targetPhase = .25; refresh(); }
+    surface.addEventListener('pointerdown', event => {
+      if (!event.isPrimary || event.button !== 0 || event.target.closest?.(interactive)) return;
+      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, pitch: targetPitch, yaw: targetYaw, moved: false };
+      suppressClick = false;
+    });
     surface.addEventListener('pointermove', event => {
+      if (drag && drag.id === event.pointerId) {
+        if (!(event.buttons & 1)) { release(event); return; }
+        const dx = event.clientX - drag.x, dy = event.clientY - drag.y;
+        if (!drag.moved && Math.hypot(dx, dy) < 6) return;
+        if (!drag.moved) {
+          drag.moved = true;
+          surface.setPointerCapture(event.pointerId);
+          surface.classList.add('is-rotating');
+        }
+        targetYaw = drag.yaw + dx * .009;
+        targetPitch = drag.pitch - dy * .009;
+        targetX = targetY = 0;
+        refresh();
+        return;
+      }
+      if (event.pointerType !== 'mouse' || reduced.matches || !width) return;
       const rect = canvas.getBoundingClientRect();
       targetX = Math.max(-1, Math.min(1, (event.clientX - rect.left) / width * 2 - 1));
       targetY = Math.max(-1, Math.min(1, (event.clientY - rect.top) / height * 2 - 1));
       refresh();
     });
-    surface.addEventListener('pointerleave', () => { targetX = targetY = 0; refresh(); });
+    function release(event) {
+      if (!drag || drag.id !== event.pointerId) return;
+      suppressClick = drag.moved;
+      drag = null;
+      surface.classList.remove('is-rotating');
+      if (surface.hasPointerCapture(event.pointerId)) surface.releasePointerCapture(event.pointerId);
+      setTimeout(() => { suppressClick = false; }, 0);
+    }
+    surface.addEventListener('pointerup', release);
+    surface.addEventListener('pointercancel', release);
+    surface.addEventListener('lostpointercapture', release);
+    surface.addEventListener('pointerleave', () => {
+      if (drag && !drag.moved) drag = null;
+      targetX = targetY = 0; refresh();
+    });
+    surface.addEventListener('keydown', event => {
+      if (event.target !== surface || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home'].includes(event.key)) return;
+      event.preventDefault();
+      if (event.key === 'Home') { reset(); return; }
+      targetYaw += event.key === 'ArrowRight' ? .25 : event.key === 'ArrowLeft' ? -.25 : 0;
+      targetPitch += event.key === 'ArrowUp' ? .25 : event.key === 'ArrowDown' ? -.25 : 0;
+      refresh();
+    });
     surface.addEventListener('click', event => {
-      if (event.target.closest?.('.power-picker, .pattern-open, a')) return;
+      if (suppressClick || event.target.closest?.(interactive)) return;
       newWeave();
     });
     new ResizeObserver(resize).observe(canvas);
@@ -166,8 +248,11 @@
     });
     reduced.addEventListener('change', () => { cancelAnimationFrame(frame); frame = 0; refresh(); });
     const renderer = {
-      refresh, newWeave,
-      preview(index) { phase = .25 + index * .8; refresh(); },
+      refresh, newWeave, reset,
+      rotate() { targetYaw += .65; targetPitch += .18; refresh(); },
+      preview(index) { targetPhase = .25 + index * .8; refresh(); },
+      snapshot() { return { pitch: targetPitch, yaw: targetYaw, phase: targetPhase }; },
+      restore(state) { if (!state) return; pitch = targetPitch = state.pitch; yaw = targetYaw = state.yaw; phase = targetPhase = state.phase; targetX = targetY = x = y = 0; },
       depth(value) { if (reduced.matches) return; targetDepth = Math.max(0, Math.min(1, value)); refresh(); },
       activate() { active = visible = true; resize(); refresh(); },
       pause() { active = false; cancelAnimationFrame(frame); frame = 0; },
@@ -289,22 +374,51 @@
   document.addEventListener('althor:depth', event => small.depth(event.detail));
   addPicker(art.querySelector('.power-picker'));
   art.querySelector('.pattern-tools').hidden = false;
+  const rotateIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.1"><ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(-30 12 12)"/><ellipse cx="12" cy="12" rx="4" ry="9" transform="rotate(-30 12 12)"/><path d="m19 5 2 3 1-3"/></g></svg>';
+  const rotate = document.createElement('button');
+  rotate.type = 'button';
+  rotate.className = 'pattern-action pattern-rotate';
+  rotate.setAttribute('aria-label', 'Rotate artwork');
+  rotate.title = 'Rotate artwork';
+  rotate.innerHTML = rotateIcon;
+  rotate.addEventListener('click', small.rotate);
+  art.querySelector('.pattern-open').before(rotate);
+  const icons = {
+    expand: '<path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/>',
+    shape: '<path d="M5 8a8 8 0 1 1-1 7M5 3v5h5"/>',
+    reset: '<circle cx="12" cy="12" r="5"/><path d="M12 2v5m0 10v5M2 12h5m10 0h5"/>',
+    save: '<path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/>',
+    close: '<path d="m6 6 12 12M6 18 18 6"/>',
+  };
+  function control(button, icon, label) {
+    button.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">${icons[icon] || ''}</svg><span class="control-label">${label}</span>`;
+  }
+  control(art.querySelector('.pattern-open'), 'expand', 'Expand');
+  rotate.insertAdjacentHTML('beforeend', '<span class="control-label">Rotate</span>');
 
   const dialog = document.createElement('dialog');
   dialog.className = 'pattern-dialog';
   dialog.setAttribute('aria-label', 'Interactive artwork');
-  dialog.innerHTML = '<canvas aria-hidden="true"></canvas><div class="pattern-dialog__header"><button class="pattern-dialog__close" type="button" aria-label="Close artwork" autofocus>×</button></div><div class="pattern-dialog__footer"><div class="power-picker" role="group" aria-label="Artwork color"></div><div class="pattern-dialog__actions"><button class="pattern-action pattern-again" type="button" aria-label="Change shape" title="Change shape">↻</button><button class="pattern-action pattern-save" type="button" aria-label="Save image" title="Save image">↓</button></div></div>';
+  dialog.innerHTML = '<canvas aria-hidden="true"></canvas><div class="pattern-dialog__header"><button class="pattern-dialog__close" type="button" aria-label="Close artwork" autofocus>×</button></div><div class="pattern-dialog__footer"><div class="power-picker" role="group" aria-label="Artwork color"></div><div class="pattern-dialog__actions"><button class="pattern-action pattern-rotate" type="button" aria-label="Rotate artwork" title="Rotate artwork">' + rotateIcon + '</button><button class="pattern-action pattern-again" type="button" aria-label="Change shape" title="Change shape">↻</button><button class="pattern-action pattern-reset" type="button" aria-label="Reset artwork" title="Reset artwork"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.1"><circle cx="12" cy="12" r="5"/><path d="M12 2v5m0 10v5M2 12h5m10 0h5"/></g></svg></button><button class="pattern-action pattern-save" type="button" aria-label="Save image" title="Save image">↓</button></div></div>';
   document.body.append(dialog);
+  control(dialog.querySelector('.pattern-again'), 'shape', 'Reshape');
+  control(dialog.querySelector('.pattern-reset'), 'reset', 'Reset');
+  control(dialog.querySelector('.pattern-save'), 'save', 'Save');
+  control(dialog.querySelector('.pattern-dialog__close'), 'close', 'Close');
+  dialog.querySelector('.pattern-rotate').insertAdjacentHTML('beforeend', '<span class="control-label">Rotate</span>');
   addPicker(dialog.querySelector('.power-picker'));
   const large = makeWeave(dialog.querySelector('canvas'), dialog.querySelector('canvas'), true);
   art.querySelector('.pattern-open').addEventListener('click', () => {
     dialog.showModal();
     small.pause();
+    large.restore(small.snapshot());
     large.activate();
   });
   dialog.querySelector('.pattern-dialog__close').addEventListener('click', () => dialog.close());
-  dialog.addEventListener('close', () => { large.pause(); small.activate(); });
+  dialog.addEventListener('close', () => { large.pause(); small.restore(large.snapshot()); small.activate(); });
   dialog.querySelector('.pattern-again').addEventListener('click', large.newWeave);
+  dialog.querySelector('.pattern-rotate').addEventListener('click', large.rotate);
+  dialog.querySelector('.pattern-reset').addEventListener('click', large.reset);
   dialog.querySelector('.pattern-save').addEventListener('click', () => {
     const source = dialog.querySelector('canvas');
     const output = document.createElement('canvas');

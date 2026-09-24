@@ -40,12 +40,21 @@
 .gallery-controls button { width: 42px; height: 42px; color: var(--text); background: transparent; border: 1px solid var(--border); border-radius: 50%; cursor: pointer; transition: border-color .2s; }
 .gallery-controls button:hover { border-color: var(--brass); }
 .gallery-controls button:disabled { opacity: .3; cursor: default; }
+.gallery-selector { display: flex; align-items: center; gap: .15rem; margin-right: .55rem; }
+.gallery-controls .gallery-choice { width: 44px; height: 44px; padding: 3px; border-color: transparent; border-radius: 8px; color: var(--text-dim); transition: color .2s, background .2s, border-color .2s; }
+.gallery-choice svg { display: block; width: 100%; height: 100%; }
+.gallery-controls .gallery-choice:hover { color: var(--thread); border-color: var(--border); }
+.gallery-controls .gallery-choice[aria-pressed=true] { color: var(--brass); border-color: color-mix(in srgb, var(--brass) 40%, transparent); background: color-mix(in srgb, var(--brass) 5%, transparent); }
+.gallery-progress { height: 1px; background: var(--border-dim); overflow: hidden; margin-top: 1.5rem; }
+.gallery-progress::after { content: ''; display: block; width: var(--gallery-segment); height: 100%; background: var(--brass); transform: translateX(var(--gallery-position, 0%)); }
 .project-rail { position: relative; display: flex; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: var(--border) transparent; gap: 1.5rem; cursor: grab; user-select: none; }
 .project-rail.is-dragging, .project-rail.is-dragging a { cursor: grabbing; }
 .project-slide { display: grid; grid-template-columns: 1.3fr 1fr; align-items: center; flex: 0 0 100%; min-width: 0; min-height: 500px; scroll-snap-align: start; border: 0; color: var(--text); padding: 1.5rem 1rem; gap: clamp(2rem, 5vw, 5rem); border-radius: 4px; }
 .project-slide:hover, .project-link:hover { color: var(--text); }
 .project-slide:focus-visible { outline-offset: -3px; }
 .project-slide__copy, .project-link__copy { display: flex; flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+.project-slide .project-figure { transform: translateX(var(--slide-shift, 0px)) scale(var(--slide-scale, 1)); }
+.project-slide__copy { transform: translateX(var(--copy-shift, 0px)); }
 .project-type { font: .65rem/1.6 var(--mono); color: var(--text-dim); }
 .project-slide h3, .project-link h2 { font-size: clamp(2.3rem, 4.5vw, 4rem); line-height: 1.08; letter-spacing: -.05em; font-weight: 400; }
 .project-slide p, .project-link p { max-width: 29ch; font-size: 1rem; line-height: 1.75; color: var(--text-2); }
@@ -133,6 +142,8 @@ a:is(:hover,:focus-visible) .portal-detail { transform: rotate(12deg); }
   .entry-link { position: static; flex: 1; justify-content: center; flex-wrap: wrap; align-content: center; text-align: center; font-size: .63rem; padding: .55rem .1rem; gap: .3rem; background: none; }
   .entry-link__dot { display: none; }
   .home-flow .home-section { padding: 3.5rem 0; }
+  .gallery-controls { gap: .4rem; }
+  .gallery-selector { margin-right: .25rem; }
   .project-slide { grid-template-columns: 1fr; min-height: 0; padding: 0 .3rem 2rem; gap: .5rem; align-content: start; }
   .project-figure { min-height: 240px; max-height: 310px; aspect-ratio: 1.2; }
   .project-slide__copy { gap: .75rem; position: relative; padding-right: 2rem; }
@@ -153,9 +164,12 @@ a:is(:hover,:focus-visible) .portal-detail { transform: rotate(12deg); }
   .project-next a { grid-template-columns: 1fr; gap: 0; }
   .project-next .project-figure { max-height: 200px; }
 }
+@media (max-width: 420px) {
+  .gallery-count { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
 @media (prefers-reduced-motion: reduce) {
   .case-figure { view-transition-name: none; }
   *, *::before, *::after { scroll-behavior: auto !important; }
-  .project-figure svg, .portal-lines, .portal-detail, .project-enter, .entry-link span, .note-list > a, .service-disclosures summary span { transition: none; transform: none !important; }
+  .project-slide .project-figure, .project-slide__copy, .project-figure svg, .portal-lines, .portal-detail, .project-enter, .entry-link span, .note-list > a, .service-disclosures summary span { transition: none; transform: none !important; }
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
 }

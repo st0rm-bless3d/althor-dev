@@ -957,11 +957,11 @@ https://althorlabs.com/checklist/
 
 althorlabs
 
-Free PDF · Pattern
+Free PDF
 
 # Agent Security Review Checklist
 
- A pre-flight checklist for shipping AI agents into regulated environments. Run it against any agent system that touches production data, customer information, or financial records — before InfoSec runs it against you.
+ A security checklist for agent systems that use production data, customer information, or financial records.
 
 Format PDF · 8 pagesVersion v1.0 · April 2026Audience Architects, security leads
 
@@ -1017,7 +1017,7 @@ althorlabs
 
 Fixed engagements
 
-# Choose a starting point.
+# Services
 
  These packages cover a specific review or integration. Each page lists the deliverables, price, and required access. For a larger project, start with a conversation.
 
@@ -1155,7 +1155,7 @@ Package · $1,500 · 3 days
 
 # MCP Server Security Review
 
- Tool-by-tool, auth boundary, output bounds, audit surface. Three days, written report, remediation list ordered by exploitability. The review you do before the MCP server crosses your prod boundary, not after.
+ A three-day review of MCP tools, authentication boundaries, output limits, and audit records. Includes a written report and remediation list ordered by exploitability.
 
 EngageDiscuss scope (30 min)
 
@@ -1230,7 +1230,7 @@ Package · $5,000 · 2 weeks
 
 # Copilot Studio Agent Quickstart
 
- A working Copilot Studio agent wired to one enterprise data source — OAuth on-behalf-of, correct DLP zone, Azure Functions middleware, generative orchestration, audit logging. Security-review-ready by handoff, not "we'll figure that out next quarter."
+ A Copilot Studio agent connected to one enterprise data source, using OAuth on-behalf-of and Azure Functions middleware. Includes DLP configuration, generative orchestration, audit logging, and security review documentation.
 
 Start the buildScope it first (30 min)
 
@@ -1291,7 +1291,7 @@ Package · $300 · 1 hour
 
 # Azure OpenAI Architecture Review
 
- One hour. You show me what you have. I draw what's actually there, write 5–10 specific recommendations, and send a summary you can forward to the next stakeholder.
+ A one-hour review of your Azure OpenAI architecture, with a system diagram, 5–10 specific recommendations, and a written summary.
 
 Book the hour
 
@@ -1346,7 +1346,7 @@ Package · $300 · 1 hour
 
 # RAG Pipeline Health Check
 
- You shipped a RAG pipeline. Answers are hit-or-miss. You want someone who's done this before to walk through your setup and call the shots — embedding model, chunk size, retrieval strategy, eval harness — and tell you what to fix first.
+ A review of your retrieval pipeline, covering the embedding model, chunk size, retrieval strategy, and evaluation harness. Includes a prioritized list of recommended changes.
 
 Book the hour
 

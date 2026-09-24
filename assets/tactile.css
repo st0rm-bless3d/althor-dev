@@ -1,0 +1,51 @@
+/* Material detail stays on the controls; reading surfaces remain quiet. */
+:root { --control-material: url('/assets/materials/metal030-color.jpg'); }
+.power-picker { gap: .3rem; }
+.power-choice, .pattern-dialog__footer .power-choice { width: 48px; height: 48px; flex: 0 0 48px; }
+.power-choice::before { width: 23px; height: 23px; border-radius: 5px; transform: rotate(45deg); opacity: .85; border: 1px solid color-mix(in srgb, var(--power) 70%, #fff); background: linear-gradient(140deg, #ffffff65, #ffffff00 43%, #00000055), var(--control-material), var(--power); background-size: auto, 150px, auto; background-blend-mode: normal, soft-light, normal; box-shadow: inset 1px 1px 2px #ffffff4d, inset -2px -2px 3px #0009, 0 2px 5px #0008; transition: transform .2s, box-shadow .2s, opacity .2s; }
+.power-choice[aria-pressed=true]::before { opacity: 1; transform: rotate(45deg) scale(1.08); box-shadow: inset 1px 1px 2px #ffffff60, inset -2px -2px 3px #0009, 0 0 0 4px var(--bg), 0 0 0 5px var(--power), 0 0 20px color-mix(in srgb, var(--power) 18%, transparent); }
+.power-choice:hover::before { opacity: 1; transform: rotate(45deg) scale(1.12); }
+.power-choice:active::before { transform: rotate(45deg) scale(.95); }
+.home-flow .pattern-tools { gap: .65rem; bottom: 12px; }
+.pattern-open, .pattern-action, .pattern-dialog__close { width: 64px; height: 64px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; flex: 0 0 auto; padding: 0; color: #c9c4b7; border: 1px solid #756e584d; border-radius: 10px; background: linear-gradient(145deg, #1d252be8, #10171bf5), var(--control-material); background-size: auto, 220px; box-shadow: inset 0 1px #d5c8a51a, inset 0 -1px #0008, 0 3px 12px #0003; transition: border-color .2s, box-shadow .2s, transform .15s; cursor: pointer; }
+.pattern-open svg, .pattern-action svg, .pattern-dialog__close svg { width: 26px; height: 26px; }
+.control-label, .pattern-open .control-label { color: inherit; font: 400 .61rem/1 var(--mono); letter-spacing: .015em; margin: 0; }
+.pattern-open:hover, .pattern-action:hover, .pattern-dialog__close:hover { color: #efe2c1; border-color: #b4a88999; box-shadow: inset 0 1px #d5c8a530, 0 4px 18px #0005; }
+.pattern-open:active, .pattern-action:active, .pattern-dialog__close:active { transform: translateY(1px); box-shadow: inset 0 2px 6px #0008; }
+.pattern-tools .power-picker { margin-right: .65rem; padding-right: 1.1rem; border-right: 1px solid var(--border); }
+.pattern-dialog__footer { gap: 1.5rem; padding-bottom: max(24px, env(safe-area-inset-bottom)); }
+.pattern-dialog__actions { gap: .75rem; }
+.pattern-dialog__close { width: 56px; height: 56px; }
+.dream-toggle { width: 44px; height: 44px; }
+.dream-toggle svg { width: 24px; height: 24px; }
+.gallery-controls { gap: .5rem; }
+.gallery-selector { gap: .4rem; margin-right: .8rem; }
+.gallery-controls .gallery-choice { width: 64px; height: 64px; padding: 9px; border-radius: 10px; border: 1px solid #6d756f40; color: #9ab5b7; background: linear-gradient(145deg, #18242bef, #0d1419f5), var(--control-material); background-size: auto, 220px; box-shadow: inset 0 1px #ffffff0b; }
+.gallery-controls .gallery-choice[aria-pressed=true] { border-color: #b4a889aa; background: linear-gradient(145deg, #3d392ee8, #171c20ef), var(--control-material); background-size: auto, 220px; color: #dfd0a9; box-shadow: inset 0 1px #e9dcb42e, 0 0 0 3px #b4a8890c; }
+.gallery-controls .gallery-choice:active { transform: translateY(1px); }
+.gallery-controls button[data-step] { width: 48px; height: 48px; border-radius: 50%; font-size: 1.15rem; }
+.gallery-controls button[data-step] svg { display: block; margin: auto; }
+.project-gallery .section-intro { flex-wrap: wrap; gap: 1.5rem; }
+.btn, .home-flow .contact-panel .btn { min-height: 52px; border-radius: 8px; text-transform: none; letter-spacing: 0; font-weight: 400; font-size: .82rem; line-height: 1.5; justify-content: center; padding: .85rem 1.4rem; }
+.btn-primary, .home-flow .contact-panel .btn-primary { color: #e7dec8; border-color: #a99a7080; background: linear-gradient(145deg, #373a30ed, #161e21f5), var(--control-material); background-size: auto, 220px; box-shadow: inset 0 1px #e4d4a72b, 0 3px 12px #0003; }
+.btn-primary:is(:hover,:focus-visible), .home-flow .contact-panel .btn-primary:is(:hover,:focus-visible) { color: #fff0cb; border-color: #cebd8e; background: linear-gradient(145deg, #484937ef, #20282af5), var(--control-material); background-size: auto, 220px; }
+.btn-secondary { color: var(--text-2); }
+.btn:active { transform: translateY(1px); }
+.btn-link { text-transform: none; letter-spacing: 0; }
+@media (max-width: 720px) {
+  .home-flow .lab-hero { padding-bottom: 8rem; }
+  .home-flow .pattern-tools { display: flex; flex-wrap: wrap; width: 280px; max-width: 100%; left: 50%; right: auto; transform: translateX(-50%); bottom: -72px; gap: .75rem; }
+  .pattern-tools .power-picker { justify-content: center; flex: 0 0 100%; margin: 0; padding: 0; border: 0; }
+  .power-choice, .pattern-dialog__footer .power-choice { width: 44px; height: 48px; flex-basis: 44px; }
+  .gallery-controls { width: 100%; justify-content: space-between; gap: .3rem; }
+  .gallery-selector { gap: .25rem; margin-right: 0; }
+  .gallery-controls .gallery-choice { width: 56px; height: 60px; padding: 7px; }
+  .gallery-count { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .gallery-controls button[data-step] { width: 44px; height: 44px; flex: 0 0 44px; }
+  .pattern-dialog__footer { gap: 1rem; }
+  .pattern-dialog__actions { gap: .5rem; }
+  .pattern-dialog__actions .pattern-action { width: 60px; height: 60px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .power-choice::before, .pattern-open, .pattern-action, .pattern-dialog__close { transition: none; }
+}

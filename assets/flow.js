@@ -92,21 +92,66 @@
     const slides = [...rail.querySelectorAll('.project-slide')];
     const controls = document.querySelector('.gallery-controls');
     const counter = controls.querySelector('.gallery-count');
+    const selector = document.createElement('div');
+    selector.className = 'gallery-selector';
+    selector.setAttribute('role', 'group');
+    selector.setAttribute('aria-label', 'Choose project');
+    const miniatures = {
+      spire: '<path d="M7 38Q18 32 24 8Q30 32 41 38M12 38Q20 30 24 14Q28 30 36 38M17 38Q22 28 24 20Q26 28 31 38"/><circle cx="35" cy="11" r="3"/>',
+      extraction: '<path d="M5 12C19 0 18 46 25 25S35 12 43 36M5 20C19 8 18 38 25 25S35 20 43 28M5 28C19 16 18 30 25 25S35 28 43 20M5 36C19 24 18 22 25 25S35 36 43 12"/>',
+      governance: '<path d="M7 39V24a17 17 0 0 1 34 0v15M12 39V24a12 12 0 0 1 24 0v15M17 39V24a7 7 0 0 1 14 0v15M24 21v14"/>',
+    };
+    const choices = slides.map((slide, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'gallery-choice';
+      button.setAttribute('aria-label', `Show ${slide.querySelector('h3').textContent}`);
+      button.setAttribute('aria-pressed', String(index === 0));
+      button.innerHTML = `<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1">${miniatures[slide.dataset.project] || miniatures.spire}</svg>`;
+      button.addEventListener('click', () => go(index));
+      selector.append(button);
+      return button;
+    });
+    controls.prepend(selector);
+    const progress = document.createElement('div');
+    progress.className = 'gallery-progress';
+    progress.setAttribute('aria-hidden', 'true');
+    progress.style.setProperty('--gallery-segment', `${100 / slides.length}%`);
+    rail.after(progress);
     let current = 0, scrollFrame = 0;
     function update() {
       scrollFrame = 0;
-      current = slides.reduce((closest, slide, index) => Math.abs(slide.offsetLeft - slides[0].offsetLeft - rail.scrollLeft) < Math.abs(slides[closest].offsetLeft - slides[0].offsetLeft - rail.scrollLeft) ? index : closest, 0);
+      const origin = slides[0].offsetLeft;
+      const offset = rail.scrollLeft;
+      const distance = slides.length > 1 ? slides[1].offsetLeft - origin : rail.clientWidth;
+      const position = Math.max(0, Math.min(slides.length - 1, offset / Math.max(1, distance)));
+      current = Math.round(position);
       const label = `${String(current + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
       if (counter.textContent !== label) counter.textContent = label;
       controls.querySelector('[data-step="-1"]').disabled = current === 0;
       controls.querySelector('[data-step="1"]').disabled = current === slides.length - 1;
+      choices.forEach((button, index) => button.setAttribute('aria-pressed', String(index === current)));
+      try {
+        if (history.state?.galleryIndex !== current) history.replaceState({ ...history.state, galleryIndex: current }, '');
+      } catch { /* Gallery position is optional when history storage is unavailable. */ }
+      progress.style.setProperty('--gallery-position', `${position * 100}%`);
+      slides.forEach((slide, index) => {
+        const depth = reduced.matches ? 0 : Math.max(-1, Math.min(1, index - position));
+        slide.style.setProperty('--slide-shift', `${depth * 32}px`);
+        slide.style.setProperty('--copy-shift', `${depth * 14}px`);
+        slide.style.setProperty('--slide-scale', String(1 - Math.abs(depth) * .06));
+      });
     }
     function go(index) {
       const next = Math.max(0, Math.min(slides.length - 1, index));
       rail.scrollTo({ left: slides[next].offsetLeft - slides[0].offsetLeft, behavior: reduced.matches ? 'instant' : 'smooth' });
     }
     controls.hidden = false;
-    controls.querySelectorAll('button').forEach(button => button.addEventListener('click', () => go(current + Number(button.dataset.step))));
+    controls.querySelectorAll('[data-step]').forEach(button => {
+      const forward = Number(button.dataset.step) === 1;
+      button.innerHTML = `<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="${forward ? 'M4 12h16m-6-6 6 6-6 6' : 'M20 12H4m6-6-6 6 6 6'}"/></svg>`;
+      button.addEventListener('click', () => go(current + Number(button.dataset.step)));
+    });
     rail.addEventListener('scroll', () => { if (!scrollFrame) scrollFrame = requestAnimationFrame(update); }, { passive: true });
     rail.addEventListener('keydown', event => {
       if (event.target !== rail || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
@@ -148,7 +193,14 @@
     rail.addEventListener('click', event => { if (suppressClick) { event.preventDefault(); event.stopPropagation(); } }, true);
     rail.addEventListener('dragstart', event => event.preventDefault());
     new ResizeObserver(update).observe(rail);
-    update();
+    function restoreGallery() {
+      const index = Math.max(0, Math.min(slides.length - 1, Number(history.state?.galleryIndex) || 0));
+      rail.scrollTo({ left: slides[index].offsetLeft - slides[0].offsetLeft, behavior: 'instant' });
+      update();
+    }
+    addEventListener('pageshow', restoreGallery);
+    reduced.addEventListener('change', update);
+    restoreGallery();
   }
 
   const filters = document.querySelector('.writing-filters');
